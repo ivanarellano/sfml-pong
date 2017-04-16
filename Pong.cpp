@@ -2,8 +2,8 @@
 
 namespace Pong
 {
-	const int WindowInfo::k_width {800};
-	const int WindowInfo::k_height {600};
+	const int WindowInfo::k_width{800};
+	const int WindowInfo::k_height{600};
 
 	bool can_go_up(const sf::RectangleShape& shape)
 	{
@@ -15,8 +15,8 @@ namespace Pong
 		return shape.getPosition().y + shape.getSize().y <= WindowInfo::k_height;
 	}
 
-	Window::Window(const std::string& title, Pong::Screen* screen)
-		: m_sf_render_thread{&Pong::Window::render_thread, this}
+	Window::Window(const std::string& title, Screen* screen)
+		: m_sf_render_thread{&Window::render_thread, this}
 	{
 		m_sf_window.create(sf::VideoMode(WindowInfo::k_width, WindowInfo::k_height), title);
 
@@ -75,7 +75,7 @@ namespace Pong
 		m_screen->on_stop();
 	}
 
-	void Window::render_thread() 
+	void Window::render_thread()
 	{
 		draw_frame();
 	}
@@ -109,8 +109,8 @@ namespace Pong
 		m_p1_score_view.set_position(WindowInfo::k_width * .25f - m_p1_score_view.get_width() / 2, k_score_offset);
 		m_p2_score_view.set_position(WindowInfo::k_width * .75f - m_p2_score_view.get_width() / 2, k_score_offset);
 
-		const float player_2_x_pos = -k_paddle_offset + WindowInfo::k_width - m_player_1.get_width();
-		const float player_vertical_center = WindowInfo::k_height / 2 - m_player_1.get_height() / 2;
+		const float player_2_x_pos{-k_paddle_offset + WindowInfo::k_width - m_player_1.get_width()};
+		const float player_vertical_center{WindowInfo::k_height / 2 - m_player_1.get_height() / 2};
 
 		m_player_1.set_position(k_paddle_offset, player_vertical_center);
 		m_player_2.set_position(player_2_x_pos, player_vertical_center);
@@ -136,8 +136,8 @@ namespace Pong
 			dir = coin_toss() ? Ball::Direction::NW : Ball::Direction::SW;
 		}
 
-		const float ball_pos_x = WindowInfo::k_width / 2 - m_ball.get_width() / 2;
-		const float ball_pos_y = static_cast<float>(random(static_cast<int>(m_ball.get_height()), WindowInfo::k_height)) - m_ball.get_height() / 2;
+		const float ball_pos_x{WindowInfo::k_width / 2 - m_ball.get_width() / 2};
+		const float ball_pos_y{static_cast<float>(random(static_cast<int>(m_ball.get_height()), WindowInfo::k_height)) - m_ball.get_height() / 2};
 
 		m_ball.set_direction(dir);
 		m_ball.reset_velocity();
@@ -151,10 +151,10 @@ namespace Pong
 	{
 		if (PlayState::Playing == m_state || PlayState::Serving == m_state)
 		{
-			const bool did_press_up = sf::Keyboard::isKeyPressed(sf::Keyboard::Up);
-			const bool did_press_down = sf::Keyboard::isKeyPressed(sf::Keyboard::Down);
-			const bool did_press_w = sf::Keyboard::isKeyPressed(sf::Keyboard::W);
-			const bool did_press_s = sf::Keyboard::isKeyPressed(sf::Keyboard::S);
+			const bool did_press_up{sf::Keyboard::isKeyPressed(sf::Keyboard::Up)};
+			const bool did_press_down{sf::Keyboard::isKeyPressed(sf::Keyboard::Down)};
+			const bool did_press_w{sf::Keyboard::isKeyPressed(sf::Keyboard::W)};
+			const bool did_press_s{sf::Keyboard::isKeyPressed(sf::Keyboard::S)};
 
 			m_player_1.move_up(did_press_w && can_go_up(m_player_1.get_shape()));
 			m_player_1.move_down(did_press_s && can_go_down(m_player_1.get_shape()));
@@ -195,8 +195,8 @@ namespace Pong
 				return;
 			}
 
-			const bool did_p1_score = m_ball.get_shape().getPosition().x > WindowInfo::k_width;
-			const bool did_p2_score = m_ball.get_shape().getPosition().x + m_ball.get_width() < 0;
+			const bool did_p1_score{m_ball.get_shape().getPosition().x > WindowInfo::k_width};
+			const bool did_p2_score{m_ball.get_shape().getPosition().x + m_ball.get_width() < 0};
 
 			if (did_p1_score)
 			{
@@ -216,8 +216,8 @@ namespace Pong
 				return;
 			}
 
-			const bool did_hit_p1 = m_ball.get_shape().getGlobalBounds().intersects(m_player_1.get_shape().getGlobalBounds());
-			const bool did_hit_p2 = m_ball.get_shape().getGlobalBounds().intersects(m_player_2.get_shape().getGlobalBounds());
+			const bool did_hit_p1{m_ball.get_shape().getGlobalBounds().intersects(m_player_1.get_shape().getGlobalBounds())};
+			const bool did_hit_p2{m_ball.get_shape().getGlobalBounds().intersects(m_player_2.get_shape().getGlobalBounds())};
 
 			if (did_hit_p1 || did_hit_p2)
 				m_ball.reflect_on_paddle();
@@ -258,18 +258,20 @@ namespace Pong
 	void GameScreen::show_winner(std::string name)
 	{
 		m_winner_text.set_text("GG.\n" + name + " Wins!");
-		m_winner_text.set_position(WindowInfo::k_width / 2 - m_winner_text.get_width() / 2, 
-			WindowInfo::k_height / 2 - m_winner_text.get_height() / 2);
+		m_winner_text.set_position(WindowInfo::k_width / 2 - m_winner_text.get_width() / 2,
+		                           WindowInfo::k_height / 2 - m_winner_text.get_height() / 2);
 
 		m_press_key_text.set_text("Press any key\nto play again.");
 		m_press_key_text.set_position(m_winner_text.get_position().x,
-			m_winner_text.get_position().y + m_winner_text.get_height());
+		                              m_winner_text.get_position().y + m_winner_text.get_height());
 
 		m_winner_text.set_visibility(Visibility::Visible);
 		m_press_key_text.set_visibility(Visibility::Visible);
 	}
 
-	Paddle::Paddle() : Paddle {sf::Vector2f {16.f, 50.f}, 375.f} {}
+	Paddle::Paddle() : Paddle {sf::Vector2f{16.f, 50.f}, 375.f}
+	{
+	}
 
 	void Paddle::update(float dt)
 	{
@@ -283,11 +285,11 @@ namespace Pong
 		}
 	}
 
-	Ball::Ball() : Ball {sf::Vector2f {10.f, 10.f}, 300, 500, 50}
-    {
+	Ball::Ball() : Ball {sf::Vector2f{10.f, 10.f}, 300, 500, 50}
+	{
 		m_bounce_sound.load(Sound::Asset::blip);
-    }
-    
+	}
+
 	void Ball::update(float dt)
 	{
 		const float time_adjusted_speed = m_velocity * dt;
@@ -323,9 +325,9 @@ namespace Pong
 			m_velocity = k_max_velocity;
 		}
 	}
-    
-    void Ball::reflect_on_court()
-    {
+
+	void Ball::reflect_on_court()
+	{
 		m_bounce_sound.play();
 
 		switch (m_direction)
@@ -345,12 +347,12 @@ namespace Pong
 		default:
 			m_direction = Direction::None;
 		}
-    }
-    
-    void Ball::reflect_on_paddle()
-    {
-        m_bounce_sound.play();
-        increase_velocity(k_spring_force);
+	}
+
+	void Ball::reflect_on_paddle()
+	{
+		m_bounce_sound.play();
+		increase_velocity(k_spring_force);
 
 		switch (m_direction)
 		{
@@ -369,9 +371,11 @@ namespace Pong
 		default:
 			m_direction = Direction::None;
 		}
-    }
+	}
 
-	HalfCourtLine::HalfCourtLine() : HalfCourtLine {sf::Vector2f {6.f, 20.f}, 30} {}
+	HalfCourtLine::HalfCourtLine() : HalfCourtLine {sf::Vector2f{6.f, 20.f}, 30}
+	{
+	}
 
 	HalfCourtLine::HalfCourtLine(sf::Vector2f size, float gap)
 		: m_dash_width {size.x}
@@ -382,7 +386,7 @@ namespace Pong
 
 		for (float y_offset = 0; y_offset < WindowInfo::k_height; y_offset += m_dash_height + gap)
 		{
-			sf::RectangleShape rect {sf::Vector2f {m_dash_width, m_dash_height}};
+			sf::RectangleShape rect{sf::Vector2f{m_dash_width, m_dash_height}};
 
 			rect.setPosition(static_cast<float>(WindowInfo::k_width / 2 - m_dash_width / 2), m_dash_height + y_offset);
 			m_notches.push_back(rect);

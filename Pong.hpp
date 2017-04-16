@@ -9,7 +9,8 @@
 
 namespace Pong
 {
-	struct WindowInfo {
+	struct WindowInfo
+	{
 		const static int k_width;
 		const static int k_height;
 	};
@@ -29,40 +30,50 @@ namespace Pong
 
 	inline std::string get_assets_path()
 	{
-        std::string project_assets_path { "assets/" };
+		std::string project_assets_path{"assets/"};
 		#ifdef TARGET_OS_MAC
 			return resourcePath() + project_assets_path;
 		#else
 			return project_assets_path;
 		#endif
 	}
-    
-	class Drawable {
+
+	class Drawable
+	{
 	public:
-		enum class Visibility {
-			Visible, Gone
+		enum class Visibility
+		{
+			Visible,
+			Gone
 		};
 
 		virtual ~Drawable() {}
+
 		virtual void draw(sf::RenderWindow* window) = 0;
 	};
 
-	class Measurement {
+	class Measurement
+	{
 	public:
 		virtual ~Measurement() {}
+
 		virtual float get_width() const = 0;
 		virtual float get_height() const = 0;
 	};
 
-	class Movable {
+	class Movable
+	{
 	public:
 		virtual ~Movable() {}
+
 		virtual void set_position(float x, float y) = 0;
 		virtual void move(float x, float y) = 0;
 	};
 
-	struct Font {
-		enum Asset {
+	struct Font
+	{
+		enum Asset
+		{
 			forward
 		};
 
@@ -78,21 +89,23 @@ namespace Pong
 		}
 	};
 
-	class Sound {
+	class Sound
+	{
 	public:
-		enum Asset {
+		enum Asset
+		{
 			blip
 		};
-        
-        Sound() {}
-        
-        void load(const Asset& asset)
-        {
-            if (m_buffer.loadFromFile(get_path(asset))) 
+
+		Sound() {}
+
+		void load(const Asset& asset)
+		{
+			if (m_buffer.loadFromFile(get_path(asset)))
 				m_sound.setBuffer(m_buffer);
-        }
-        
-        void play() { if (m_sound.getBuffer() != nullptr) m_sound.play(); }
+		}
+
+		void play() { if (m_sound.getBuffer() != nullptr) m_sound.play(); }
 
 		static std::string get_path(Asset asset)
 		{
@@ -104,12 +117,14 @@ namespace Pong
 			default: return "";
 			}
 		}
+
 	private:
-        sf::SoundBuffer m_buffer;
+		sf::SoundBuffer m_buffer;
 		sf::Sound m_sound;
 	};
 
-	struct Screen : Drawable {
+	struct Screen : Drawable
+	{
 		virtual ~Screen() {}
 
 		virtual void on_start() = 0;
@@ -123,7 +138,8 @@ namespace Pong
 		Screen() {}
 	};
 
-	class Window {
+	class Window
+	{
 	public:
 		Window(const std::string& title, Screen* screen);
 	private:
@@ -144,7 +160,8 @@ namespace Pong
 		Window& operator=(const Window&) = delete;
 	};
 
-	struct Text : Drawable, Measurement, Movable {
+	struct Text : Drawable, Measurement, Movable
+	{
 		explicit Text(Font::Asset asset = Font::forward, int size = 50) : m_visibility(Visibility::Visible)
 		{
 			m_font.loadFromFile(Font::get_path(asset));
@@ -174,7 +191,8 @@ namespace Pong
 		Visibility m_visibility;
 	};
 
-	struct Actor : Drawable, Measurement, Movable {
+	struct Actor : Drawable, Measurement, Movable
+	{
 		explicit Actor(sf::Vector2f size)
 			: m_rect {size}
 			, m_visibility {Visibility::Visible} {}
@@ -201,7 +219,8 @@ namespace Pong
 		std::string m_name;
 	};
 
-	class Paddle : public Actor {
+	class Paddle : public Actor
+	{
 	public:
 		Paddle();
 
@@ -221,45 +240,48 @@ namespace Pong
 		bool m_move_down;
 	};
 
-	class Ball : public Actor {
+	class Ball : public Actor
+	{
 	public:
-		enum class Direction {
+		enum class Direction
+		{
 			None, NW, NE, SW, SE
 		};
 
 		Ball();
 
-        explicit Ball(sf::Vector2f size, float start_velocity, float max_velocity, float spring_force)
+		explicit Ball(sf::Vector2f size, float start_velocity, float max_velocity, float spring_force)
 			: Actor {size}
-			, k_start_velocity {start_velocity}
-			, k_max_velocity {max_velocity}
-			, k_spring_force {spring_force}
-			, m_velocity {start_velocity}
-			, m_direction {Direction::None} {}
+			  , k_start_velocity {start_velocity}
+			  , k_max_velocity {max_velocity}
+			  , k_spring_force {spring_force}
+			  , m_velocity {start_velocity}
+			  , m_direction {Direction::None} {}
 
 		void update(float dt) override;
 
 		void increase_velocity(float vel);
-        void reflect_on_court();
-        void reflect_on_paddle();
-        
+		void reflect_on_court();
+		void reflect_on_paddle();
+
 		void reset_velocity() { m_velocity = k_start_velocity; }
 		void set_direction(Direction dir) { m_direction = dir; }
 	private:
 		const float k_start_velocity;
 		const float k_max_velocity;
-        const float k_spring_force;
+		const float k_spring_force;
 
 		float m_velocity;
 		Direction m_direction;
-        Sound m_bounce_sound;
+		Sound m_bounce_sound;
 	};
 
 	/*
 	* A half court line with a dashed line effect.
 	* The width and height set the size of a single dash.
 	*/
-	class HalfCourtLine : public Drawable {
+	class HalfCourtLine : public Drawable
+	{
 	public:
 		HalfCourtLine();
 
@@ -272,9 +294,11 @@ namespace Pong
 		std::vector<sf::RectangleShape> m_notches;
 	};
 
-	class GameScreen : public Screen {
+	class GameScreen : public Screen
+	{
 	public:
-		enum class PlayState {
+		enum class PlayState
+		{
 			Playing, Serving, Won
 		};
 
@@ -282,13 +306,13 @@ namespace Pong
 
 		GameScreen(float paddle_offset, float score_offset, int serve_delay)
 			: k_serve_delay {serve_delay}
-			, k_paddle_offset {paddle_offset}
-			, k_score_offset {score_offset}
-			, m_p1_score {0}
-			, m_p2_score {0}
-			, m_state {PlayState::Serving}
-			, m_server {nullptr}
-			, m_time {0} {}
+			  , k_paddle_offset {paddle_offset}
+			  , k_score_offset {score_offset}
+			  , m_p1_score {0}
+			  , m_p2_score {0}
+			  , m_state {PlayState::Serving}
+			  , m_server {nullptr}
+			  , m_time {0} {}
 
 		virtual void serve();
 
@@ -298,11 +322,12 @@ namespace Pong
 		void handle_input(sf::Event event) override;
 
 		void on_stop() override {}
+
 	private:
 		const int k_serve_delay;
 		const float k_paddle_offset;
 		const float k_score_offset;
-		
+
 		int m_p1_score;
 		int m_p2_score;
 		PlayState m_state;
