@@ -249,8 +249,8 @@ namespace Pong
 
 	Paddle* GameScreen::did_player_win()
 	{
-		bool did_p1_win{m_p1_score > 5};
-		bool did_p2_win{m_p2_score > 5};
+		bool did_p1_win{m_p1_score >= 5};
+		bool did_p2_win{m_p2_score >= 5};
 
 		return did_p1_win ? &m_player_1 : did_p2_win ? &m_player_2 : nullptr;
 	}

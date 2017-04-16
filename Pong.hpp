@@ -43,8 +43,7 @@ namespace Pong
 	public:
 		enum class Visibility
 		{
-			Visible,
-			Gone
+			Visible, Gone
 		};
 
 		virtual ~Drawable() {}
