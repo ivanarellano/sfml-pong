@@ -1,5 +1,5 @@
 # sfml-pong
-
+[![Stories in Ready](https://badge.waffle.io/ivanarellano/sfml-pong.svg?label=ready&title=Ready)](http://waffle.io/ivanarellano/sfml-pong)
 
 # Dependencies
 - Setup [SFML 2.4.2](https://www.sfml-dev.org/download/sfml/2.4.2/) through their [instructions](https://www.sfml-dev.org/tutorials/2.4/#getting-started).
