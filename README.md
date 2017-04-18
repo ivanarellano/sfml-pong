@@ -8,7 +8,7 @@
 - `FFFFORWA.TTF` font
 
 # Setup
-The Pong source code is tested and compiled using Visual Studio 2017 and Xcode 8.3.1.
+The sfml-pong source code is tested and compiled using Visual Studio 2017 and Xcode 8.3.1.
 
 - Setup SFML 2.4.2 through their [instructions](https://www.sfml-dev.org/tutorials/2.4/#getting-started).
 - Download the project dependencies in [sfml-pong 1.0](https://github.com/ivanarellano/sfml-pong/releases/download/1.0/sfml_pong_1_0.zip).
