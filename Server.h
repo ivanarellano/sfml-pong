@@ -24,7 +24,7 @@ public:
 		, m_running {false}
 		, m_listen_thread {&Server::listen, this}
 		, m_totasent {0}
-		, m_totareceived {0}
+		, m_total_received {0}
 	{
 		m_packet_handler = std::bind(handler, instance, 
 			std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
@@ -53,7 +53,7 @@ public:
 	ClientID get_client_id(const sf::IpAddress& ip, const PortNumber& port);
 	bool has_client(const ClientID& id);
 	bool has_client(const sf::IpAddress& ip, const PortNumber& port);
-	bool filclient_info(const ClientID& id, ClientInfo& info);
+	bool fill_client_info(const ClientID& id, ClientInfo& info);
 	bool remove_client(const ClientID& id);
 	bool remove_client(const sf::IpAddress& ip, const PortNumber& port);
 
@@ -67,7 +67,6 @@ public:
 	std::string get_client_list();
 
 	sf::Mutex& get_mutex();
-
 private:
 	ClientID m_last_id;
 
@@ -86,7 +85,7 @@ private:
 	sf::Mutex m_mutex;
 
 	size_t m_totasent;
-	size_t m_totareceived;
+	size_t m_total_received;
 };
 
-} // end namespace
+}
