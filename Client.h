@@ -40,8 +40,8 @@ public:
 	void update(const sf::Time& time);
 	bool is_connected() const;
 	void set_player_name(const std::string& name);
-	sf::Mutex& get_mutex();
 
+	sf::Mutex& get_mutex();
 private:
 	std::string m_player_name;
 
