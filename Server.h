@@ -7,7 +7,7 @@
 namespace Pong 
 {
 
-#define HEARTBEAT_INTERVAMS 1000
+#define HEARTBEAT_INTERVAL_MS 1000
 #define HEARTBEAT_RETRIES 5
 
 class Server;
