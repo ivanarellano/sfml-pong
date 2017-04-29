@@ -233,49 +233,142 @@ ClientID Pong::Server::add_client(const sf::IpAddress& ip, const PortNumber& por
 
 ClientID Pong::Server::get_client_id(const sf::IpAddress& ip, const PortNumber& port)
 {
+	sf::Lock lock{ m_mutex };
+
+	for (auto& itr : m_clients)
+	{
+		if (itr.second.m_ip == ip && itr.second.m_port == port)
+			return itr.first;
+	}
+
+	return ClientID(Network::NullID);
 }
 
 bool Pong::Server::has_client(const ClientID& id)
 {
+	return m_clients.find(id) != m_clients.end();
 }
 
 bool Pong::Server::has_client(const sf::IpAddress& ip, const PortNumber& port)
 {
+	return get_client_id(ip, port) != ClientID(Network::NullID);
 }
 
 bool Pong::Server::fill_client_info(const ClientID& id, ClientInfo& info)
 {
+	sf::Lock lock {m_mutex};
+
+	for (auto& itr : m_clients)
+	{
+		if (itr.first == id)
+		{
+			info = itr.second;
+			return true;
+		}
+	}
+
+	return false;
 }
 
 bool Pong::Server::remove_client(const ClientID& id)
 {
+	sf::Lock lock {m_mutex};
+
+	auto itr = m_clients.find(id);
+	if (itr == m_clients.end())
+		return false;
+
+	sf::Packet p;
+	set_packet(PacketType::Disconnect, p);
+	send(id, p);
+
+	m_clients.erase(itr);
+
+	return true;
 }
 
 bool Pong::Server::remove_client(const sf::IpAddress& ip, const PortNumber& port)
 {
+	ClientID id {get_client_id(ip, port)};
+
+	if (id != ClientID(Network::NullID))
+		return remove_client(id);
+
+	return false;
 }
 
 void Pong::Server::disconnect_all()
 {
+	if (!m_running)
+		return;
+
+	sf::Packet p;
+	set_packet(PacketType::Disconnect, p);
+	broadcast(p);
+
+	sf::Lock lock {m_mutex};
+	m_clients.clear();
 }
 
 bool Pong::Server::start()
 {
+	if (m_running)
+		return false;
+
+	// Check for failure when binding incoming socket to port
+	if (m_incoming.bind(static_cast<unsigned short>(Network::ServerPort)) != sf::Socket::Done)
+		return false;
+
+	m_outgoing.bind(sf::Socket::AnyPort);
+
+	std::cout << "Incoming port: "
+		<< m_incoming.getLocalPort() << ". Outgoing port: "
+		<< m_outgoing.getLocalPort() << std::endl;
+
+	m_listen_thread.launch();
+	m_running = true;
+
+	return true;
 }
 
 bool Pong::Server::stop()
 {
+	if (!m_running)
+		return false;
+
+	disconnect_all();
+
+	m_running = false;
+	m_incoming.unbind();
+
+	return true;
 }
 
-bool Pong::Server::is_running()
+bool Pong::Server::is_running() const
 {
+	return m_running;
 }
 
 std::string Pong::Server::get_client_list()
 {
+	std::string output;
+	sf::Lock lock {m_mutex};
+
+	int i = 0;
+	for (auto& itr : m_clients)
+	{
+		output += itr.second.m_ip.toString();
+
+		if (i > 0)
+			output += ", ";
+
+		++i;
+	}
+
+	return output;
 }
 
 sf::Mutex& Pong::Server::get_mutex()
 {
+	return m_mutex;
 }
->>>>>>> Stashed changes

@@ -23,7 +23,7 @@ public:
 		: m_last_id {0}
 		, m_running {false}
 		, m_listen_thread {&Server::listen, this}
-		, m_totasent {0}
+		, m_total_sent {0}
 		, m_total_received {0}
 	{
 		m_packet_handler = std::bind(handler, instance, 
@@ -61,7 +61,7 @@ public:
 	bool start();
 	bool stop();
 
-	bool is_running();
+	bool is_running() const;
 
 	unsigned int get_client_count() const { return m_clients.size(); };
 	std::string get_client_list();
