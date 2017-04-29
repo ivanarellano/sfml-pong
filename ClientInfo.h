@@ -5,12 +5,12 @@
 
 struct ClientInfo {
 	ClientInfo(const sf::IpAddress& ip, const PortNumber& port, const sf::Time& heartbeat)
-		: m_ip{ ip }
-		, m_port{ port }
-		, m_last_heartbeat{ heartbeat }
-		, m_heartbeat_waiting{ false }
-		, m_heartbeat_retry{ 0 }
-		, m_latency{ 0 }
+		: m_ip {ip}
+		, m_port {port}
+		, m_last_heartbeat {heartbeat}
+		, m_heartbeat_waiting {false}
+		, m_heartbeat_retry {0}
+		, m_latency {0}
 	{}
 
 	ClientInfo& operator=(const ClientInfo& info) {

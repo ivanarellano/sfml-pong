@@ -1,17 +1,14 @@
 #pragma once
-#include "PacketTypes.h"
+#include "PacketType.h"
 #include "ClientInfo.h"
 #include <functional>
 #include <unordered_map>
 
-namespace Pong 
-{
-
 #define HEARTBEAT_INTERVAL_MS 1000
 #define HEARTBEAT_RETRIES 5
 
-class Server;
 using Clients = std::unordered_map<ClientID, ClientInfo>;
+class Server;
 using PacketHandler = std::function<void(sf::IpAddress&, const PortNumber&, const PacketID&, sf::Packet&, Server*)>;
 using TimeoutHandler = std::function<void(const ClientID&)>;
 
@@ -87,5 +84,3 @@ private:
 	size_t m_total_sent;
 	size_t m_total_received;
 };
-
-}

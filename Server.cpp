@@ -1,31 +1,31 @@
 #include "Server.h"
 #include <iostream>
 
-Pong::Server::Server(void(*handler)(sf::IpAddress&, const PortNumber&, const PacketID&, sf::Packet&, Server*))
-	: m_last_id {0}
-	, m_running {false}
-	, m_listen_thread {nullptr}
-	, m_total_sent {0}
-	, m_total_received {0}
+Server::Server(void(*handler)(sf::IpAddress&, const PortNumber&, const PacketID&, sf::Packet&, Server*))
+	: m_last_id{ 0 }
+	, m_running{ false }
+	, m_listen_thread{ &Server::listen, this }
+	, m_total_sent{ 0 }
+	, m_total_received{ 0 }
 {
 	m_packet_handler = bind(handler,
 		std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
-		std::placeholders::_4, std::placeholders::_5);	
+		std::placeholders::_4, std::placeholders::_5);
 }
 
-Pong::Server::~Server()
+Server::~Server()
 {
 	stop();
 }
 
-void Pong::Server::bind_timeout_handler(void(*handler)(const ClientID&))
+void Server::bind_timeout_handler(void(*handler)(const ClientID&))
 {
 	m_timeout_handler = bind(handler, std::placeholders::_1);
 }
 
-bool Pong::Server::send(const ClientID& id, sf::Packet& packet)
+bool Server::send(const ClientID& id, sf::Packet& packet)
 {
-	sf::Lock lock {m_mutex};
+	sf::Lock lock{ m_mutex };
 
 	auto itr = m_clients.find(id);
 	if (itr == m_clients.end())
@@ -34,7 +34,7 @@ bool Pong::Server::send(const ClientID& id, sf::Packet& packet)
 	return send(itr->second.m_ip, itr->second.m_port, packet);
 }
 
-bool Pong::Server::send(sf::IpAddress& ip, const PortNumber& port, sf::Packet& packet)
+bool Server::send(sf::IpAddress& ip, const PortNumber& port, sf::Packet& packet)
 {
 	if (m_outgoing.send(packet, ip, port) != sf::Socket::Done)
 	{
@@ -47,9 +47,9 @@ bool Pong::Server::send(sf::IpAddress& ip, const PortNumber& port, sf::Packet& p
 	return true;
 }
 
-void Pong::Server::broadcast(sf::Packet& packet, const ClientID& ignore)
+void Server::broadcast(sf::Packet& packet, const ClientID& ignore)
 {
-	sf::Lock lock {m_mutex};
+	sf::Lock lock{ m_mutex };
 
 	for (auto& itr : m_clients)
 	{
@@ -66,7 +66,7 @@ void Pong::Server::broadcast(sf::Packet& packet, const ClientID& ignore)
 	}
 }
 
-void Pong::Server::listen()
+void Server::listen()
 {
 	sf::IpAddress ip;
 	PortNumber port;
@@ -140,7 +140,7 @@ void Pong::Server::listen()
 	}
 }
 
-void Pong::Server::update(const sf::Time& time)
+void Server::update(const sf::Time& time)
 {
 	m_server_time += time;
 
@@ -159,7 +159,7 @@ void Pong::Server::update(const sf::Time& time)
 		}
 	}
 
-	sf::Lock lock {m_mutex};
+	sf::Lock lock{ m_mutex };
 
 	// Set heartbeats for known clients
 	for (auto itr = m_clients.begin(); itr != m_clients.end();)
@@ -212,9 +212,9 @@ void Pong::Server::update(const sf::Time& time)
 	}
 }
 
-ClientID Pong::Server::add_client(const sf::IpAddress& ip, const PortNumber& port)
+ClientID Server::add_client(const sf::IpAddress& ip, const PortNumber& port)
 {
-	sf::Lock lock {m_mutex};
+	sf::Lock lock{ m_mutex };
 
 	for (auto& itr : m_clients)
 	{
@@ -222,8 +222,8 @@ ClientID Pong::Server::add_client(const sf::IpAddress& ip, const PortNumber& por
 			return ClientID(Network::NullID);
 	}
 
-	ClientID id {m_last_id};
-	ClientInfo info {ip, port, m_server_time};
+	ClientID id{ m_last_id };
+	ClientInfo info{ ip, port, m_server_time };
 
 	m_clients.insert(std::make_pair(id, info));
 	++m_last_id;
@@ -231,7 +231,7 @@ ClientID Pong::Server::add_client(const sf::IpAddress& ip, const PortNumber& por
 	return id;
 }
 
-ClientID Pong::Server::get_client_id(const sf::IpAddress& ip, const PortNumber& port)
+ClientID Server::get_client_id(const sf::IpAddress& ip, const PortNumber& port)
 {
 	sf::Lock lock{ m_mutex };
 
@@ -244,19 +244,19 @@ ClientID Pong::Server::get_client_id(const sf::IpAddress& ip, const PortNumber& 
 	return ClientID(Network::NullID);
 }
 
-bool Pong::Server::has_client(const ClientID& id)
+bool Server::has_client(const ClientID& id)
 {
 	return m_clients.find(id) != m_clients.end();
 }
 
-bool Pong::Server::has_client(const sf::IpAddress& ip, const PortNumber& port)
+bool Server::has_client(const sf::IpAddress& ip, const PortNumber& port)
 {
 	return get_client_id(ip, port) != ClientID(Network::NullID);
 }
 
-bool Pong::Server::fill_client_info(const ClientID& id, ClientInfo& info)
+bool Server::fill_client_info(const ClientID& id, ClientInfo& info)
 {
-	sf::Lock lock {m_mutex};
+	sf::Lock lock{ m_mutex };
 
 	for (auto& itr : m_clients)
 	{
@@ -270,9 +270,9 @@ bool Pong::Server::fill_client_info(const ClientID& id, ClientInfo& info)
 	return false;
 }
 
-bool Pong::Server::remove_client(const ClientID& id)
+bool Server::remove_client(const ClientID& id)
 {
-	sf::Lock lock {m_mutex};
+	sf::Lock lock{ m_mutex };
 
 	auto itr = m_clients.find(id);
 	if (itr == m_clients.end())
@@ -287,9 +287,9 @@ bool Pong::Server::remove_client(const ClientID& id)
 	return true;
 }
 
-bool Pong::Server::remove_client(const sf::IpAddress& ip, const PortNumber& port)
+bool Server::remove_client(const sf::IpAddress& ip, const PortNumber& port)
 {
-	ClientID id {get_client_id(ip, port)};
+	ClientID id{ get_client_id(ip, port) };
 
 	if (id != ClientID(Network::NullID))
 		return remove_client(id);
@@ -297,7 +297,7 @@ bool Pong::Server::remove_client(const sf::IpAddress& ip, const PortNumber& port
 	return false;
 }
 
-void Pong::Server::disconnect_all()
+void Server::disconnect_all()
 {
 	if (!m_running)
 		return;
@@ -306,11 +306,11 @@ void Pong::Server::disconnect_all()
 	set_packet(PacketType::Disconnect, p);
 	broadcast(p);
 
-	sf::Lock lock {m_mutex};
+	sf::Lock lock{ m_mutex };
 	m_clients.clear();
 }
 
-bool Pong::Server::start()
+bool Server::start()
 {
 	if (m_running)
 		return false;
@@ -331,7 +331,7 @@ bool Pong::Server::start()
 	return true;
 }
 
-bool Pong::Server::stop()
+bool Server::stop()
 {
 	if (!m_running)
 		return false;
@@ -344,15 +344,15 @@ bool Pong::Server::stop()
 	return true;
 }
 
-bool Pong::Server::is_running() const
+bool Server::is_running() const
 {
 	return m_running;
 }
 
-std::string Pong::Server::get_client_list()
+std::string Server::get_client_list()
 {
 	std::string output;
-	sf::Lock lock {m_mutex};
+	sf::Lock lock{ m_mutex };
 
 	int i = 0;
 	for (auto& itr : m_clients)
@@ -368,7 +368,7 @@ std::string Pong::Server::get_client_list()
 	return output;
 }
 
-sf::Mutex& Pong::Server::get_mutex()
+sf::Mutex& Server::get_mutex()
 {
 	return m_mutex;
 }
