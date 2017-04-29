@@ -7,7 +7,7 @@
 namespace Pong 
 {
 
-#define HEARTBEAT_INTERVAMS 1000
+#define HEARTBEAT_INTERVAL_MS 1000
 #define HEARTBEAT_RETRIES 5
 
 class Server;
@@ -84,7 +84,7 @@ private:
 	sf::Thread m_listen_thread;
 	sf::Mutex m_mutex;
 
-	size_t m_totasent;
+	size_t m_total_sent;
 	size_t m_total_received;
 };
 
