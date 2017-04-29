@@ -2,11 +2,11 @@
 #include <iostream>
 
 Server::Server(void(*handler)(sf::IpAddress&, const PortNumber&, const PacketID&, sf::Packet&, Server*))
-	: m_last_id{ 0 }
-	, m_running{ false }
-	, m_listen_thread{ &Server::listen, this }
-	, m_total_sent{ 0 }
-	, m_total_received{ 0 }
+	: m_last_id { 0 }
+	, m_running { false }
+	, m_listen_thread { &Server::listen, this }
+	, m_total_sent { 0 }
+	, m_total_received { 0 }
 {
 	m_packet_handler = bind(handler,
 		std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
@@ -25,7 +25,7 @@ void Server::bind_timeout_handler(void(*handler)(const ClientID&))
 
 bool Server::send(const ClientID& id, sf::Packet& packet)
 {
-	sf::Lock lock{ m_mutex };
+	sf::Lock lock { m_mutex };
 
 	auto itr = m_clients.find(id);
 	if (itr == m_clients.end())
@@ -49,7 +49,7 @@ bool Server::send(sf::IpAddress& ip, const PortNumber& port, sf::Packet& packet)
 
 void Server::broadcast(sf::Packet& packet, const ClientID& ignore)
 {
-	sf::Lock lock{ m_mutex };
+	sf::Lock lock { m_mutex };
 
 	for (auto& itr : m_clients)
 	{
@@ -149,7 +149,7 @@ void Server::update(const sf::Time& time)
 		constexpr sf::Int32 max_timestamp = static_cast<sf::Int32>(Network::HighestTimestamp);
 
 		m_server_time -= sf::milliseconds(max_timestamp);
-		sf::Lock lock{ m_mutex };
+		sf::Lock lock { m_mutex };
 
 		for (auto& itr : m_clients)
 		{
@@ -159,7 +159,7 @@ void Server::update(const sf::Time& time)
 		}
 	}
 
-	sf::Lock lock{ m_mutex };
+	sf::Lock lock { m_mutex };
 
 	// Set heartbeats for known clients
 	for (auto itr = m_clients.begin(); itr != m_clients.end();)
@@ -214,7 +214,7 @@ void Server::update(const sf::Time& time)
 
 ClientID Server::add_client(const sf::IpAddress& ip, const PortNumber& port)
 {
-	sf::Lock lock{ m_mutex };
+	sf::Lock lock { m_mutex };
 
 	for (auto& itr : m_clients)
 	{
@@ -233,7 +233,7 @@ ClientID Server::add_client(const sf::IpAddress& ip, const PortNumber& port)
 
 ClientID Server::get_client_id(const sf::IpAddress& ip, const PortNumber& port)
 {
-	sf::Lock lock{ m_mutex };
+	sf::Lock lock { m_mutex };
 
 	for (auto& itr : m_clients)
 	{
@@ -256,7 +256,7 @@ bool Server::has_client(const sf::IpAddress& ip, const PortNumber& port)
 
 bool Server::fill_client_info(const ClientID& id, ClientInfo& info)
 {
-	sf::Lock lock{ m_mutex };
+	sf::Lock lock { m_mutex };
 
 	for (auto& itr : m_clients)
 	{
@@ -272,7 +272,7 @@ bool Server::fill_client_info(const ClientID& id, ClientInfo& info)
 
 bool Server::remove_client(const ClientID& id)
 {
-	sf::Lock lock{ m_mutex };
+	sf::Lock lock { m_mutex };
 
 	auto itr = m_clients.find(id);
 	if (itr == m_clients.end())
@@ -289,7 +289,7 @@ bool Server::remove_client(const ClientID& id)
 
 bool Server::remove_client(const sf::IpAddress& ip, const PortNumber& port)
 {
-	ClientID id{ get_client_id(ip, port) };
+	ClientID id { get_client_id(ip, port) };
 
 	if (id != ClientID(Network::NullID))
 		return remove_client(id);
@@ -306,7 +306,7 @@ void Server::disconnect_all()
 	set_packet(PacketType::Disconnect, p);
 	broadcast(p);
 
-	sf::Lock lock{ m_mutex };
+	sf::Lock lock { m_mutex };
 	m_clients.clear();
 }
 
@@ -352,7 +352,7 @@ bool Server::is_running() const
 std::string Server::get_client_list()
 {
 	std::string output;
-	sf::Lock lock{ m_mutex };
+	sf::Lock lock { m_mutex };
 
 	int i = 0;
 	for (auto& itr : m_clients)
