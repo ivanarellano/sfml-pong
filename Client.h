@@ -1,12 +1,9 @@
 #pragma once
-#include "PacketTypes.h"
+#include "PacketType.h"
 #include "NetworkDefinitions.h"
 #include <SFML/Network.hpp>
 #include <SFML/System/Time.hpp>
 #include <functional>
-
-namespace Pong
-{
 
 #define CONNECT_TIMEOUT_MS 5000
 
@@ -56,5 +53,3 @@ private:
 	sf::Thread m_listen_thread;
 	sf::Mutex m_mutex;
 };
-
-}

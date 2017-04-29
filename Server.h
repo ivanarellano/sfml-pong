@@ -1,17 +1,14 @@
 #pragma once
-#include "PacketTypes.h"
+#include "PacketType.h"
 #include "ClientInfo.h"
 #include <functional>
 #include <unordered_map>
 
-namespace Pong 
-{
-
 #define HEARTBEAT_INTERVAL_MS 1000
 #define HEARTBEAT_RETRIES 5
 
-class Server;
 using Clients = std::unordered_map<ClientID, ClientInfo>;
+class Server;
 using PacketHandler = std::function<void(sf::IpAddress&, const PortNumber&, const PacketID&, sf::Packet&, Server*)>;
 using TimeoutHandler = std::function<void(const ClientID&)>;
 
@@ -20,11 +17,11 @@ class Server
 public:
 	template <class T>
 	Server(void(T::*handler)(sf::IpAddress&, const PortNumber&, const PacketID&, sf::Packet&, Server*), T* instance)
-		: m_last_id {0}
-		, m_running {false}
-		, m_listen_thread {&Server::listen, this}
-		, m_totasent {0}
-		, m_totareceived {0}
+		: m_last_id { 0 }
+		, m_running { false }
+		, m_listen_thread { &Server::listen, this }
+		, m_total_sent {0}
+		, m_total_received {0}
 	{
 		m_packet_handler = std::bind(handler, instance, 
 			std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
@@ -53,7 +50,7 @@ public:
 	ClientID get_client_id(const sf::IpAddress& ip, const PortNumber& port);
 	bool has_client(const ClientID& id);
 	bool has_client(const sf::IpAddress& ip, const PortNumber& port);
-	bool filclient_info(const ClientID& id, ClientInfo& info);
+	bool fill_client_info(const ClientID& id, ClientInfo& info);
 	bool remove_client(const ClientID& id);
 	bool remove_client(const sf::IpAddress& ip, const PortNumber& port);
 
@@ -61,13 +58,12 @@ public:
 	bool start();
 	bool stop();
 
-	bool is_running();
+	bool is_running() const;
 
 	unsigned int get_client_count() const { return m_clients.size(); };
 	std::string get_client_list();
 
 	sf::Mutex& get_mutex();
-
 private:
 	ClientID m_last_id;
 
@@ -85,8 +81,6 @@ private:
 	sf::Thread m_listen_thread;
 	sf::Mutex m_mutex;
 
-	size_t m_totasent;
-	size_t m_totareceived;
+	size_t m_total_sent;
+	size_t m_total_received;
 };
-
-} // end namespace
