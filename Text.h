@@ -2,14 +2,10 @@
 #include "Font.h"
 #include "Widget.h"
 #include <SFML/Graphics/Text.hpp>
+#include <unordered_map>
 
 namespace Pong
 {
-	enum class ViewState
-	{
-		Neutral, Focused, Clicked
-	};
-
 	struct TextStyle
 	{
 		TextStyle();
@@ -18,6 +14,8 @@ namespace Pong
 		unsigned int m_size;
 		sf::Color m_color;
 	};
+
+	using TextStates = std::unordered_map<ViewState, TextStyle>;
 
 	struct Text : Widget
 	{
@@ -46,9 +44,11 @@ namespace Pong
 			m_text.setFont(m_font);
 		}
 
-		void set_style(const TextStyle& style);
+		void set_style(const ViewState& state, const TextStyle& style);
+		void apply_style();
 	private:
 		sf::Text m_text;
 		sf::Font m_font;
+		TextStates m_style_states;
 	};
 }
