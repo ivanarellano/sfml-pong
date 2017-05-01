@@ -1,12 +1,14 @@
-#include "Pong.hpp"
 #include <iostream>
+
+#include "Window.h"
+#include "GameScreen.h"
 
 int main() 
 {
 	try
 	{
 		Pong::GameScreen game_screen;
-		Pong::Window window{ "Pong",  &game_screen };
+		Pong::Window window { "Pong",  &game_screen };
 	} 
 	catch (std::exception& e)
 	{
