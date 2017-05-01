@@ -3,8 +3,9 @@
 
 namespace Pong
 {
-	class Widget : View
+	class Widget : public View
 	{
+	public:
 		virtual ~Widget() {}
 
 		virtual void read_in(std::stringstream& stream) = 0;
