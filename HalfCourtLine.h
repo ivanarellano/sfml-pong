@@ -15,7 +15,7 @@ namespace Pong
 
 		explicit HalfCourtLine(sf::Vector2f size, float gap);
 
-		void draw(sf::RenderWindow* window) override;
+		void draw(sf::RenderTarget* target) override;
 	private:
 		float m_dash_width;
 		float m_dash_height;

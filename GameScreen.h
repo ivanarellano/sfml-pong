@@ -41,7 +41,7 @@ namespace Pong
 
 		void on_start() override;
 		void update(float dt) override;
-		void draw(sf::RenderWindow* window) override;
+		void draw(sf::RenderTarget* target) override;
 		void handle_input(sf::Event event) override;
 
 		void on_stop() override {}

@@ -1,39 +1,51 @@
 #pragma once
-#include "Measurement.h"
-#include "Movable.h"
 #include "Font.h"
+#include "View.h"
 #include <SFML/Graphics/Text.hpp>
 
 namespace Pong
 {
-	struct Text : Drawable, Measurement, Movable
+	enum class ViewState
 	{
-		explicit Text(Font::Asset asset = Font::forward, int size = 50) : m_visibility(Visibility::Visible)
-		{
-			m_font.loadFromFile(Font::get_path(asset));
+		Neutral, Focused, Clicked
+	};
 
-			m_text.setFont(m_font);
-			m_text.setFillColor(sf::Color::White);
+	struct TextStyle
+	{
+		TextStyle();
 
-			set_size(size);
-		}
+		Font::Asset m_font;
+		unsigned int m_size;
+		sf::Color m_color;
+	};
+
+	struct Text : View
+	{
+		Text();
+
+		void update(float dt) override {}
 
 		float get_width() const override { return m_text.getGlobalBounds().width; }
 		float get_height() const override { return m_text.getGlobalBounds().height; }
 
-		void draw(sf::RenderWindow* window) override { if (is_visible()) window->draw(m_text); }
+		void draw(sf::RenderTarget* window) override { if (is_visible()) window->draw(m_text); }
 		void set_position(float x, float y) override { m_text.setPosition(x, y); }
 		void move(float x, float y) override { m_text.move(x, y); }
 
 		sf::Vector2f get_position() const { return m_text.getPosition(); }
-		bool is_visible() const { return m_visibility == Visibility::Visible ? true : false; }
 
 		void set_text(const std::string& text) { m_text.setString(text); }
-		void set_size(int size) { m_text.setCharacterSize(size); }
-		void set_visibility(Visibility vis) { m_visibility = vis; }
+		void set_size(unsigned int size) { m_text.setCharacterSize(size); }
+		void set_color(sf::Color color) { m_text.setFillColor(color); }
+		void set_font(Font::Asset asset)
+		{
+			m_font.loadFromFile(Font::get_path(asset)); 
+			m_text.setFont(m_font);
+		}
+
+		void set_style(const TextStyle& style);
 	private:
 		sf::Text m_text;
 		sf::Font m_font;
-		Visibility m_visibility;
 	};
 }

@@ -16,9 +16,9 @@ namespace Pong
 
 	void GameScreen::on_start()
 	{
-		m_ball.set_visibility(Visibility::Gone);
-		m_winner_text.set_visibility(Visibility::Gone);
-		m_press_key_text.set_visibility(Visibility::Gone);
+		m_ball.set_visibility(View::Visibility::Gone);
+		m_winner_text.set_visibility(View::Visibility::Gone);
+		m_press_key_text.set_visibility(View::Visibility::Gone);
 
 		m_p1_score = 0;
 		m_p2_score = 0;
@@ -61,7 +61,7 @@ namespace Pong
 		m_ball.set_direction(dir);
 		m_ball.reset_velocity();
 		m_ball.set_position(ball_pos_x, ball_pos_y);
-		m_ball.set_visibility(Visibility::Visible);
+		m_ball.set_visibility(View::Visibility::Visible);
 
 		m_state = PlayState::Playing;
 	}
@@ -107,7 +107,7 @@ namespace Pong
 
 			if (m_winner != nullptr)
 			{
-				m_ball.set_visibility(Visibility::Gone);
+				m_ball.set_visibility(View::Visibility::Gone);
 
 				show_winner(m_winner->get_name());
 				m_state = PlayState::Won;
@@ -148,16 +148,16 @@ namespace Pong
 		}
 	}
 
-	void GameScreen::draw(sf::RenderWindow* window)
+	void GameScreen::draw(sf::RenderTarget* target)
 	{
-		m_half_court_line.draw(window);
-		m_player_1.draw(window);
-		m_player_2.draw(window);
-		m_ball.draw(window);
-		m_p1_score_view.draw(window);
-		m_p2_score_view.draw(window);
-		m_winner_text.draw(window);
-		m_press_key_text.draw(window);
+		m_half_court_line.draw(target);
+		m_player_1.draw(target);
+		m_player_2.draw(target);
+		m_ball.draw(target);
+		m_p1_score_view.draw(target);
+		m_p2_score_view.draw(target);
+		m_winner_text.draw(target);
+		m_press_key_text.draw(target);
 	}
 
 	void GameScreen::handle_input(sf::Event event)
@@ -184,8 +184,8 @@ namespace Pong
 		m_press_key_text.set_position(m_winner_text.get_position().x,
 		                              m_winner_text.get_position().y + m_winner_text.get_height());
 
-		m_winner_text.set_visibility(Visibility::Visible);
-		m_press_key_text.set_visibility(Visibility::Visible);
+		m_winner_text.set_visibility(View::Visibility::Visible);
+		m_press_key_text.set_visibility(View::Visibility::Visible);
 	}
 
 	bool GameScreen::can_go_up(const sf::RectangleShape& shape)
