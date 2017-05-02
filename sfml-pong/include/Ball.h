@@ -15,12 +15,12 @@ namespace Pong
 		Ball();
 
 		explicit Ball(sf::Vector2f size, float start_velocity, float max_velocity, float spring_force)
-			: Actor{ size }
-			, k_start_velocity{ start_velocity }
-			, k_max_velocity{ max_velocity }
-			, k_spring_force{ spring_force }
-			, m_velocity{ start_velocity }
-			, m_direction{ Direction::None }
+			: Actor { size }
+			, k_start_velocity { start_velocity }
+			, k_max_velocity { max_velocity }
+			, k_spring_force { spring_force }
+			, m_velocity { start_velocity }
+			, m_direction { Direction::None }
 		{}
 
 		void update(float dt) override;

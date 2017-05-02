@@ -2,7 +2,7 @@
 
 namespace Pong
 {
-	Ball::Ball() : Ball {sf::Vector2f{10.f, 10.f}, 300, 500, 50}
+	Ball::Ball() : Ball { sf::Vector2f { 10.f, 10.f }, 300, 500, 50 }
 	{
 		m_bounce_sound.load(Sound::Asset::blip);
 	}

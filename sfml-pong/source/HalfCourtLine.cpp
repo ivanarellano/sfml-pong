@@ -23,9 +23,9 @@ namespace Pong
 		}
 	}
 
-	void HalfCourtLine::draw(sf::RenderWindow* window)
+	void HalfCourtLine::draw(sf::RenderTarget* target)
 	{
 		for (auto& notch : m_notches)
-			window->draw(notch);
+			target->draw(notch);
 	}
 }

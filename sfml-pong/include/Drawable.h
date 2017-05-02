@@ -6,13 +6,8 @@ namespace Pong
 	class Drawable
 	{
 	public:
-		enum class Visibility
-		{
-			Visible, Gone
-		};
-
 		virtual ~Drawable() {}
 
-		virtual void draw(sf::RenderWindow* window) = 0;
+		virtual void draw(sf::RenderTarget* target) = 0;
 	};
 }
