@@ -7,6 +7,10 @@ namespace Pong
 {
 	TitleScreen::TitleScreen()
 	{
+		m_title.set_text("PONG");
+		m_host_game.set_text("PONG");
+		m_join_game.set_text("PONG");
+		m_credits.set_text("PONG");
 	}
 
 	void TitleScreen::on_start()
