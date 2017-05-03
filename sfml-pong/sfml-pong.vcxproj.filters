@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\View">
+      <UniqueIdentifier>{81fad7d7-1f32-4c3f-9e15-4bbcac42e162}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Network">
+      <UniqueIdentifier>{e78e9698-2163-4108-852e-f4c0919bce9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\View">
+      <UniqueIdentifier>{426c0aca-71f7-419a-82ce-e9d683834535}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Network">
+      <UniqueIdentifier>{6deed142-b6ba-4329-9355-23c9627240bf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Media Include="assets\blip.wav">
@@ -25,83 +37,64 @@
     </Font>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\Ball.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Client.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\GameScreen.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\HalfCourtLine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\PacketType.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Paddle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Server.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Text.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Window.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="source\ResourcePath.mm">
-      <Filter>Source Files</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="include\Actor.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="include\Network\Client.h">
+      <Filter>Header Files\Network</Filter>
     </ClInclude>
-    <ClInclude Include="include\Ball.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="include\Network\ClientInfo.h">
+      <Filter>Header Files\Network</Filter>
     </ClInclude>
-    <ClInclude Include="include\Client.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="include\Network\NetSettings.h">
+      <Filter>Header Files\Network</Filter>
     </ClInclude>
-    <ClInclude Include="include\ClientInfo.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="include\Network\NetworkDefinitions.h">
+      <Filter>Header Files\Network</Filter>
     </ClInclude>
-    <ClInclude Include="include\Drawable.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="include\Network\PacketType.h">
+      <Filter>Header Files\Network</Filter>
     </ClInclude>
-    <ClInclude Include="include\Font.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="include\Network\Server.h">
+      <Filter>Header Files\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="include\View\Actor.h">
+      <Filter>Header Files\View</Filter>
+    </ClInclude>
+    <ClInclude Include="include\View\Ball.h">
+      <Filter>Header Files\View</Filter>
+    </ClInclude>
+    <ClInclude Include="include\View\Drawable.h">
+      <Filter>Header Files\View</Filter>
+    </ClInclude>
+    <ClInclude Include="include\View\Event.h">
+      <Filter>Header Files\View</Filter>
+    </ClInclude>
+    <ClInclude Include="include\View\Font.h">
+      <Filter>Header Files\View</Filter>
+    </ClInclude>
+    <ClInclude Include="include\View\HalfCourtLine.h">
+      <Filter>Header Files\View</Filter>
+    </ClInclude>
+    <ClInclude Include="include\View\Layout.h">
+      <Filter>Header Files\View</Filter>
+    </ClInclude>
+    <ClInclude Include="include\View\Measurement.h">
+      <Filter>Header Files\View</Filter>
+    </ClInclude>
+    <ClInclude Include="include\View\Movable.h">
+      <Filter>Header Files\View</Filter>
+    </ClInclude>
+    <ClInclude Include="include\View\Paddle.h">
+      <Filter>Header Files\View</Filter>
+    </ClInclude>
+    <ClInclude Include="include\View\Text.h">
+      <Filter>Header Files\View</Filter>
+    </ClInclude>
+    <ClInclude Include="include\View\View.h">
+      <Filter>Header Files\View</Filter>
+    </ClInclude>
+    <ClInclude Include="include\View\Widget.h">
+      <Filter>Header Files\View</Filter>
     </ClInclude>
     <ClInclude Include="include\GameScreen.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\HalfCourtLine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Measurement.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Movable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\NetSettings.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\NetworkDefinitions.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PacketType.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Paddle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\ResourcePath.hpp">
@@ -113,23 +106,48 @@
     <ClInclude Include="include\Screen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Server.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\Sound.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Text.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\View.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Widget.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\Network\Client.cpp">
+      <Filter>Source Files\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Network\PacketType.cpp">
+      <Filter>Source Files\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Network\Server.cpp">
+      <Filter>Source Files\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="source\View\Ball.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
+    <ClCompile Include="source\View\HalfCourtLine.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
+    <ClCompile Include="source\View\Paddle.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
+    <ClCompile Include="source\View\Text.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GameScreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="source\ResourcePath.mm">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -89,7 +89,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>SFML_STATIC;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\libs\SFML-2.4.2\include;include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\libs\SFML-2.4.2\include;include\View;include\Network;include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -119,7 +119,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>SFML_STATIC;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\libs\SFML-2.4.2\include;include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\libs\SFML-2.4.2\include;include\View;include\Network;include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -153,44 +153,46 @@
     <Font Include="assets\FFFFORWA.TTF" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\Ball.cpp" />
-    <ClCompile Include="source\Client.cpp" />
+    <ClInclude Include="include\GameScreen.h" />
+    <ClInclude Include="include\Network\Client.h" />
+    <ClInclude Include="include\Network\ClientInfo.h" />
+    <ClInclude Include="include\Network\NetSettings.h" />
+    <ClInclude Include="include\Network\NetworkDefinitions.h" />
+    <ClInclude Include="include\Network\PacketType.h" />
+    <ClInclude Include="include\Network\Server.h" />
+    <ClInclude Include="include\ResourcePath.hpp" />
+    <ClInclude Include="include\Resources.h" />
+    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\Sound.h" />
+    <ClInclude Include="include\View\Actor.h" />
+    <ClInclude Include="include\View\Ball.h" />
+    <ClInclude Include="include\View\Drawable.h" />
+    <ClInclude Include="include\View\Event.h" />
+    <ClInclude Include="include\View\Font.h" />
+    <ClInclude Include="include\View\HalfCourtLine.h" />
+    <ClInclude Include="include\View\Layout.h" />
+    <ClInclude Include="include\View\Measurement.h" />
+    <ClInclude Include="include\View\Movable.h" />
+    <ClInclude Include="include\View\Paddle.h" />
+    <ClInclude Include="include\View\Text.h" />
+    <ClInclude Include="include\View\View.h" />
+    <ClInclude Include="include\View\Widget.h" />
+    <ClInclude Include="include\Window.h" />
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="source\GameScreen.cpp" />
-    <ClCompile Include="source\HalfCourtLine.cpp" />
     <ClCompile Include="source\main.cpp" />
-    <ClCompile Include="source\PacketType.cpp" />
-    <ClCompile Include="source\Paddle.cpp" />
-    <ClCompile Include="source\Server.cpp" />
-    <ClCompile Include="source\Text.cpp" />
+    <ClCompile Include="source\Network\Client.cpp" />
+    <ClCompile Include="source\Network\PacketType.cpp" />
+    <ClCompile Include="source\Network\Server.cpp" />
+    <ClCompile Include="source\View\Ball.cpp" />
+    <ClCompile Include="source\View\HalfCourtLine.cpp" />
+    <ClCompile Include="source\View\Paddle.cpp" />
+    <ClCompile Include="source\View\Text.cpp" />
     <ClCompile Include="source\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="source\ResourcePath.mm" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="include\Actor.h" />
-    <ClInclude Include="include\Ball.h" />
-    <ClInclude Include="include\Client.h" />
-    <ClInclude Include="include\ClientInfo.h" />
-    <ClInclude Include="include\Drawable.h" />
-    <ClInclude Include="include\Font.h" />
-    <ClInclude Include="include\GameScreen.h" />
-    <ClInclude Include="include\HalfCourtLine.h" />
-    <ClInclude Include="include\Measurement.h" />
-    <ClInclude Include="include\Movable.h" />
-    <ClInclude Include="include\NetSettings.h" />
-    <ClInclude Include="include\NetworkDefinitions.h" />
-    <ClInclude Include="include\PacketType.h" />
-    <ClInclude Include="include\Paddle.h" />
-    <ClInclude Include="include\ResourcePath.hpp" />
-    <ClInclude Include="include\Resources.h" />
-    <ClInclude Include="include\Screen.h" />
-    <ClInclude Include="include\Server.h" />
-    <ClInclude Include="include\Sound.h" />
-    <ClInclude Include="include\Text.h" />
-    <ClInclude Include="include\View.h" />
-    <ClInclude Include="include\Widget.h" />
-    <ClInclude Include="include\Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
