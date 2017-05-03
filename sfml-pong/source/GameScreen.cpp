@@ -173,9 +173,9 @@ namespace Pong
 		m_press_key_text.draw(target);
 	}
 
-	void GameScreen::handle_input(sf::Event event)
+	void GameScreen::handle_input(sf::Event event, Window* window)
 	{
-		if (PlayState::Won == m_state)
+		if (PlayState::Won == m_state && event.type == sf::Event::KeyReleased)
 			on_start();
 	}
 

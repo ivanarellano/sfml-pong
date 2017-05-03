@@ -1,7 +1,7 @@
 #include "TitleScreen.h"
 #include <SFML/Window/Event.hpp>
 #include "Window.h"
-#include <iostream>
+#include "GameScreen.h"
 
 namespace Pong
 {
@@ -16,6 +16,14 @@ namespace Pong
 		m_host_game.set_text("New Game (LAN)");
 		m_join_game.set_text("Join Game (LAN)");
 		m_credits.set_text("Credits");
+	}
+
+	void TitleScreen::new_game()
+	{
+	}
+
+	void TitleScreen::join_game()
+	{
 	}
 
 	void TitleScreen::on_start()
@@ -40,8 +48,12 @@ namespace Pong
 	{
 	}
 
-	void TitleScreen::handle_input(sf::Event event)
+	void TitleScreen::handle_input(sf::Event event, Window* window)
 	{
+		if (event.type == sf::Event::MouseButtonReleased)
+		{
+			window->go_to_game_screen();
+		}
 	}
 
 	void TitleScreen::on_stop()

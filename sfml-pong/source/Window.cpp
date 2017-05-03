@@ -20,6 +20,11 @@ namespace Pong
 		shutdown();
 	}
 
+	void Window::go_to_game_screen()
+	{
+		set_screen(new GameScreen());
+	}
+
 	void Window::poll_input_events()
 	{
 		sf::Event event;
@@ -30,9 +35,10 @@ namespace Pong
 			{
 				m_sf_window.close();
 			}
-			else
+			else 
 			{
-				m_screen->handle_input(event);
+				if (m_screen != nullptr)
+					m_screen->handle_input(event, this);
 			}
 		}
 	}
