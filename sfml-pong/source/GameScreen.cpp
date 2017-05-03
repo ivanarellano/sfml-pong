@@ -1,5 +1,6 @@
-#include "GameScreen.h"
+#include "Random.h"
 #include "Window.h"
+#include "GameScreen.h"
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Event.hpp>
 
@@ -164,6 +165,10 @@ namespace Pong
 	{
 		if (PlayState::Won == m_state)
 			on_start();
+	}
+
+	void GameScreen::on_stop()
+	{
 	}
 
 	Paddle* GameScreen::did_player_win()
