@@ -7,12 +7,12 @@ namespace Pong
 		: m_sf_render_thread { &Window::render_thread, this }
 	{
 		m_sf_window.create(sf::VideoMode(k_width, k_height), title);
-
-		set_screen(screen);
-
+		m_sf_window.setFramerateLimit(60);
 		m_sf_window.setActive(false);
 
 		m_sf_render_thread.launch();
+
+		set_screen(screen);
 
 		while (m_sf_window.isOpen())
 		{
