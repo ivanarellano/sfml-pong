@@ -16,16 +16,7 @@ namespace Pong
 		};
 
 		GameScreen();
-
-		GameScreen(float paddle_offset, float score_offset, int serve_delay)
-			: k_serve_delay { serve_delay }
-			, k_paddle_offset { paddle_offset }
-			, k_score_offset { score_offset }
-			, m_p1_score { 0 }
-			, m_p2_score { 0 }
-			, m_state { PlayState::Serving }
-			, m_server { nullptr }
-			, m_time { 0 } {}
+		GameScreen(float paddle_offset, float score_offset, int serve_delay);
 
 		virtual void serve();
 

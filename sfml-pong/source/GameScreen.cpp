@@ -15,7 +15,19 @@ namespace Pong
 		m_press_key_text.set_size(20);
 	}
 
-	void GameScreen::on_start()
+	GameScreen::GameScreen(float paddle_offset, float score_offset, int serve_delay)
+		: k_serve_delay { serve_delay }
+		, k_paddle_offset { paddle_offset }
+		, k_score_offset { score_offset }
+		, m_p1_score { 0 }
+		, m_p2_score { 0 }
+		, m_state { PlayState::Serving }
+		, m_server { nullptr }
+		, m_time { 0 }
+	{
+	}
+
+	void Pong::GameScreen::on_start()
 	{
 		m_ball.set_visibility(View::Visibility::Gone);
 		m_winner_text.set_visibility(View::Visibility::Gone);
@@ -29,8 +41,8 @@ namespace Pong
 		m_p1_score_view.set_position(Window::k_width * .25f - m_p1_score_view.get_width() / 2, k_score_offset);
 		m_p2_score_view.set_position(Window::k_width * .75f - m_p2_score_view.get_width() / 2, k_score_offset);
 
-		const float player_2_x_pos{-k_paddle_offset + Window::k_width - m_player_1.get_width()};
-		const float player_vertical_center{ Window::k_height / 2 - m_player_1.get_height() / 2};
+		const float player_2_x_pos {-k_paddle_offset + Window::k_width - m_player_1.get_width()};
+		const float player_vertical_center { Window::k_height / 2 - m_player_1.get_height() / 2};
 
 		m_player_1.set_position(k_paddle_offset, player_vertical_center);
 		m_player_2.set_position(player_2_x_pos, player_vertical_center);

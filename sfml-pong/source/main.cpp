@@ -1,7 +1,5 @@
 #include <iostream>
-
 #include "Window.h"
-#include "GameScreen.h"
 #include "TitleScreen.h"
 
 int main() 

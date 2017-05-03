@@ -26,8 +26,8 @@ namespace Pong
 		void on_release() override;
 		void update(float dt) override;
 
-		float get_width() const override { return m_text.getGlobalBounds().width; }
-		float get_height() const override { return m_text.getGlobalBounds().height; }
+		float get_width() const override { return m_text.getLocalBounds().width; }
+		float get_height() const override { return m_text.getLocalBounds().height; }
 
 		void draw(sf::RenderTarget* window) override { if (is_visible()) window->draw(m_text); }
 		void set_position(float x, float y) override { m_text.setPosition(x, y); }
