@@ -7,29 +7,25 @@ namespace Pong
 {
 	TitleScreen::TitleScreen()
 	{
+		m_title.set_size(80);
+		m_host_game.set_size(20);
+		m_join_game.set_size(20);
+		m_credits.set_size(20);
+
 		m_title.set_text("PONG");
-		m_host_game.set_text("PONG");
-		m_join_game.set_text("PONG");
-		m_credits.set_text("PONG");
+		m_host_game.set_text("New Game (LAN)");
+		m_join_game.set_text("Join Game (LAN)");
+		m_credits.set_text("Credits");
 	}
 
 	void TitleScreen::on_start()
 	{
 		const int half_window = Window::k_width / 2;
 
-		float title_w = m_title.get_width();
-		float host_game_w = m_host_game.get_width();
-		float join_game_w = m_join_game.get_width();
-		float credits_w = m_credits.get_width();
-
-		std::cout << host_game_w << std::endl;
-		std::cout << join_game_w << std::endl;
-		std::cout << credits_w << std::endl;
-
-		m_title.set_position(half_window - title_w / 2, 100.f);
-		m_host_game.set_position(half_window - host_game_w / 2, 200.f);
-		m_join_game.set_position(half_window - join_game_w / 2, 300.f);
-		m_credits.set_position(half_window - credits_w / 2, 500.f);
+		m_title.set_position(half_window - m_title.get_width() / 2, 100.f);
+		m_host_game.set_position(half_window - m_host_game.get_width() / 2, 375.f);
+		m_join_game.set_position(half_window - m_join_game.get_width() / 2, 425.f);
+		m_credits.set_position(half_window - m_credits.get_width() / 2, 475.f);
 	}
 
 	void TitleScreen::draw(sf::RenderTarget* target)
