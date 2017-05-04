@@ -153,6 +153,7 @@
     <Font Include="assets\FFFFORWA.TTF" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\GameScreen.h" />
     <ClInclude Include="include\Network\Client.h" />
     <ClInclude Include="include\Network\ClientInfo.h" />
@@ -182,6 +183,7 @@
     <ClInclude Include="include\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\Game.cpp" />
     <ClCompile Include="source\GameScreen.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\Network\Client.cpp" />
