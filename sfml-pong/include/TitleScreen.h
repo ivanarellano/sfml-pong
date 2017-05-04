@@ -9,8 +9,8 @@ namespace Pong
 	public:
 		TitleScreen();
 
-		virtual void new_game();
-		virtual void join_game();
+		void new_game_clicked();
+		void join_game_clicked();
 
 		void draw(sf::RenderTarget* target) override;
 		void on_start() override;

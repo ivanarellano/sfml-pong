@@ -1,6 +1,7 @@
 #include "Window.h"
 #include <SFML/Window/Event.hpp>
 #include "TitleScreen.h"
+#include <iostream>
 
 namespace Pong
 {
@@ -21,6 +22,11 @@ namespace Pong
 		shutdown();
 	}
 
+	sf::RenderWindow* Window::get_render_window()
+	{
+		return &m_sf_window;
+	}
+
 	void Window::show_game_screen()
 	{
 		set_screen(new GameScreen());
@@ -29,6 +35,12 @@ namespace Pong
 	void Window::show_title_screen()
 	{
 		set_screen(new TitleScreen());
+	}
+
+	void Window::show_credits_screen()
+	{
+		// TODO: Show credits
+		std::cout << "TODO: Show credits" << std::endl;
 	}
 
 	void Window::poll_input_events()

@@ -2,6 +2,7 @@
 #include <SFML/Window/Event.hpp>
 #include "Window.h"
 #include "GameScreen.h"
+#include <iostream>
 
 namespace Pong
 {
@@ -18,14 +19,16 @@ namespace Pong
 		m_credits.set_text("Credits");
 	}
 
-	void TitleScreen::new_game()
+	void TitleScreen::new_game_clicked()
 	{
 		// TODO: Start server and wait for client to join
+		std::cout << "TODO: Start server" << std::endl;
 	}
 
-	void TitleScreen::join_game()
+	void TitleScreen::join_game_clicked()
 	{
 		// TODO: Start client and look for servers on network
+		std::cout << "TODO: Start client" << std::endl;
 	}
 
 	void TitleScreen::on_start()
@@ -52,9 +55,21 @@ namespace Pong
 
 	void TitleScreen::handle_input(sf::Event event, Window* window)
 	{
-		if (event.type == sf::Event::MouseButtonReleased)
+		if (event.type != sf::Event::MouseButtonReleased)
+			return;
+
+		sf::Vector2f p = sf::Vector2f(sf::Mouse::getPosition(*window->get_render_window()));
+
+		if (m_host_game.get_bounds().contains(p.x, p.y)) {
+			new_game_clicked();
+		}
+		else if (m_join_game.get_bounds().contains(p.x, p.y))
 		{
-			window->show_game_screen();
+			join_game_clicked();
+		}
+		else if (m_credits.get_bounds().contains(p.x, p.y))
+		{
+			window->show_credits_screen();
 		}
 	}
 

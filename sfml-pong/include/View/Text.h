@@ -26,13 +26,14 @@ namespace Pong
 		void on_release() override;
 		void update(float dt) override;
 
-		float get_width() const override { return m_text.getLocalBounds().width; }
-		float get_height() const override { return m_text.getLocalBounds().height; }
+		float get_width() const override { return get_bounds().width; }
+		float get_height() const override { return get_bounds().height; }
 
 		void draw(sf::RenderTarget* window) override { if (is_visible()) window->draw(m_text); }
 		void set_position(float x, float y) override { m_text.setPosition(x, y); }
 		void move(float x, float y) override { m_text.move(x, y); }
 
+		sf::FloatRect get_bounds() const { return m_text.getGlobalBounds(); }
 		sf::Vector2f get_position() const { return m_text.getPosition(); }
 
 		void set_text(const std::string& text) { m_text.setString(text); }

@@ -15,8 +15,11 @@ namespace Pong
 
 		Window(const std::string& title);
 
+		sf::RenderWindow* get_render_window();
+
 		void show_game_screen();
 		void show_title_screen();
+		void show_credits_screen();
 	private:
 		sf::RenderWindow m_sf_window;
 		sf::Clock m_clock;
