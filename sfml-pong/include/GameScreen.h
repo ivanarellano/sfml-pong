@@ -4,19 +4,9 @@
 #include "Paddle.h"
 #include "Text.h"
 #include "HalfCourtLine.h"
-#include <random>
 
 namespace Pong
 {
-	inline int random(int min, int max)
-	{
-		static std::default_random_engine random_engine;
-		random_engine.seed(std::random_device{}());
-		return std::uniform_int_distribution<>{min, max}(random_engine);
-	}
-
-	inline bool coin_toss() { return random(0, 1); }
-
 	class GameScreen : public Screen
 	{
 	public:
@@ -26,25 +16,15 @@ namespace Pong
 		};
 
 		GameScreen();
-
-		GameScreen(float paddle_offset, float score_offset, int serve_delay)
-			: k_serve_delay { serve_delay }
-			, k_paddle_offset { paddle_offset }
-			, k_score_offset { score_offset }
-			, m_p1_score { 0 }
-			, m_p2_score { 0 }
-			, m_state { PlayState::Serving }
-			, m_server { nullptr }
-			, m_time { 0 } {}
+		GameScreen(float paddle_offset, float score_offset, int serve_delay);
 
 		virtual void serve();
 
+		void draw(sf::RenderTarget* target) override;
 		void on_start() override;
 		void update(float dt) override;
-		void draw(sf::RenderTarget* target) override;
-		void handle_input(sf::Event event) override;
-
-		void on_stop() override {}
+		void handle_input(sf::Event event, Window* window) override;
+		void on_stop() override;
 
 	private:
 		const int k_serve_delay;
