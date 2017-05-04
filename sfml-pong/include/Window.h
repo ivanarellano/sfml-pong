@@ -13,12 +13,13 @@ namespace Pong
 		constexpr static int k_width { 800 };
 		constexpr static int k_height { 600 };
 
-		Window(const std::string& title, Screen* screen);
+		Window(const std::string& title);
 
-		virtual void go_to_game_screen();
+		void show_game_screen();
+		void show_title_screen();
 	private:
 		sf::RenderWindow m_sf_window;
-		sf::Clock m_frame_time;
+		sf::Clock m_clock;
 		Screen* m_screen;
 
 		void poll_input_events();

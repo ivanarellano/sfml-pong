@@ -6,8 +6,7 @@ int main()
 {
 	try
 	{
-		Pong::TitleScreen landing_screen;
-		Pong::Window window { "Pong",  &landing_screen };
+		Pong::Window window { "Pong" };
 	} 
 	catch (std::exception& e)
 	{

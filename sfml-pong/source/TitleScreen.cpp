@@ -52,7 +52,7 @@ namespace Pong
 	{
 		if (event.type == sf::Event::MouseButtonReleased)
 		{
-			window->go_to_game_screen();
+			window->show_game_screen();
 		}
 	}
 

@@ -1,14 +1,15 @@
 #include "Window.h"
 #include <SFML/Window/Event.hpp>
+#include "TitleScreen.h"
 
 namespace Pong
 {
-	Window::Window(const std::string& title, Screen* screen)
+	Window::Window(const std::string& title) : m_screen { nullptr }
 	{
 		m_sf_window.create(sf::VideoMode(k_width, k_height), title);
 		m_sf_window.setFramerateLimit(60);
 
-		set_screen(screen);
+		show_title_screen();
 
 		while (m_sf_window.isOpen())
 		{
@@ -20,9 +21,14 @@ namespace Pong
 		shutdown();
 	}
 
-	void Window::go_to_game_screen()
+	void Window::show_game_screen()
 	{
 		set_screen(new GameScreen());
+	}
+
+	void Window::show_title_screen()
+	{
+		set_screen(new TitleScreen());
 	}
 
 	void Window::poll_input_events()
@@ -45,7 +51,7 @@ namespace Pong
 
 	void Window::update_game_state()
 	{
-		m_screen->update(m_frame_time.restart().asSeconds());
+		m_screen->update(m_clock.restart().asSeconds());
 	}
 
 	void Window::draw_frame()
@@ -64,6 +70,12 @@ namespace Pong
 
 	void Window::set_screen(Screen* screen)
 	{
+		if (m_screen != nullptr)
+		{
+			m_screen->on_stop();
+			delete m_screen;
+		}
+
 		m_screen = screen;
 		m_screen->on_start();
 	}
