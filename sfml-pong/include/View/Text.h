@@ -27,12 +27,11 @@ namespace Pong
 		void update(float dt) override;
 
 		sf::FloatRect get_bounds() const override { return m_text.getGlobalBounds(); }
-
 		void draw(sf::RenderTarget* window) override { if (is_visible()) window->draw(m_text); }
+
+		sf::Vector2f get_position() const override { return m_text.getPosition(); }
 		void set_position(float x, float y) override { m_text.setPosition(x, y); }
 		void move(float x, float y) override { m_text.move(x, y); }
-
-		sf::Vector2f get_position() const { return m_text.getPosition(); }
 
 		void set_text(const std::string& text) { m_text.setString(text); }
 		void set_size(unsigned int size) { m_text.setCharacterSize(size); }
