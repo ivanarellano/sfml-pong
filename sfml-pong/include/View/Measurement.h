@@ -1,4 +1,5 @@
 #pragma once
+#include "SFML/Graphics/Rect.hpp"
 
 namespace Pong
 {
@@ -7,7 +8,6 @@ namespace Pong
 	public:
 		virtual ~Measurement() {}
 
-		virtual float get_width() const = 0;
-		virtual float get_height() const = 0;
+		virtual sf::FloatRect get_bounds() const = 0;
 	};
 }

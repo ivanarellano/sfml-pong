@@ -2,7 +2,6 @@
 
 namespace Pong
 {
-
 	TextStyle::TextStyle()
 		: m_font { Font::forward }
 		, m_size { 50 }

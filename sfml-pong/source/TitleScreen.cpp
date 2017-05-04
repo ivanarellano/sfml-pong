@@ -35,10 +35,10 @@ namespace Pong
 	{
 		const int half_window = Window::k_width / 2;
 
-		m_title.set_position(half_window - m_title.get_width() / 2, 100.f);
-		m_host_game.set_position(half_window - m_host_game.get_width() / 2, 375.f);
-		m_join_game.set_position(half_window - m_join_game.get_width() / 2, 425.f);
-		m_credits.set_position(half_window - m_credits.get_width() / 2, 475.f);
+		m_title.set_position(half_window - m_title.get_bounds().width / 2, 100.f);
+		m_host_game.set_position(half_window - m_host_game.get_bounds().width / 2, 375.f);
+		m_join_game.set_position(half_window - m_join_game.get_bounds().width / 2, 425.f);
+		m_credits.set_position(half_window - m_credits.get_bounds().width / 2, 475.f);
 	}
 
 	void TitleScreen::draw(sf::RenderTarget* target)
