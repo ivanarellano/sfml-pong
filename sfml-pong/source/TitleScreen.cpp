@@ -58,19 +58,14 @@ namespace Pong
 		if (event.type != sf::Event::MouseButtonReleased)
 			return;
 
-		sf::Vector2f p = sf::Vector2f(sf::Mouse::getPosition(*window->get_render_window()));
+		auto pos = sf::Vector2f(sf::Mouse::getPosition(*window->get_render_window()));
 
-		if (m_host_game.get_bounds().contains(p.x, p.y)) {
+		if (m_host_game.get_bounds().contains(pos.x, pos.y))
 			new_game_clicked();
-		}
-		else if (m_join_game.get_bounds().contains(p.x, p.y))
-		{
+		else if (m_join_game.get_bounds().contains(pos.x, pos.y))
 			join_game_clicked();
-		}
-		else if (m_credits.get_bounds().contains(p.x, p.y))
-		{
+		else if (m_credits.get_bounds().contains(pos.x, pos.y))
 			window->show_credits_screen();
-		}
 	}
 
 	void TitleScreen::on_stop()
