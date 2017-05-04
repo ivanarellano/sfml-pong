@@ -2,6 +2,13 @@
 
 namespace Pong
 {
+	TextStyle::TextStyle()
+		: m_font { Font::forward }
+		, m_size { 50 }
+		, m_color { sf::Color::White }
+	{
+	}
+
 	Text::Text()
 	{
 		TextStyle style;
@@ -26,13 +33,6 @@ namespace Pong
 	void Text::set_style(const ViewState& state, const TextStyle& style)
 	{
 		m_style_states[state] = style;
-	}
-
-	TextStyle::TextStyle() 
-		: m_font { Font::forward }
-		, m_size { 50 }
-		, m_color { sf::Color::White }
-	{
 	}
 
 	void Text::apply_style()

@@ -160,10 +160,12 @@
     <ClInclude Include="include\Network\NetworkDefinitions.h" />
     <ClInclude Include="include\Network\PacketType.h" />
     <ClInclude Include="include\Network\Server.h" />
+    <ClInclude Include="include\Random.h" />
     <ClInclude Include="include\ResourcePath.hpp" />
     <ClInclude Include="include\Resources.h" />
     <ClInclude Include="include\Screen.h" />
     <ClInclude Include="include\Sound.h" />
+    <ClInclude Include="include\TitleScreen.h" />
     <ClInclude Include="include\View\Actor.h" />
     <ClInclude Include="include\View\Ball.h" />
     <ClInclude Include="include\View\Drawable.h" />
@@ -185,6 +187,7 @@
     <ClCompile Include="source\Network\Client.cpp" />
     <ClCompile Include="source\Network\PacketType.cpp" />
     <ClCompile Include="source\Network\Server.cpp" />
+    <ClCompile Include="source\TitleScreen.cpp" />
     <ClCompile Include="source\View\Ball.cpp" />
     <ClCompile Include="source\View\HalfCourtLine.cpp" />
     <ClCompile Include="source\View\Paddle.cpp" />

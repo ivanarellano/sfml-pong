@@ -1,27 +1,46 @@
 #include "Window.h"
 #include <SFML/Window/Event.hpp>
+#include "TitleScreen.h"
+#include <iostream>
 
 namespace Pong
 {
-	Window::Window(const std::string& title, Screen* screen)
-		: m_sf_render_thread { &Window::render_thread, this }
+	Window::Window(const std::string& title) : m_screen { nullptr }
 	{
 		m_sf_window.create(sf::VideoMode(k_width, k_height), title);
 		m_sf_window.setFramerateLimit(60);
-		m_sf_window.setActive(false);
 
-		m_sf_render_thread.launch();
-
-		set_screen(screen);
+		show_title_screen();
 
 		while (m_sf_window.isOpen())
 		{
 			poll_input_events();
-
 			update_game_state();
+			draw_frame();
 		}
 
 		shutdown();
+	}
+
+	sf::RenderWindow* Window::get_render_window()
+	{
+		return &m_sf_window;
+	}
+
+	void Window::show_game_screen()
+	{
+		set_screen(new GameScreen());
+	}
+
+	void Window::show_title_screen()
+	{
+		set_screen(new TitleScreen());
+	}
+
+	void Window::show_credits_screen()
+	{
+		// TODO: Show credits
+		std::cout << "TODO: Show credits" << std::endl;
 	}
 
 	void Window::poll_input_events()
@@ -34,28 +53,26 @@ namespace Pong
 			{
 				m_sf_window.close();
 			}
-			else
+			else 
 			{
-				m_screen->handle_input(event);
+				if (m_screen != nullptr)
+					m_screen->handle_input(event, this);
 			}
 		}
 	}
 
 	void Window::update_game_state()
 	{
-		m_screen->update(m_frame_time.restart().asSeconds());
+		m_screen->update(m_clock.restart().asSeconds());
 	}
 
 	void Window::draw_frame()
 	{
-		while (m_sf_window.isOpen())
-		{
-			m_sf_window.clear();
+		m_sf_window.clear();
 
-			m_screen->draw(&m_sf_window);
+		m_screen->draw(&m_sf_window);
 
-			m_sf_window.display();
-		}
+		m_sf_window.display();
 	}
 
 	void Window::shutdown() const
@@ -63,13 +80,14 @@ namespace Pong
 		m_screen->on_stop();
 	}
 
-	void Window::render_thread()
-	{
-		draw_frame();
-	}
-
 	void Window::set_screen(Screen* screen)
 	{
+		if (m_screen != nullptr)
+		{
+			m_screen->on_stop();
+			delete m_screen;
+		}
+
 		m_screen = screen;
 		m_screen->on_start();
 	}

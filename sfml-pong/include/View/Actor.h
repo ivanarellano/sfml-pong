@@ -11,8 +11,7 @@ namespace Pong
 		const std::string& get_name() const { return m_name; }
 		void set_name(std::string name) { m_name = name; }
 
-		float get_width() const override { return m_rect.getSize().x; }
-		float get_height() const override { return m_rect.getSize().y; }
+		sf::FloatRect get_bounds() const override { return m_rect.getGlobalBounds(); }
 
 		void draw(sf::RenderTarget* window) override { if (is_visible()) window->draw(get_shape()); }
 		void set_position(float x, float y) override { m_rect.setPosition(x, y); }
