@@ -21,7 +21,6 @@ namespace Pong
 	{
 		Text();
 
-		void read_in(std::stringstream& stream) override;
 		void on_click(const sf::Vector2f& mouse_pos) override;
 		void on_release() override;
 		void update(float dt) override;

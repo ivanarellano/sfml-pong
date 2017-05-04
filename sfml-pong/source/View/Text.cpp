@@ -16,10 +16,6 @@ namespace Pong
 		apply_style();
 	}
 
-	void Text::read_in(std::stringstream& stream)
-	{
-	}
-
 	void Text::on_click(const sf::Vector2f& mouse_pos)
 	{
 	}
