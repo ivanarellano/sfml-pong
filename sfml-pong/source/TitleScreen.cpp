@@ -20,10 +20,12 @@ namespace Pong
 
 	void TitleScreen::new_game()
 	{
+		// TODO: Start server and wait for client to join
 	}
 
 	void TitleScreen::join_game()
 	{
+		// TODO: Start client and look for servers on network
 	}
 
 	void TitleScreen::on_start()
