@@ -24,6 +24,7 @@ namespace Pong
 		, m_state { PlayState::Serving }
 		, m_server { nullptr }
 		, m_time { 0 }
+		, m_press_key_text { "Press any key\nto play again.", nullptr }
 	{
 	}
 
@@ -35,11 +36,11 @@ namespace Pong
 
 		m_p1_score = 0;
 		m_p2_score = 0;
-		m_p1_score_view.set_text(std::to_string(m_p1_score));
-		m_p2_score_view.set_text(std::to_string(m_p1_score));
+		m_p1_score_text.set_text(std::to_string(m_p1_score));
+		m_p2_score_text.set_text(std::to_string(m_p1_score));
 
-		m_p1_score_view.set_position(Window::k_width * .25f - m_p1_score_view.get_bounds().width / 2, k_score_offset);
-		m_p2_score_view.set_position(Window::k_width * .75f - m_p2_score_view.get_bounds().height / 2, k_score_offset);
+		m_p1_score_text.set_position(Window::k_width * .25f - m_p1_score_text.get_bounds().width / 2, k_score_offset);
+		m_p2_score_text.set_position(Window::k_width * .75f - m_p2_score_text.get_bounds().height / 2, k_score_offset);
 
 		const float player_2_x_pos { -k_paddle_offset + Window::k_width - m_player_1.get_bounds().width };
 		const float player_vertical_center { Window::k_height / 2 - m_player_1.get_bounds().height / 2 };
@@ -133,13 +134,13 @@ namespace Pong
 
 			if (did_p1_score)
 			{
-				m_p1_score_view.set_text(std::to_string(++m_p1_score));
+				m_p1_score_text.set_text(std::to_string(++m_p1_score));
 				m_server = &m_player_1;
 			}
 
 			if (did_p2_score)
 			{
-				m_p2_score_view.set_text(std::to_string(++m_p2_score));
+				m_p2_score_text.set_text(std::to_string(++m_p2_score));
 				m_server = &m_player_2;
 			}
 
@@ -168,8 +169,8 @@ namespace Pong
 		m_player_1.draw(target);
 		m_player_2.draw(target);
 		m_ball.draw(target);
-		m_p1_score_view.draw(target);
-		m_p2_score_view.draw(target);
+		m_p1_score_text.draw(target);
+		m_p2_score_text.draw(target);
 		m_winner_text.draw(target);
 		m_press_key_text.draw(target);
 	}
@@ -198,7 +199,6 @@ namespace Pong
 		m_winner_text.set_position(Window::k_width / 2 - m_winner_text.get_bounds().width / 2, 
 			Window::k_height / 2 - m_winner_text.get_bounds().height / 2);
 
-		m_press_key_text.set_text("Press any key\nto play again.");
 		m_press_key_text.set_position(m_winner_text.get_position().x,
 		                              m_winner_text.get_position().y + m_winner_text.get_bounds().height);
 

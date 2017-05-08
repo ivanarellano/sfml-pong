@@ -1,7 +1,7 @@
 #include "TitleScreen.h"
-#include <SFML/Window/Event.hpp>
 #include "Window.h"
 #include "GameScreen.h"
+#include <SFML/Window/Event.hpp>
 #include <iostream>
 
 namespace Pong

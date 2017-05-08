@@ -5,11 +5,11 @@ namespace Pong
 	TextStyle::TextStyle()
 		: m_font { Font::forward }
 		, m_size { 50 }
-		, m_color { sf::Color::Red }
+		, m_color { sf::Color::White }
 	{
 	}
 
-	Text::Text() : Text("",  nullptr)
+	Text::Text() : Text(std::string(), nullptr)
 	{
 	}
 
@@ -29,7 +29,9 @@ namespace Pong
 			m_on_click_cb();
 	}
 
-	void Text::update(float dt) { /* No-op */}
+	void Text::update(float dt) 
+	{
+	}
 
 	void Text::set_style(const ViewState& state, const TextStyle& style)
 	{
