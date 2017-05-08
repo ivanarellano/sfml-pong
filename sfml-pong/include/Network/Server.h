@@ -21,11 +21,11 @@ namespace Pong
 	public:
 		template <class T>
 		Server(void(T::*handler)(sf::IpAddress&, const PortNumber&, const PacketID&, sf::Packet&, Server*), T* instance)
-			: m_last_id			{ 0 }
-			, m_running			{ false }
-			, m_listen_thread	{ &Server::listen, this }
-			, m_total_sent		{ 0 }
-			, m_total_received	{ 0 }
+			: m_last_id { 0 }
+			, m_running { false }
+			, m_listen_thread { &Server::listen, this }
+			, m_total_sent { 0 }
+			, m_total_received { 0 }
 		{
 			m_packet_handler = std::bind(handler, instance,
 				std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
