@@ -17,10 +17,8 @@ namespace Pong
 		: m_on_click_cb { callback }
 	{
 		TextStyle style;
-		set_text(text);
 		set_style(ViewState::Neutral, style);
-
-		apply_style();
+		set_text(text);
 	}
 
 	void Text::on_click()
@@ -36,6 +34,9 @@ namespace Pong
 	void Text::set_style(const ViewState& state, const TextStyle& style)
 	{
 		m_style_states[state] = style;
+
+		if (state == m_state) 
+			apply_style();
 	}
 
 	void Text::apply_style()
