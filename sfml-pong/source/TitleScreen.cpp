@@ -7,10 +7,10 @@
 namespace Pong
 {
 	TitleScreen::TitleScreen()
-		: m_title { "PONG", nullptr }
-		, m_host_game{ "New Game (LAN)", []() { std::cout << "host game clicked" << std::endl; } }
-		, m_join_game { "Join Game (LAN)", nullptr }
-		, m_credits { "Credits", nullptr }
+		: m_title	  { "PONG", nullptr }
+		, m_host_game { "New Game (LAN)", cb_new_game }
+		, m_join_game { "Join Game (LAN)", cb_join_game }
+		, m_credits	  { "Credits", cb_credits }
 	{
 		m_title.set_size(80);
 		m_host_game.set_size(20);
@@ -20,11 +20,13 @@ namespace Pong
 
 	void TitleScreen::start_game_server()
 	{
+		// TODO: Start server
 		std::cout << "TODO: Start server" << std::endl;
 	}
 
 	void TitleScreen::find_game_server()
 	{
+		// TODO: Start client
 		std::cout << "TODO: Start client" << std::endl;
 	}
 
@@ -58,11 +60,11 @@ namespace Pong
 		auto pos = sf::Vector2f(sf::Mouse::getPosition(*window->get_render_window()));
 
 		if (m_host_game.get_bounds().contains(pos.x, pos.y))
-			m_host_game.on_click();
+			m_host_game.on_click(this);
 		else if (m_join_game.get_bounds().contains(pos.x, pos.y))
-			m_join_game.on_click();
+			m_join_game.on_click(this);
 		else if (m_credits.get_bounds().contains(pos.x, pos.y))
-			m_credits.on_click();
+			m_credits.on_click(window);
 	}
 
 	void TitleScreen::on_stop()

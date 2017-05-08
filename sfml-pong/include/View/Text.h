@@ -17,14 +17,13 @@ namespace Pong
 	};
 
 	using TextStates = std::unordered_map<ViewState, TextStyle>;
-	using OnClickCallback = void(*)();
 
 	struct Text : Widget
 	{
 		Text();
 		Text(const std::string& text, OnClickCallback callback);
 
-		void on_click() override;
+		void on_click(Address pw) override;
 		void update(float dt) override;
 
 		sf::FloatRect get_bounds() const override { return m_text.getGlobalBounds(); }

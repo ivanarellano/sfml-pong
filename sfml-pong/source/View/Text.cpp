@@ -21,10 +21,10 @@ namespace Pong
 		set_text(text);
 	}
 
-	void Text::on_click()
+	void Text::on_click(Address pw)
 	{
 		if (m_on_click_cb != nullptr)
-			m_on_click_cb();
+			m_on_click_cb(pw);
 	}
 
 	void Text::update(float dt) 
