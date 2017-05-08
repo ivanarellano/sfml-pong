@@ -1,4 +1,5 @@
 #include "Server.h"
+#include <SFML\System\Lock.hpp>
 #include <iostream>
 
 namespace Pong

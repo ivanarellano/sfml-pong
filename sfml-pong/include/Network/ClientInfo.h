@@ -1,6 +1,6 @@
 #pragma once
 #include "NetworkDefinitions.h"
-#include <SFML/Network.hpp>
+#include <SFML/Network/IpAddress.hpp>
 #include <SFML/System/Time.hpp>
 
 struct ClientInfo {

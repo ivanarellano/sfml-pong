@@ -34,8 +34,26 @@ namespace Pong
 
 	void TitleScreen::find_game_server()
 	{
-		// TODO: Start client
-		std::cout << "TODO: Start client" << std::endl;
+		sf::IpAddress ip { "localhost" };
+		PortNumber port { 5600 };
+
+		m_client.set_server_information(ip, port);
+		m_client.setup(&handle_packet);
+
+		if (m_client.connect())
+		{
+			sf::Clock clock;
+			clock.restart();
+
+			while (m_client.is_connected())
+				m_client.update(clock.restart());
+		}
+		else
+		{
+			std::cout << "Failed to connect." << std::endl;
+		}
+
+		std::cout << "Quitting..." << std::endl;
 	}
 
 	void TitleScreen::on_start()

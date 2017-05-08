@@ -1,8 +1,14 @@
 #pragma once
 #include "PacketType.h"
 #include "ClientInfo.h"
-#include <functional>
 #include <unordered_map>
+#include <functional>
+#include <SFML/Network/IpAddress.hpp>
+#include <SFML/Network/Packet.hpp>
+#include <SFML/Network/UdpSocket.hpp>
+#include <SFML/System/Mutex.hpp>
+#include <SFML/System/Thread.hpp>
+#include <SFML/System/Time.hpp>
 
 #define HEARTBEAT_INTERVAL_MS 1000
 #define HEARTBEAT_RETRIES 5
@@ -11,7 +17,7 @@ namespace Pong
 {
 	using Clients = std::unordered_map<ClientID, ClientInfo>;
 	class Server;
-	using PacketHandler = std::function<void(sf::IpAddress&, const PortNumber&, const PacketID&, sf::Packet&, Server*)>;
+	using ServerPacketHandler = std::function<void(sf::IpAddress&, const PortNumber&, const PacketID&, sf::Packet&, Server*)>;
 	using TimeoutHandler = std::function<void(const ClientID&)>;
 
 	void server_handler(sf::IpAddress& ip, const PortNumber& port, const PacketID& id, sf::Packet& packet, Server* server);
@@ -74,7 +80,7 @@ namespace Pong
 		sf::UdpSocket m_incoming;
 		sf::UdpSocket m_outgoing;
 
-		PacketHandler m_packet_handler;
+		ServerPacketHandler m_packet_handler;
 		TimeoutHandler m_timeout_handler;
 
 		Clients m_clients;

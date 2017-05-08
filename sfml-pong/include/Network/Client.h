@@ -1,55 +1,64 @@
 #pragma once
 #include "PacketType.h"
 #include "NetworkDefinitions.h"
-#include <SFML/Network.hpp>
+#include <SFML/Network/Packet.hpp>
+#include <SFML/Network/IpAddress.hpp>
+#include <SFML/Network/UdpSocket.hpp>
+#include <SFML/System/Mutex.hpp>
+#include <SFML/System/Thread.hpp>
 #include <SFML/System/Time.hpp>
 #include <functional>
 
 #define CONNECT_TIMEOUT_MS 5000
 
-class Client;
+namespace Pong
+{
+	class Client;
 
-using PacketHandler = std::function<void(const PacketID&, sf::Packet&, Client*)>;
+	using ClientPacketHandler = std::function<void(const PacketID&, sf::Packet&, Client*)>;
 
-class Client {
-public:
-	Client();
-	~Client();
+	void handle_packet(const PacketID& id, sf::Packet& packet, Client* client);
 
-	bool connect();
-	bool disconnect();
-	void listen();
-	bool send(sf::Packet& packet);
-	const sf::Time& get_time() const;
-	const sf::Time& get_last_heartbeat() const;
-	void set_time(const sf::Time& time);
-	void set_server_information(const sf::IpAddress& ip, const PortNumber& port);
+	class Client {
+	public:
+		Client();
+		~Client();
 
-	template<class T>
-	void setup(void(T::*handler) (const PacketID&, sf::Packet&, Client*), T* instance)
-	{
-		m_packet_handler = std::bind(handler, instance,
-			std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-	}
+		bool connect();
+		bool disconnect();
+		void listen();
+		bool send(sf::Packet& packet);
+		const sf::Time& get_time() const;
+		const sf::Time& get_last_heartbeat() const;
+		void set_time(const sf::Time& time);
+		void set_server_information(const sf::IpAddress& ip, const PortNumber& port);
 
-	void setup(void(*handler) (const PacketID&, sf::Packet&, Client*));
-	void unregister_packet_handler();
-	void update(const sf::Time& time);
-	bool is_connected() const;
-	void set_player_name(const std::string& name);
+		template<class T>
+		void setup(void(T::*handler) (const PacketID&, sf::Packet&, Client*), T* instance)
+		{
+			m_packet_handler = std::bind(handler, instance,
+				std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+		}
 
-	sf::Mutex& get_mutex();
-private:
-	std::string m_player_name;
+		void setup(void(*handler) (const PacketID&, sf::Packet&, Client*));
+		void unregister_packet_handler();
+		void update(const sf::Time& time);
+		bool is_connected() const;
+		void set_player_name(const std::string& name);
 
-	sf::UdpSocket m_socket;
-	sf::IpAddress m_server_ip;
-	PortNumber m_server_port;
-	PacketHandler m_packet_handler;
-	bool m_connected;
-	sf::Time m_server_time;
-	sf::Time m_last_heartbeat;
+		sf::Mutex& get_mutex();
+	private:
+		std::string m_player_name;
 
-	sf::Thread m_listen_thread;
-	sf::Mutex m_mutex;
-};
+		sf::UdpSocket m_socket;
+		sf::IpAddress m_server_ip;
+		PortNumber m_server_port;
+		ClientPacketHandler m_packet_handler;
+		bool m_connected;
+		sf::Time m_server_time;
+		sf::Time m_last_heartbeat;
+
+		sf::Thread m_listen_thread;
+		sf::Mutex m_mutex;
+	};
+}
