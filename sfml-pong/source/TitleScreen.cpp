@@ -1,16 +1,15 @@
 #include "TitleScreen.h"
-#include "Window.h"
-#include "GameScreen.h"
 #include <SFML/Window/Event.hpp>
 #include <iostream>
 
 namespace Pong
 {
 	TitleScreen::TitleScreen()
-		: m_title	  { "PONG", nullptr }
+		: m_title { "PONG", nullptr }
 		, m_host_game { "New Game (LAN)", cb_new_game }
 		, m_join_game { "Join Game (LAN)", cb_join_game }
-		, m_credits	  { "Credits", cb_credits }
+		, m_credits { "Credits", cb_credits }
+		, m_server { server_handler }
 	{
 		m_title.set_size(80);
 		m_host_game.set_size(20);
@@ -20,7 +19,17 @@ namespace Pong
 
 	void TitleScreen::start_game_server()
 	{
-		
+		if (m_server.start())
+		{
+			sf::Clock clock;
+			clock.restart();
+
+			while (m_server.is_running()) {
+				m_server.update(clock.restart());
+			}
+
+			std::cout << "Stopping server..." << std::endl;
+		}
 	}
 
 	void TitleScreen::find_game_server()

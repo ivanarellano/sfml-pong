@@ -4,11 +4,11 @@
 namespace Pong
 {
 	void server_handler(sf::IpAddress& ip, const PortNumber& port, const PacketID& id, sf::Packet& packet, Server* server) {
-		ClientID id = server->get_client_id(ip, port);
+		ClientID client_id = server->get_client_id(ip, port);
 
-		if (id >= 0)
+		if (client_id >= 0) 
 		{
-			if ((PacketType)id == PacketType::Disconnect)
+			if ((PacketType)id == PacketType::Disconnect) 
 			{
 				server->remove_client(ip, port);
 
@@ -18,9 +18,9 @@ namespace Pong
 				message = "Client left! " + ip.toString() + ":" + std::to_string(port);
 				p << message;
 
-				server->broadcast(p, id);
+				server->broadcast(p, client_id);
 			}
-			else if ((PacketType)id == PacketType::Message)
+			else if ((PacketType)id == PacketType::Message) 
 			{
 				std::string receivedMessage;
 				packet >> receivedMessage;
@@ -30,12 +30,12 @@ namespace Pong
 				fill_packet(PacketType::Message, p);
 				p << message;
 
-				server->broadcast(p, id);
+				server->broadcast(p, client_id);
 			}
 		}
-		else
+		else 
 		{
-			if ((PacketType)id == PacketType::Connect)
+			if ((PacketType)id == PacketType::Connect) 
 			{
 				ClientID id = server->add_client(ip, port);
 
@@ -144,14 +144,14 @@ namespace Pong
 			PacketID p_id;
 			if (!(packet >> p_id))
 			{
-				std::cout << "Invalid packet received: unable to extract id." << std::endl;
+				std::cout << "Invalid packet received: unable to extract client_id." << std::endl;
 				continue;
 			}
 
 			PacketType id = static_cast<PacketType>(p_id);
 			if (id < PacketType::Disconnect || id >= PacketType::OutOfBounds)
 			{
-				std::cout << "Invalid packet received: id is out of bounds." << std::endl;
+				std::cout << "Invalid packet received: client_id is out of bounds." << std::endl;
 				continue;
 			}
 
