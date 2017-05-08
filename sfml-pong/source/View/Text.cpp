@@ -5,19 +5,21 @@ namespace Pong
 	TextStyle::TextStyle()
 		: m_font { Font::forward }
 		, m_size { 50 }
-		, m_color { sf::Color::White }
+		, m_color { sf::Color::Red }
 	{
 	}
 
-	Text::Text() : Text(nullptr)
+	Text::Text() : Text("",  nullptr)
 	{
 	}
 
-	// TODO: bind using std
-	Text::Text(OnClickCallback callback) : m_on_click_cb { callback }
+	Text::Text(const std::string& text, OnClickCallback callback)
+		: m_on_click_cb { callback }
 	{
 		TextStyle style;
+		set_text(text);
 		set_style(ViewState::Neutral, style);
+
 		apply_style();
 	}
 

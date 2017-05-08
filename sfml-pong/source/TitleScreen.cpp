@@ -7,27 +7,24 @@
 namespace Pong
 {
 	TitleScreen::TitleScreen()
+		: m_title { "PONG", nullptr }
+		, m_host_game{ "New Game (LAN)", []() { std::cout << "host game clicked" << std::endl; } }
+		, m_join_game { "Join Game (LAN)", nullptr }
+		, m_credits { "Credits", nullptr }
 	{
 		m_title.set_size(80);
 		m_host_game.set_size(20);
 		m_join_game.set_size(20);
 		m_credits.set_size(20);
-
-		m_title.set_text("PONG");
-		m_host_game.set_text("New Game (LAN)");
-		m_join_game.set_text("Join Game (LAN)");
-		m_credits.set_text("Credits");
 	}
 
 	void TitleScreen::start_game_server()
 	{
-		// TODO: Start server and wait for client to join
 		std::cout << "TODO: Start server" << std::endl;
 	}
 
 	void TitleScreen::find_game_server()
 	{
-		// TODO: Start client and look for servers on network
 		std::cout << "TODO: Start client" << std::endl;
 	}
 

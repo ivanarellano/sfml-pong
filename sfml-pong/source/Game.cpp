@@ -24,10 +24,12 @@ namespace Pong
 
 	sf::Time Game::get_elapsed()
 	{
+		return m_clock.getElapsedTime();
 	}
 
 	Window* Game::get_window()
 	{
+		return &m_window;
 	}
 
 	void Game::restart_clock()
