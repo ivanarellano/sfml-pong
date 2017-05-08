@@ -3,12 +3,56 @@
 
 namespace Pong
 {
+	void server_handler(sf::IpAddress& ip, const PortNumber& port, const PacketID& id, sf::Packet& packet, Server* server) {
+		ClientID id = server->get_client_id(ip, port);
+
+		if (id >= 0)
+		{
+			if ((PacketType)id == PacketType::Disconnect)
+			{
+				server->remove_client(ip, port);
+
+				sf::Packet p;
+				fill_packet(PacketType::Message, p);
+				std::string message;
+				message = "Client left! " + ip.toString() + ":" + std::to_string(port);
+				p << message;
+
+				server->broadcast(p, id);
+			}
+			else if ((PacketType)id == PacketType::Message)
+			{
+				std::string receivedMessage;
+				packet >> receivedMessage;
+				std::string message = ip.toString() + ":" + std::to_string(port) + " :" + receivedMessage;
+
+				sf::Packet p;
+				fill_packet(PacketType::Message, p);
+				p << message;
+
+				server->broadcast(p, id);
+			}
+		}
+		else
+		{
+			if ((PacketType)id == PacketType::Connect)
+			{
+				ClientID id = server->add_client(ip, port);
+
+				sf::Packet packet;
+				fill_packet(PacketType::Connect, packet);
+
+				server->send(id, packet);
+			}
+		}
+	}
+
 	Server::Server(void(*handler)(sf::IpAddress&, const PortNumber&, const PacketID&, sf::Packet&, Server*))
-		: m_last_id{ 0 }
-		, m_running{ false }
-		, m_listen_thread{ &Server::listen, this }
-		, m_total_sent{ 0 }
-		, m_total_received{ 0 }
+		: m_last_id			{ 0 }
+		, m_running			{ false }
+		, m_listen_thread	{ &Server::listen, this }
+		, m_total_sent		{ 0 }
+		, m_total_received	{ 0 }
 	{
 		m_packet_handler = bind(handler,
 			std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
@@ -27,7 +71,7 @@ namespace Pong
 
 	bool Server::send(const ClientID& id, sf::Packet& packet)
 	{
-		sf::Lock lock{ m_mutex };
+		sf::Lock lock { m_mutex };
 
 		auto itr = m_clients.find(id);
 		if (itr == m_clients.end())
@@ -51,7 +95,7 @@ namespace Pong
 
 	void Server::broadcast(sf::Packet& packet, const ClientID& ignore)
 	{
-		sf::Lock lock{ m_mutex };
+		sf::Lock lock { m_mutex };
 
 		for (auto& itr : m_clients)
 		{
@@ -113,7 +157,7 @@ namespace Pong
 
 			if (id == PacketType::Heartbeat)
 			{
-				sf::Lock lock{ m_mutex };
+				sf::Lock lock { m_mutex };
 
 				for (auto& itr : m_clients)
 				{
@@ -151,7 +195,7 @@ namespace Pong
 			constexpr sf::Int32 max_timestamp = static_cast<sf::Int32>(Network::HighestTimestamp);
 
 			m_server_time -= sf::milliseconds(max_timestamp);
-			sf::Lock lock{ m_mutex };
+			sf::Lock lock { m_mutex };
 
 			for (auto& itr : m_clients)
 			{
@@ -195,7 +239,7 @@ namespace Pong
 					}
 
 					sf::Packet p;
-					set_packet(PacketType::Heartbeat, p);
+					fill_packet(PacketType::Heartbeat, p);
 
 					p << m_server_time.asMilliseconds();
 					send(itr->first, p);
@@ -216,7 +260,7 @@ namespace Pong
 
 	ClientID Server::add_client(const sf::IpAddress& ip, const PortNumber& port)
 	{
-		sf::Lock lock{ m_mutex };
+		sf::Lock lock { m_mutex };
 
 		for (auto& itr : m_clients)
 		{
@@ -224,8 +268,8 @@ namespace Pong
 				return ClientID(Network::NullID);
 		}
 
-		ClientID id{ m_last_id };
-		ClientInfo info{ ip, port, m_server_time };
+		ClientID id { m_last_id };
+		ClientInfo info { ip, port, m_server_time };
 
 		m_clients.insert(std::make_pair(id, info));
 		++m_last_id;
@@ -235,7 +279,7 @@ namespace Pong
 
 	ClientID Server::get_client_id(const sf::IpAddress& ip, const PortNumber& port)
 	{
-		sf::Lock lock{ m_mutex };
+		sf::Lock lock { m_mutex };
 
 		for (auto& itr : m_clients)
 		{
@@ -258,7 +302,7 @@ namespace Pong
 
 	bool Server::fill_client_info(const ClientID& id, ClientInfo& info)
 	{
-		sf::Lock lock{ m_mutex };
+		sf::Lock lock { m_mutex };
 
 		for (auto& itr : m_clients)
 		{
@@ -274,14 +318,14 @@ namespace Pong
 
 	bool Server::remove_client(const ClientID& id)
 	{
-		sf::Lock lock{ m_mutex };
+		sf::Lock lock { m_mutex };
 
 		auto itr = m_clients.find(id);
 		if (itr == m_clients.end())
 			return false;
 
 		sf::Packet p;
-		set_packet(PacketType::Disconnect, p);
+		fill_packet(PacketType::Disconnect, p);
 		send(id, p);
 
 		m_clients.erase(itr);
@@ -291,7 +335,7 @@ namespace Pong
 
 	bool Server::remove_client(const sf::IpAddress& ip, const PortNumber& port)
 	{
-		ClientID id{ get_client_id(ip, port) };
+		ClientID id { get_client_id(ip, port) };
 
 		if (id != ClientID(Network::NullID))
 			return remove_client(id);
@@ -305,10 +349,10 @@ namespace Pong
 			return;
 
 		sf::Packet p;
-		set_packet(PacketType::Disconnect, p);
+		fill_packet(PacketType::Disconnect, p);
 		broadcast(p);
 
-		sf::Lock lock{ m_mutex };
+		sf::Lock lock { m_mutex };
 		m_clients.clear();
 	}
 
@@ -354,7 +398,7 @@ namespace Pong
 	std::string Server::get_client_list()
 	{
 		std::string output;
-		sf::Lock lock{ m_mutex };
+		sf::Lock lock { m_mutex };
 
 		int i = 0;
 		for (auto& itr : m_clients)

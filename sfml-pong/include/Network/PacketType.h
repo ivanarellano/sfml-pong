@@ -9,4 +9,4 @@ enum class PacketType
 	PlayerUpdate, Message, OutOfBounds
 };
 
-void set_packet(const PacketType& type, sf::Packet& packet);
+void fill_packet(const PacketType& type, sf::Packet& packet);

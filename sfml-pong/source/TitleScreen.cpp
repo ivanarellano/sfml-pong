@@ -20,8 +20,7 @@ namespace Pong
 
 	void TitleScreen::start_game_server()
 	{
-		// TODO: Start server
-		std::cout << "TODO: Start server" << std::endl;
+		
 	}
 
 	void TitleScreen::find_game_server()

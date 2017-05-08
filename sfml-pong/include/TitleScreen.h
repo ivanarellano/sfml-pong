@@ -1,7 +1,9 @@
 #pragma once
-#include "Window.h"
+#include "Client.h"
 #include "Screen.h"
+#include "Server.h"
 #include "Text.h"
+#include "Window.h"
 
 namespace Pong
 {
@@ -23,6 +25,9 @@ namespace Pong
 		Text m_host_game;
 		Text m_join_game;
 		Text m_credits;
+
+		Client m_client;
+		Server m_server;
 
 		static void cb_new_game(Address pw) { reference_to<TitleScreen>(pw).start_game_server(); }
 		static void cb_join_game(Address pw) { reference_to<TitleScreen>(pw).find_game_server(); }

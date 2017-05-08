@@ -22,7 +22,7 @@ bool Client::connect()
 	std::cout << "Bound client to port: " << m_socket.getLocalPort() << std::endl;
 
 	sf::Packet p;
-	set_packet(PacketType::Connect, p);
+	fill_packet(PacketType::Connect, p);
 	p << m_player_name;
 
 	if (m_socket.send(p, m_server_ip, m_server_port) != sf::Socket::Done)
@@ -83,7 +83,7 @@ bool Client::disconnect()
 		return false;
 
 	sf::Packet p;
-	set_packet(PacketType::Disconnect, p);
+	fill_packet(PacketType::Disconnect, p);
 
 	sf::Socket::Status status = m_socket.send(p, m_server_ip, m_server_port);
 
@@ -141,7 +141,7 @@ void Client::listen()
 		if (id == PacketType::Heartbeat)
 		{
 			sf::Packet p;
-			set_packet(PacketType::Heartbeat, p);
+			fill_packet(PacketType::Heartbeat, p);
 
 			if (m_socket.send(p, m_server_ip, m_server_port) != sf::Socket::Done)
 				std::cout << "Failed sending a heartbeat!" << std::endl;
