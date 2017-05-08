@@ -19,13 +19,13 @@ namespace Pong
 		m_credits.set_text("Credits");
 	}
 
-	void TitleScreen::new_game_clicked()
+	void TitleScreen::start_game_server()
 	{
 		// TODO: Start server and wait for client to join
 		std::cout << "TODO: Start server" << std::endl;
 	}
 
-	void TitleScreen::join_game_clicked()
+	void TitleScreen::find_game_server()
 	{
 		// TODO: Start client and look for servers on network
 		std::cout << "TODO: Start client" << std::endl;
@@ -61,11 +61,11 @@ namespace Pong
 		auto pos = sf::Vector2f(sf::Mouse::getPosition(*window->get_render_window()));
 
 		if (m_host_game.get_bounds().contains(pos.x, pos.y))
-			new_game_clicked();
+			m_host_game.on_click();
 		else if (m_join_game.get_bounds().contains(pos.x, pos.y))
-			join_game_clicked();
+			m_join_game.on_click();
 		else if (m_credits.get_bounds().contains(pos.x, pos.y))
-			window->show_credits_screen();
+			m_credits.on_click();
 	}
 
 	void TitleScreen::on_stop()

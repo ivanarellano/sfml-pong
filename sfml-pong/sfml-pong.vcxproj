@@ -173,7 +173,6 @@
     <ClInclude Include="include\View\Event.h" />
     <ClInclude Include="include\View\Font.h" />
     <ClInclude Include="include\View\HalfCourtLine.h" />
-    <ClInclude Include="include\View\Layout.h" />
     <ClInclude Include="include\View\Measurement.h" />
     <ClInclude Include="include\View\Movable.h" />
     <ClInclude Include="include\View\Paddle.h" />

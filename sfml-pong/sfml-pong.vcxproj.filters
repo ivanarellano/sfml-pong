@@ -73,9 +73,6 @@
     <ClInclude Include="include\View\HalfCourtLine.h">
       <Filter>Header Files\View</Filter>
     </ClInclude>
-    <ClInclude Include="include\View\Layout.h">
-      <Filter>Header Files\View</Filter>
-    </ClInclude>
     <ClInclude Include="include\View\Measurement.h">
       <Filter>Header Files\View</Filter>
     </ClInclude>

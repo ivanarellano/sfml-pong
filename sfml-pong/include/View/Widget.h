@@ -17,7 +17,7 @@ namespace Pong
 	public:
 		virtual ~Widget() {}
 
-		virtual void on_click(const sf::Vector2f& mouse_pos) = 0;
+		virtual void on_click() = 0;
 		virtual void on_release() = 0;
 	protected:
 		ViewState m_state { ViewState::Neutral };

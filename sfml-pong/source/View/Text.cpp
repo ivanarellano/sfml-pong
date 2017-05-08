@@ -9,19 +9,22 @@ namespace Pong
 	{
 	}
 
-	Text::Text()
+	Text::Text() : Text(nullptr)
+	{
+	}
+
+	// TODO: bind using std
+	Text::Text(OnClickCallback callback) : m_on_click_cb { callback }
 	{
 		TextStyle style;
 		set_style(ViewState::Neutral, style);
 		apply_style();
 	}
 
-	void Text::on_click(const sf::Vector2f& mouse_pos)
+	void Text::on_click()
 	{
-	}
-
-	void Text::on_release()
-	{
+		if (m_on_click_cb != nullptr)
+			m_on_click_cb();
 	}
 
 	void Text::update(float dt) { /* No-op */}

@@ -3,6 +3,7 @@
 #include "Widget.h"
 #include <SFML/Graphics/Text.hpp>
 #include <unordered_map>
+#include <functional>
 
 namespace Pong
 {
@@ -16,13 +17,14 @@ namespace Pong
 	};
 
 	using TextStates = std::unordered_map<ViewState, TextStyle>;
+	using OnClickCallback = std::function<void()>;
 
 	struct Text : Widget
 	{
 		Text();
+		explicit Text(OnClickCallback callback);
 
-		void on_click(const sf::Vector2f& mouse_pos) override;
-		void on_release() override;
+		void on_click() override;
 		void update(float dt) override;
 
 		sf::FloatRect get_bounds() const override { return m_text.getGlobalBounds(); }
@@ -47,5 +49,6 @@ namespace Pong
 		sf::Text m_text;
 		sf::Font m_font;
 		TextStates m_style_states;
+		OnClickCallback m_on_click_cb;
 	};
 }
