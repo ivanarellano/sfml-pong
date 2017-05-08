@@ -38,9 +38,9 @@ namespace Pong
 		Ball m_ball;
 		Paddle m_player_1;
 		Paddle m_player_2;
-		Text m_p1_score_view;
-		Text m_p2_score_view;
 		HalfCourtLine m_half_court_line;
+		Text m_p1_score_text;
+		Text m_p2_score_text;
 		Text m_winner_text;
 		Text m_press_key_text;
 

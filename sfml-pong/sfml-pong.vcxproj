@@ -153,6 +153,7 @@
     <Font Include="assets\FFFFORWA.TTF" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\GameScreen.h" />
     <ClInclude Include="include\Network\Client.h" />
     <ClInclude Include="include\Network\ClientInfo.h" />
@@ -172,7 +173,6 @@
     <ClInclude Include="include\View\Event.h" />
     <ClInclude Include="include\View\Font.h" />
     <ClInclude Include="include\View\HalfCourtLine.h" />
-    <ClInclude Include="include\View\Layout.h" />
     <ClInclude Include="include\View\Measurement.h" />
     <ClInclude Include="include\View\Movable.h" />
     <ClInclude Include="include\View\Paddle.h" />
@@ -182,6 +182,7 @@
     <ClInclude Include="include\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\Game.cpp" />
     <ClCompile Include="source\GameScreen.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\Network\Client.cpp" />

@@ -1,33 +1,32 @@
 #include "TitleScreen.h"
-#include <SFML/Window/Event.hpp>
 #include "Window.h"
 #include "GameScreen.h"
+#include <SFML/Window/Event.hpp>
 #include <iostream>
 
 namespace Pong
 {
 	TitleScreen::TitleScreen()
+		: m_title	  { "PONG", nullptr }
+		, m_host_game { "New Game (LAN)", cb_new_game }
+		, m_join_game { "Join Game (LAN)", cb_join_game }
+		, m_credits	  { "Credits", cb_credits }
 	{
 		m_title.set_size(80);
 		m_host_game.set_size(20);
 		m_join_game.set_size(20);
 		m_credits.set_size(20);
-
-		m_title.set_text("PONG");
-		m_host_game.set_text("New Game (LAN)");
-		m_join_game.set_text("Join Game (LAN)");
-		m_credits.set_text("Credits");
 	}
 
-	void TitleScreen::new_game_clicked()
+	void TitleScreen::start_game_server()
 	{
-		// TODO: Start server and wait for client to join
+		// TODO: Start server
 		std::cout << "TODO: Start server" << std::endl;
 	}
 
-	void TitleScreen::join_game_clicked()
+	void TitleScreen::find_game_server()
 	{
-		// TODO: Start client and look for servers on network
+		// TODO: Start client
 		std::cout << "TODO: Start client" << std::endl;
 	}
 
@@ -61,11 +60,11 @@ namespace Pong
 		auto pos = sf::Vector2f(sf::Mouse::getPosition(*window->get_render_window()));
 
 		if (m_host_game.get_bounds().contains(pos.x, pos.y))
-			new_game_clicked();
+			m_host_game.on_click(this);
 		else if (m_join_game.get_bounds().contains(pos.x, pos.y))
-			join_game_clicked();
+			m_join_game.on_click(this);
 		else if (m_credits.get_bounds().contains(pos.x, pos.y))
-			window->show_credits_screen();
+			m_credits.on_click(window);
 	}
 
 	void TitleScreen::on_stop()

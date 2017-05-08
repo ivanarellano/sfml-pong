@@ -3,9 +3,14 @@
 
 namespace Pong
 {
-	enum class ElementType {
-		Label, Button
-	};
+	using Address = void*;
+	using OnClickCallback = void(*)(Address);
+
+	template<class W> W& reference_to(Address pw)
+		// treat an address as a reference to a W
+	{
+		return *static_cast<W*>(pw);
+	}
 
 	enum class ViewState
 	{
@@ -17,15 +22,7 @@ namespace Pong
 	public:
 		virtual ~Widget() {}
 
-		virtual void read_in(std::stringstream& stream) = 0;
-		virtual void on_click(const sf::Vector2f& mouse_pos) = 0;
-		virtual void on_release() = 0;
-
-		friend std::stringstream& operator>>(std::stringstream& stream, Widget& widget)
-		{
-			widget.read_in(stream);
-			return stream;
-		}
+		virtual void on_click(Address) = 0;
 	protected:
 		ViewState m_state { ViewState::Neutral };
 	};
