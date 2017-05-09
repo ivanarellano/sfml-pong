@@ -1,7 +1,8 @@
 #pragma once
 #include "Screen.h"
+#include "Server.h"
+#include "Client.h"
 #include <SFML/Graphics/RenderWindow.hpp>
-#include "GameScreen.h"
 
 namespace Pong
 {
@@ -25,11 +26,12 @@ namespace Pong
 		sf::Clock m_clock;
 		Screen* m_screen;
 
+		Server m_server;
+
 		void poll_input_events();
 		void update_game_state();
 		void draw_frame();
 		void shutdown() const;
-
 		void set_screen(Screen* screen);
 
 		Window(const Window&) = delete;

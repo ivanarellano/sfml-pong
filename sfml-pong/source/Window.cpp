@@ -1,16 +1,45 @@
 #include "Window.h"
-#include <SFML/Window/Event.hpp>
+#include "GameScreen.h"
 #include "TitleScreen.h"
+#include <SFML/Window/Event.hpp>
+#include <thread>
 #include <iostream>
 
 namespace Pong
 {
-	Window::Window(const std::string& title) : m_screen { nullptr }
+	void f() { std::cout << "f" << std::endl; }
+
+	struct ServerUpdate {
+		ServerUpdate(Server& server) : m_server { &server } {}
+
+		Server* m_server;
+
+		void update()
+		{
+			if (m_server->start())
+			{
+				sf::Clock clock;
+				clock.restart();
+
+				while (m_server->is_running()) {
+					m_server->update(clock.restart());
+				}
+
+				std::cout << "Stopping server..." << std::endl;
+			}
+		}
+
+		void operator()() { update(); }
+	};
+
+	Window::Window(const std::string& title) : m_screen { nullptr }, m_server { server_handler }
 	{
 		m_sf_window.create(sf::VideoMode(k_width, k_height), title);
 		m_sf_window.setFramerateLimit(60);
 
 		show_title_screen();
+
+		std::thread server_thread { ServerUpdate(m_server) };
 
 		while (m_sf_window.isOpen())
 		{
@@ -20,6 +49,8 @@ namespace Pong
 		}
 
 		shutdown();
+
+		server_thread.join();
 	}
 
 	sf::RenderWindow* Window::get_render_window()
@@ -42,6 +73,45 @@ namespace Pong
 		// TODO: Show credits
 		std::cout << "TODO: Show credits" << std::endl;
 	}
+
+	//void Window::s_thread()
+	//{
+	//	if (m_server.start())
+	//	{
+	//		sf::Clock clock;
+	//		clock.restart();
+
+	//		while (m_server.is_running()) {
+	//			m_server.update(clock.restart());
+	//		}
+
+	//		std::cout << "Stopping server..." << std::endl;
+	//	}
+	//}
+
+	//void Window::c_thread()
+	//{
+	//	sf::IpAddress ip{ "localhost" };
+	//	PortNumber port{ 5600 };
+
+	//	m_client.set_server_information(ip, port);
+	//	m_client.setup(&handle_packet);
+
+	//	if (m_client.connect())
+	//	{
+	//		sf::Clock clock;
+	//		clock.restart();
+
+	//		while (m_client.is_connected())
+	//			m_client.update(clock.restart());
+	//	}
+	//	else
+	//	{
+	//		std::cout << "Failed to connect." << std::endl;
+	//	}
+
+	//	std::cout << "Quitting..." << std::endl;
+	//}
 
 	void Window::poll_input_events()
 	{

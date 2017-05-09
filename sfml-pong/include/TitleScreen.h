@@ -2,6 +2,7 @@
 #include "Screen.h"
 #include "Text.h"
 #include "Window.h"
+#include <iostream>
 
 namespace Pong
 {
