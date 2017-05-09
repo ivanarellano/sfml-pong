@@ -9,51 +9,11 @@ namespace Pong
 		, m_host_game { "New Game (LAN)", cb_new_game }
 		, m_join_game { "Join Game (LAN)", cb_join_game }
 		, m_credits { "Credits", cb_credits }
-		, m_server { server_handler }
 	{
 		m_title.set_size(80);
 		m_host_game.set_size(20);
 		m_join_game.set_size(20);
 		m_credits.set_size(20);
-	}
-
-	void TitleScreen::start_game_server()
-	{
-		if (m_server.start())
-		{
-			sf::Clock clock;
-			clock.restart();
-
-			while (m_server.is_running()) {
-				m_server.update(clock.restart());
-			}
-
-			std::cout << "Stopping server..." << std::endl;
-		}
-	}
-
-	void TitleScreen::find_game_server()
-	{
-		sf::IpAddress ip { "localhost" };
-		PortNumber port { 5600 };
-
-		m_client.set_server_information(ip, port);
-		m_client.setup(&handle_packet);
-
-		if (m_client.connect())
-		{
-			sf::Clock clock;
-			clock.restart();
-
-			while (m_client.is_connected())
-				m_client.update(clock.restart());
-		}
-		else
-		{
-			std::cout << "Failed to connect." << std::endl;
-		}
-
-		std::cout << "Quitting..." << std::endl;
 	}
 
 	void TitleScreen::on_start()
