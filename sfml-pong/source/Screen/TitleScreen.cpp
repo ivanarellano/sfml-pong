@@ -1,6 +1,6 @@
-#include "TitleScreen.h"
 #include "Window.h"
-#include "GameScreen.h"
+#include "Screen/TitleScreen.h"
+#include "Screen/GameScreen.h"
 #include <SFML/Window/Event.hpp>
 #include <iostream>
 

@@ -1,7 +1,6 @@
 #pragma once
-#include "Screen.h"
+#include "Screen/Screen.h"
 #include <SFML/Graphics/RenderWindow.hpp>
-#include "GameScreen.h"
 
 namespace Pong
 {

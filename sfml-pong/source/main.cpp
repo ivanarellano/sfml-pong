@@ -1,6 +1,6 @@
-#include <iostream>
 #include "Window.h"
-#include "TitleScreen.h"
+#include "Screen/TitleScreen.h"
+#include <iostream>
 
 int main() 
 {

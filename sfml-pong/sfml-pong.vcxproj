@@ -154,7 +154,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Game.h" />
-    <ClInclude Include="include\GameScreen.h" />
     <ClInclude Include="include\Network\Client.h" />
     <ClInclude Include="include\Network\ClientInfo.h" />
     <ClInclude Include="include\Network\NetSettings.h" />
@@ -164,9 +163,10 @@
     <ClInclude Include="include\Random.h" />
     <ClInclude Include="include\ResourcePath.hpp" />
     <ClInclude Include="include\Resources.h" />
-    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\Screen\GameScreen.h" />
+    <ClInclude Include="include\Screen\Screen.h" />
+    <ClInclude Include="include\Screen\TitleScreen.h" />
     <ClInclude Include="include\Sound.h" />
-    <ClInclude Include="include\TitleScreen.h" />
     <ClInclude Include="include\View\Actor.h" />
     <ClInclude Include="include\View\Ball.h" />
     <ClInclude Include="include\View\Drawable.h" />
@@ -183,12 +183,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Game.cpp" />
-    <ClCompile Include="source\GameScreen.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\Network\Client.cpp" />
     <ClCompile Include="source\Network\PacketType.cpp" />
     <ClCompile Include="source\Network\Server.cpp" />
-    <ClCompile Include="source\TitleScreen.cpp" />
+    <ClCompile Include="source\Screen\GameScreen.cpp" />
+    <ClCompile Include="source\Screen\TitleScreen.cpp" />
     <ClCompile Include="source\View\Ball.cpp" />
     <ClCompile Include="source\View\HalfCourtLine.cpp" />
     <ClCompile Include="source\View\Paddle.cpp" />

@@ -1,6 +1,6 @@
 #include "Random.h"
 #include "Window.h"
-#include "GameScreen.h"
+#include "Screen/GameScreen.h"
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Event.hpp>
 
