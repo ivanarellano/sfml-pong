@@ -42,13 +42,13 @@ namespace Pong
 		if (event.type != sf::Event::MouseButtonReleased)
 			return;
 
-		auto pos = sf::Vector2f(sf::Mouse::getPosition(*window->get_render_window()));
+		auto mouse_pos = sf::Vector2f(sf::Mouse::getPosition(*window->get_render_window()));
 
-		if (m_host_game.get_bounds().contains(pos.x, pos.y))
+		if (m_host_game.get_bounds().contains(mouse_pos.x, mouse_pos.y))
 			m_host_game.on_click(this);
-		else if (m_join_game.get_bounds().contains(pos.x, pos.y))
+		else if (m_join_game.get_bounds().contains(mouse_pos.x, mouse_pos.y))
 			m_join_game.on_click(this);
-		else if (m_credits.get_bounds().contains(pos.x, pos.y))
+		else if (m_credits.get_bounds().contains(mouse_pos.x, mouse_pos.y))
 			m_credits.on_click(window);
 	}
 

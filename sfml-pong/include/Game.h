@@ -22,6 +22,7 @@ namespace Pong
 
 		sf::Clock m_clock;
 		sf::Time m_elapsed;
+
 		Window m_window;
 		Client m_client;
 	};
