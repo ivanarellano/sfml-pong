@@ -3,25 +3,21 @@
 
 namespace Pong
 {
-	HalfCourtLine::HalfCourtLine(int height, int width, sf::Vector2f size, float gap)
-		: m_dash_width { size.x }
-		, m_dash_height { size.y }
+	HalfCourtLine::HalfCourtLine(sf::Vector2u screen_sz, sf::Vector2i dash_sz, int gap)
 	{
-		if (gap < 1 || m_dash_width < 1 || m_dash_height < 1)
-			return;
+		if (gap < 1 || dash_sz.x < 1 || dash_sz.y < 1) return;
 
-		for (float y_offset = 0; y_offset < height; y_offset += m_dash_height + gap)
+		for (float y_offset = 0; y_offset < screen_sz.y; y_offset += dash_sz.y + gap)
 		{
-			sf::RectangleShape rect { sf::Vector2f{ m_dash_width, m_dash_height } };
+			sf::RectangleShape rect{ sf::Vector2f{ dash_sz } };
 
-			rect.setPosition(static_cast<float>(width / 2 - m_dash_width / 2), m_dash_height + y_offset);
+			rect.setPosition(static_cast<float>(screen_sz.x / 2 - dash_sz.x / 2), dash_sz.y + y_offset);
 			m_notches.push_back(rect);
 		}
 	}
 
 	void HalfCourtLine::draw(sf::RenderTarget* target)
 	{
-		for (auto& notch : m_notches)
-			target->draw(notch);
+		for (const auto& notch : m_notches) target->draw(notch);
 	}
 }

@@ -6,19 +6,9 @@
 
 namespace Pong
 {
-	GameScreen::GameScreen(sf::Vector2u screen_size)
-		: Screen{ screen_size }
-		, m_p1_score { 0 }
-		, m_p2_score { 0 }
-		, m_state { PlayState::Serving }
-		, m_server { nullptr }
-		, m_press_key_text { "Press any key\nto play again.", nullptr }
+	GameScreen::GameScreen(sf::Vector2u screen_size) : Screen{ screen_size }
 	{
-		m_player_1.set_name("P1");
-		m_player_2.set_name("P2");
-
-		m_winner_text.set_size(80);
-		m_press_key_text.set_size(20);
+		init_gui();
 	}
 
 	void GameScreen::on_start()
@@ -48,8 +38,7 @@ namespace Pong
 	
 	void GameScreen::serve()
 	{
-		if (m_server == nullptr)
-			return;
+		if (m_server == nullptr) return;
 
 		Ball::Direction dir;
 
@@ -176,6 +165,14 @@ namespace Pong
 		}
 	}
 
+	void GameScreen::init_gui()
+	{
+		m_player_1.set_name("P1");
+		m_player_2.set_name("P2");
+
+		m_winner_text.set_size(80);
+		m_press_key_text.set_size(20);
+	}
 
 	Paddle* GameScreen::did_player_win()
 	{

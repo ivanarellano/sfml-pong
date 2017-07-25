@@ -28,9 +28,11 @@ namespace Pong
 		const float k_paddle_offset{ 35.f };
 		const float k_score_offset{ 40.f };
 
-		int m_p1_score;
-		int m_p2_score;
-		PlayState m_state;
+		void init_gui();
+
+		int m_p1_score{ 0 };
+		int m_p2_score{ 0 };
+		PlayState m_state{ PlayState::Serving };
 
 		Ball m_ball;
 		Paddle m_player_1;
@@ -38,10 +40,10 @@ namespace Pong
 		Text m_p1_score_text;
 		Text m_p2_score_text;
 		Text m_winner_text;
-		Text m_press_key_text;
-		HalfCourtLine m_half_court_line {100, 1};
+		Text m_press_key_text{ "Press any key\nto play again." };
+		HalfCourtLine m_half_court_line{ m_screen_size };
 
-		Paddle* m_server;
+		Paddle* m_server{ nullptr };
 		sf::Clock m_clock;
 		float m_time;
 

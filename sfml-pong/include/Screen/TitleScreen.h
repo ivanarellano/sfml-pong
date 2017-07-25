@@ -18,10 +18,10 @@ namespace Pong
 		void update(float dt) override { /* Do nothing*/ }
 		void handle_input(sf::Event event, Game* game) override;
 	private:
-		Text m_title;
-		Text m_host_game;
-		Text m_join_game;
-		Text m_credits;
+		Text m_title{ "PONG" };
+		Text m_host_game{ "New Game (LAN)", cb_new_game };
+		Text m_join_game{ "Join Game (LAN)", cb_join_game };
+		Text m_credits{ "Credits", cb_credits };
 
 		static void cb_new_game(Address pw) { reference_to<TitleScreen>(pw).start_game_server(); }
 		static void cb_join_game(Address pw) { reference_to<TitleScreen>(pw).find_game_server(); }

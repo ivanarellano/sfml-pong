@@ -9,12 +9,15 @@ namespace Pong
 	{
 	}
 
-	Text::Text() : Text(std::string(), nullptr)
+	Text::Text() : Text("")
 	{
 	}
 
-	Text::Text(const std::string& text, OnClickCallback callback)
-		: m_on_click_cb { callback }
+	Text::Text(const std::string& text) : Text{ text, nullptr }
+	{
+	}
+
+	Text::Text(const std::string& text, OnClickCallback callback) : m_on_click_cb { callback }
 	{
 		TextStyle style;
 		set_style(ViewState::Neutral, style);
