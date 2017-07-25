@@ -25,7 +25,6 @@ namespace Pong
 		Text(const std::string& text, OnClickCallback callback);
 
 		void on_click(Address pw) override;
-		void update(float dt) override;
 
 		sf::FloatRect get_bounds() const override { return m_text.getGlobalBounds(); }
 		void draw(sf::RenderTarget* window) override { if (is_visible()) window->draw(m_text); }

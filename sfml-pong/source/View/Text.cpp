@@ -30,10 +30,6 @@ namespace Pong
 			m_on_click_cb(pw);
 	}
 
-	void Text::update(float dt) 
-	{
-	}
-
 	void Text::set_style(const ViewState& state, const TextStyle& style)
 	{
 		m_style_states[state] = style;

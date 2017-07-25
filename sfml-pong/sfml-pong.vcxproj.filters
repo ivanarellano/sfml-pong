@@ -67,9 +67,6 @@
     <ClInclude Include="include\View\Ball.h">
       <Filter>Header Files\View</Filter>
     </ClInclude>
-    <ClInclude Include="include\View\Drawable.h">
-      <Filter>Header Files\View</Filter>
-    </ClInclude>
     <ClInclude Include="include\View\Event.h">
       <Filter>Header Files\View</Filter>
     </ClInclude>
@@ -80,9 +77,6 @@
       <Filter>Header Files\View</Filter>
     </ClInclude>
     <ClInclude Include="include\View\Measurement.h">
-      <Filter>Header Files\View</Filter>
-    </ClInclude>
-    <ClInclude Include="include\View\Movable.h">
       <Filter>Header Files\View</Filter>
     </ClInclude>
     <ClInclude Include="include\View\Paddle.h">

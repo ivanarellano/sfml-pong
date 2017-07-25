@@ -4,6 +4,7 @@
 #include "Paddle.h"
 #include "Text.h"
 #include "HalfCourtLine.h"
+#include <SFML\System\Clock.hpp>
 
 namespace Pong
 {
@@ -25,8 +26,8 @@ namespace Pong
 		void handle_input(sf::Event event, Game* game) override;
 	private:
 		const int k_serve_delay{ 3 };
-		const float k_paddle_offset{ 35.f };
-		const float k_score_offset{ 40.f };
+		const float k_paddle_hori_padding{ 35.f };
+		const float k_score_vert_padding{ 40.f };
 
 		void init_gui();
 
@@ -35,8 +36,8 @@ namespace Pong
 		PlayState m_state{ PlayState::Serving };
 
 		Ball m_ball;
-		Paddle m_player_1;
-		Paddle m_player_2;
+		Paddle m_p1;
+		Paddle m_p2;
 		Text m_p1_score_text;
 		Text m_p2_score_text;
 		Text m_winner_text;

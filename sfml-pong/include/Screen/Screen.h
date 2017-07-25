@@ -1,5 +1,6 @@
 #pragma once
-#include "Drawable.h"
+#include "View.h"
+#include <SFML\Window\Event.hpp>
 
 namespace Pong
 {

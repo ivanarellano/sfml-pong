@@ -13,25 +13,25 @@ namespace Pong
 
 	void GameScreen::on_start()
 	{
-		m_ball.set_visibility(View::Visibility::Gone);
-		m_winner_text.set_visibility(View::Visibility::Gone);
-		m_press_key_text.set_visibility(View::Visibility::Gone);
+		m_ball.set_visibility(false);
+		m_winner_text.set_visibility(false);
+		m_press_key_text.set_visibility(false);
 
 		m_p1_score = 0;
 		m_p2_score = 0;
 		m_p1_score_text.set_text(std::to_string(m_p1_score));
 		m_p2_score_text.set_text(std::to_string(m_p1_score));
 
-		m_p1_score_text.set_position(m_screen_size.x * .25f - m_p1_score_text.get_bounds().width / 2, k_score_offset);
-		m_p2_score_text.set_position(m_screen_size.x * .75f - m_p2_score_text.get_bounds().height / 2, k_score_offset);
+		m_p1_score_text.set_position(m_screen_size.x * .25f - m_p1_score_text.get_bounds().width / 2, k_score_vert_padding);
+		m_p2_score_text.set_position(m_screen_size.x * .75f - m_p2_score_text.get_bounds().height / 2, k_score_vert_padding);
 
-		const float player_2_x_pos { -k_paddle_offset + m_screen_size.x - m_player_1.get_bounds().width };
-		const float player_vertical_center { m_screen_size.y / 2 - m_player_1.get_bounds().height / 2 };
+		const float player_2_x_pos { -k_paddle_hori_padding + m_screen_size.x - m_p1.get_bounds().width };
+		const float player_vertical_center { m_screen_size.y / 2 - m_p1.get_bounds().height / 2 };
 
-		m_player_1.set_position(k_paddle_offset, player_vertical_center);
-		m_player_2.set_position(player_2_x_pos, player_vertical_center);
+		m_p1.set_position(k_paddle_hori_padding, player_vertical_center);
+		m_p2.set_position(player_2_x_pos, player_vertical_center);
 
-		m_server = coin_toss() ? &m_player_1 : &m_player_2;
+		m_server = coin_toss() ? &m_p1 : &m_p2;
 
 		m_state = PlayState::Serving;
 	}
@@ -42,7 +42,7 @@ namespace Pong
 
 		Ball::Direction dir;
 
-		if (m_server == &m_player_1)
+		if (m_server == &m_p1)
 		{
 			dir = coin_toss() ? Ball::Direction::NE : Ball::Direction::SE;
 		}
@@ -58,7 +58,7 @@ namespace Pong
 		m_ball.set_direction(dir);
 		m_ball.reset_velocity();
 		m_ball.set_position(ball_pos_x, ball_pos_y);
-		m_ball.set_visibility(View::Visibility::Visible);
+		m_ball.set_visibility(true);
 
 		m_state = PlayState::Playing;
 	}
@@ -72,14 +72,14 @@ namespace Pong
 			const bool did_press_w	  { sf::Keyboard::isKeyPressed(sf::Keyboard::W) };
 			const bool did_press_s	  { sf::Keyboard::isKeyPressed(sf::Keyboard::S) };
 
-			m_player_1.move_up(did_press_w && can_go_up(m_player_1.get_shape()));
-			m_player_1.move_down(did_press_s && can_go_down(m_player_1.get_shape()));
+			m_p1.move_up(did_press_w && can_go_up(m_p1.get_shape()));
+			m_p1.move_down(did_press_s && can_go_down(m_p1.get_shape()));
 
-			m_player_2.move_up(did_press_up && can_go_up(m_player_2.get_shape()));
-			m_player_2.move_down(did_press_down && can_go_down(m_player_2.get_shape()));
+			m_p2.move_up(did_press_up && can_go_up(m_p2.get_shape()));
+			m_p2.move_down(did_press_down && can_go_down(m_p2.get_shape()));
 
-			m_player_1.update(dt);
-			m_player_2.update(dt);
+			m_p1.update(dt);
+			m_p2.update(dt);
 		}
 
 		if (PlayState::Won == m_state)
@@ -104,7 +104,7 @@ namespace Pong
 
 			if (m_winner != nullptr)
 			{
-				m_ball.set_visibility(View::Visibility::Gone);
+				m_ball.set_visibility(false);
 
 				show_winner(m_winner->get_name());
 				m_state = PlayState::Won;
@@ -117,13 +117,13 @@ namespace Pong
 			if (did_p1_score)
 			{
 				m_p1_score_text.set_text(std::to_string(++m_p1_score));
-				m_server = &m_player_1;
+				m_server = &m_p1;
 			}
 
 			if (did_p2_score)
 			{
 				m_p2_score_text.set_text(std::to_string(++m_p2_score));
-				m_server = &m_player_2;
+				m_server = &m_p2;
 			}
 
 			if (did_p1_score || did_p2_score)
@@ -132,14 +132,18 @@ namespace Pong
 				return;
 			}
 
-			const bool did_hit_p1 { m_ball.get_bounds().intersects(m_player_1.get_bounds()) };
-			const bool did_hit_p2 { m_ball.get_bounds().intersects(m_player_2.get_bounds()) };
+			const bool did_hit_p1 { m_ball.get_bounds().intersects(m_p1.get_bounds()) };
+			const bool did_hit_p2 { m_ball.get_bounds().intersects(m_p2.get_bounds()) };
 
 			if (did_hit_p1 || did_hit_p2)
+			{
 				m_ball.reflect_on_paddle();
+			}
 
 			if (!can_go_up(m_ball.get_shape()) || !can_go_down(m_ball.get_shape()))
+			{
 				m_ball.reflect_on_court();
+			}
 
 			m_ball.update(dt);
 		}
@@ -148,8 +152,8 @@ namespace Pong
 	void GameScreen::draw(sf::RenderTarget* target)
 	{
 		m_half_court_line.draw(target);
-		m_player_1.draw(target);
-		m_player_2.draw(target);
+		m_p1.draw(target);
+		m_p2.draw(target);
 		m_ball.draw(target);
 		m_p1_score_text.draw(target);
 		m_p2_score_text.draw(target);
@@ -167,8 +171,8 @@ namespace Pong
 
 	void GameScreen::init_gui()
 	{
-		m_player_1.set_name("P1");
-		m_player_2.set_name("P2");
+		m_p1.set_name("P1");
+		m_p2.set_name("P2");
 
 		m_winner_text.set_size(80);
 		m_press_key_text.set_size(20);
@@ -179,7 +183,7 @@ namespace Pong
 		bool did_p1_win { m_p1_score >= 5 };
 		bool did_p2_win { m_p2_score >= 5 };
 
-		return did_p1_win ? &m_player_1 : did_p2_win ? &m_player_2 : nullptr;
+		return did_p1_win ? &m_p1 : did_p2_win ? &m_p2 : nullptr;
 	}
 
 	void GameScreen::show_winner(std::string name)
@@ -191,8 +195,8 @@ namespace Pong
 		m_press_key_text.set_position(m_winner_text.get_position().x,
 		                              m_winner_text.get_position().y + m_winner_text.get_bounds().height);
 
-		m_winner_text.set_visibility(View::Visibility::Visible);
-		m_press_key_text.set_visibility(View::Visibility::Visible);
+		m_winner_text.set_visibility(true);
+		m_press_key_text.set_visibility(true);
 	}
 
 	bool GameScreen::can_go_up(const sf::RectangleShape& shape)

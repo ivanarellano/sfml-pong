@@ -21,7 +21,8 @@ namespace Pong
 			, k_spring_force { spring_force }
 			, m_velocity { start_velocity }
 			, m_direction { Direction::None }
-		{}
+		{
+		}
 
 		void update(float dt) override;
 

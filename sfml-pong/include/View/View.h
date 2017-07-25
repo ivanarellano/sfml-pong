@@ -1,26 +1,44 @@
 #pragma once
-#include "Movable.h"
-#include "Measurement.h"
-#include "Drawable.h"
+#include <SFML/System/Vector2.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
 
 namespace Pong
 {
+	class Drawable
+	{
+	public:
+		virtual ~Drawable() {}
+
+		virtual void draw(sf::RenderTarget* target) = 0;
+	};
+
+	class Measurement
+	{
+	public:
+		virtual ~Measurement() {}
+
+		virtual sf::FloatRect get_bounds() const = 0;
+	};
+
+	class Movable
+	{
+	public:
+		virtual ~Movable() {}
+
+		virtual sf::Vector2f get_position() const = 0;
+		virtual void set_position(float x, float y) = 0;
+		virtual void move(float x, float y) = 0;
+	};
+
 	class View : Drawable, Measurement, Movable
 	{
 	public:
-		enum class Visibility
-		{
-			Visible, Gone
-		};
-
 		virtual ~View() {}
 
-		virtual void update(float dt) = 0;
+		bool is_visible() const { return m_visibility ? true : false; }
 
-		bool is_visible() const { return m_visibility == Visibility::Visible ? true : false; }
-
-		void set_visibility(Visibility vis) { m_visibility = vis; }
+		void set_visibility(bool visibility) { m_visibility = visibility; }
 	private:
-		Visibility m_visibility { Visibility::Visible };
+		bool m_visibility { true };
 	};
 }
