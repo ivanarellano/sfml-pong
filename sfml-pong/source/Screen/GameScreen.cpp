@@ -1,6 +1,6 @@
 #include "Screen/GameScreen.h"
 #include "Random.h"
-#include "Window.h"
+#include "Game.h"
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Event.hpp>
 
@@ -168,7 +168,7 @@ namespace Pong
 		m_press_key_text.draw(target);
 	}
 
-	void GameScreen::handle_input(sf::Event event, Window* window)
+	void GameScreen::handle_input(sf::Event event, Game* game)
 	{
 		if (PlayState::Won == m_state && event.type == sf::Event::KeyReleased) 
 		{

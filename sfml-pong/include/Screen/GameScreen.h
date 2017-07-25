@@ -22,7 +22,7 @@ namespace Pong
 		void draw(sf::RenderTarget* target) override;
 		void on_start() override;
 		void update(float dt) override;
-		void handle_input(sf::Event event, Window* window) override;
+		void handle_input(sf::Event event, Game* game) override;
 	private:
 		const int k_serve_delay{ 3 };
 		const float k_paddle_offset{ 35.f };

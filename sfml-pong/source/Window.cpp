@@ -26,23 +26,19 @@ namespace Pong
 		m_window.display();
 	}
 
-	void Window::update()
+	void Window::update(sf::Event event)
 	{
-		sf::Event event;
-		while (m_window.pollEvent(event))
+		if (event.type == sf::Event::Closed) 
 		{
-			if (event.type == sf::Event::Closed) 
-			{
-				m_is_done = true;
-			} 
-			else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) 
-			{
-				m_is_done = true;
-			} 
-			else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::F5) 
-			{
-				toggle_fullscreen();
-			}
+			m_is_done = true;
+		} 
+		else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) 
+		{
+			m_is_done = true;
+		} 
+		else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::F5) 
+		{
+			toggle_fullscreen();
 		}
 	}
 

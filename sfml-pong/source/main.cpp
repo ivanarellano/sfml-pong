@@ -12,7 +12,7 @@ int main()
 			game.render();
 			game.restart_clock();
 		}
-	} 
+	}
 	catch (std::exception& e)
 	{
 		std::cout << e.what() << std::endl;

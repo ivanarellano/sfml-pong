@@ -16,7 +16,7 @@ namespace Pong
 		void draw(sf::RenderTarget* target) override;
 		void on_start() override;
 		void update(float dt) override { /* Do nothing*/ }
-		void handle_input(sf::Event event, Window* window) override;
+		void handle_input(sf::Event event, Game* game) override;
 	private:
 		Text m_title;
 		Text m_host_game;

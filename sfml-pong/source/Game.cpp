@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "Screen\TitleScreen.h"
 #include "Screen\GameScreen.h"
+#include <SFML\Window\Event.hpp>
 #include <iostream>
 
 namespace Pong
@@ -15,7 +16,16 @@ namespace Pong
 
 	void Game::handle_input()
 	{
-		m_window.update();
+		sf::Event event;
+		while (m_window.get_render_window()->pollEvent(event))
+		{
+			m_window.update(event);
+
+			if (m_screen != nullptr)
+			{
+				m_screen->handle_input(event, this);
+			}
+		}
 	}
 
 	void Game::update()

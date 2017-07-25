@@ -47,13 +47,13 @@ namespace Pong
 		m_credits.draw(target);
 	}
 
-	void TitleScreen::handle_input(sf::Event event, Window* window)
+	void TitleScreen::handle_input(sf::Event event, Game* game)
 	{
 		if (event.type != sf::Event::MouseButtonReleased) {
 			return;
 		}
 
-		auto pos = sf::Vector2f(sf::Mouse::getPosition(*window->get_render_window()));
+		auto pos = sf::Vector2f(sf::Mouse::getPosition(*game->get_window()->get_render_window()));
 
 		if (m_host_game.get_bounds().contains(pos.x, pos.y)) {
 			m_host_game.on_click(this);
@@ -62,7 +62,7 @@ namespace Pong
 			m_join_game.on_click(this);
 		}
 		else if (m_credits.get_bounds().contains(pos.x, pos.y)) {
-			m_credits.on_click(window);
+			m_credits.on_click(game);
 		}
 	}
 }

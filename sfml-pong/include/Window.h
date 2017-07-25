@@ -14,7 +14,7 @@ namespace Pong
 		void begin_draw();
 		void end_draw();
 
-		void update();
+		void update(sf::Event event);
 
 		bool is_done() { return m_is_done; }
 		bool is_fullscreen() { return m_is_fullscreen; }
