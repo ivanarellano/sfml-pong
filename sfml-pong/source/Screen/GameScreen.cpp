@@ -6,25 +6,19 @@
 
 namespace Pong
 {
-	GameScreen::GameScreen() : GameScreen { 35.f, 40.f, 3 }
-	{
-		m_player_1.set_name("P1");
-		m_player_2.set_name("P2");
-
-		m_winner_text.set_size(80);
-		m_press_key_text.set_size(20);
-	}
-
-	GameScreen::GameScreen(float paddle_offset, float score_offset, int serve_delay)
-		: k_serve_delay { serve_delay }
-		, k_paddle_offset { paddle_offset }
-		, k_score_offset { score_offset }
+	GameScreen::GameScreen(sf::Vector2u screen_size)
+		: Screen{ screen_size }
 		, m_p1_score { 0 }
 		, m_p2_score { 0 }
 		, m_state { PlayState::Serving }
 		, m_server { nullptr }
 		, m_press_key_text { "Press any key\nto play again.", nullptr }
 	{
+		m_player_1.set_name("P1");
+		m_player_2.set_name("P2");
+
+		m_winner_text.set_size(80);
+		m_press_key_text.set_size(20);
 	}
 
 	void GameScreen::on_start()

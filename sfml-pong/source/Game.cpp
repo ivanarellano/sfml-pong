@@ -51,9 +51,9 @@ namespace Pong
 		m_screen->on_start();
 	}
 
-	void Game::show_game_screen() { set_screen(new GameScreen()); }
+	void Game::show_game_screen() { set_screen(new GameScreen(m_window.get_window_size())); }
 
-	void Game::show_title_screen() { set_screen(new TitleScreen()); }
+	void Game::show_title_screen() { set_screen(new TitleScreen(m_window.get_window_size())); }
 
 	void Game::show_credits_screen() { std::cout << "TODO: Show credits screen" << std::endl; }
 }

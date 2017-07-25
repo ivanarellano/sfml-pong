@@ -8,7 +8,7 @@ namespace Pong
 	class TitleScreen : public Screen
 	{
 	public:
-		TitleScreen();
+		explicit TitleScreen(sf::Vector2u screen_size);
 
 		void start_game_server();
 		void find_game_server();

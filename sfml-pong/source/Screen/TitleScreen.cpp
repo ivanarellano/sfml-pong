@@ -1,16 +1,17 @@
-#include "Window.h"
 #include "Screen/TitleScreen.h"
 #include "Screen/GameScreen.h"
+#include "Window.h"
 #include <SFML/Window/Event.hpp>
 #include <iostream>
 
 namespace Pong
 {
-	TitleScreen::TitleScreen()
-		: m_title	  { "PONG", nullptr }
+	TitleScreen::TitleScreen(sf::Vector2u screen_size)
+		: Screen{ screen_size }
+		, m_title { "PONG", nullptr }
 		, m_host_game { "New Game (LAN)", cb_new_game }
 		, m_join_game { "Join Game (LAN)", cb_join_game }
-		, m_credits	  { "Credits", cb_credits }
+		, m_credits { "Credits", cb_credits }
 	{
 		m_title.set_size(80);
 		m_host_game.set_size(20);

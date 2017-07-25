@@ -15,8 +15,7 @@ namespace Pong
 			Playing, Serving, Won
 		};
 
-		GameScreen();
-		GameScreen(float paddle_offset, float score_offset, int serve_delay);
+		explicit GameScreen(sf::Vector2u screen_size);
 
 		virtual void serve();
 
@@ -25,9 +24,9 @@ namespace Pong
 		void update(float dt) override;
 		void handle_input(sf::Event event, Window* window) override;
 	private:
-		const int k_serve_delay;
-		const float k_paddle_offset;
-		const float k_score_offset;
+		const int k_serve_delay{ 3 };
+		const float k_paddle_offset{ 35.f };
+		const float k_score_offset{ 40.f };
 
 		int m_p1_score;
 		int m_p2_score;
