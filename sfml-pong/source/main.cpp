@@ -1,13 +1,18 @@
-#include "Window.h"
-#include "Screen/TitleScreen.h"
+#include "Game.h"
 #include <iostream>
 
 int main() 
 {
 	try
 	{
-		Pong::Window window { "Pong" };
-	} 
+		Pong::Game game;
+		while (!game.get_window()->is_done()) {
+			game.handle_input();
+			game.update();
+			game.render();
+			game.restart_clock();
+		}
+	}
 	catch (std::exception& e)
 	{
 		std::cout << e.what() << std::endl;

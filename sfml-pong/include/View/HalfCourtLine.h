@@ -11,9 +11,8 @@ namespace Pong
 	class HalfCourtLine : public Drawable
 	{
 	public:
-		HalfCourtLine();
-
-		HalfCourtLine(sf::Vector2f size, float gap);
+		HalfCourtLine(int width, int height, 
+			sf::Vector2f size = sf::Vector2f { 6.f, 20.f }, float gap = 30);
 
 		void draw(sf::RenderTarget* target) override;
 	private:
