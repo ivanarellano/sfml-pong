@@ -1,6 +1,6 @@
+#include "Screen/GameScreen.h"
 #include "Random.h"
 #include "Window.h"
-#include "Screen/GameScreen.h"
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Event.hpp>
 
@@ -23,7 +23,6 @@ namespace Pong
 		, m_p2_score { 0 }
 		, m_state { PlayState::Serving }
 		, m_server { nullptr }
-		, m_time { 0 }
 		, m_press_key_text { "Press any key\nto play again.", nullptr }
 	{
 	}
@@ -39,11 +38,11 @@ namespace Pong
 		m_p1_score_text.set_text(std::to_string(m_p1_score));
 		m_p2_score_text.set_text(std::to_string(m_p1_score));
 
-		m_p1_score_text.set_position(Window::k_width * .25f - m_p1_score_text.get_bounds().width / 2, k_score_offset);
-		m_p2_score_text.set_position(Window::k_width * .75f - m_p2_score_text.get_bounds().height / 2, k_score_offset);
+		m_p1_score_text.set_position(m_screen_size.x * .25f - m_p1_score_text.get_bounds().width / 2, k_score_offset);
+		m_p2_score_text.set_position(m_screen_size.x * .75f - m_p2_score_text.get_bounds().height / 2, k_score_offset);
 
-		const float player_2_x_pos { -k_paddle_offset + Window::k_width - m_player_1.get_bounds().width };
-		const float player_vertical_center { Window::k_height / 2 - m_player_1.get_bounds().height / 2 };
+		const float player_2_x_pos { -k_paddle_offset + m_screen_size.x - m_player_1.get_bounds().width };
+		const float player_vertical_center { m_screen_size.y / 2 - m_player_1.get_bounds().height / 2 };
 
 		m_player_1.set_position(k_paddle_offset, player_vertical_center);
 		m_player_2.set_position(player_2_x_pos, player_vertical_center);
@@ -69,9 +68,9 @@ namespace Pong
 			dir = coin_toss() ? Ball::Direction::NW : Ball::Direction::SW;
 		}
 
-		const float ball_pos_x { Window::k_width / 2 - m_ball.get_bounds().width / 2};
+		const float ball_pos_x { m_screen_size.x / 2 - m_ball.get_bounds().width / 2};
 		const float ball_pos_y { static_cast<float>(random(static_cast<int>(m_ball.get_bounds().height),
-			Window::k_height)) - m_ball.get_bounds().height / 2};
+			m_screen_size.y)) - m_ball.get_bounds().height / 2};
 
 		m_ball.set_direction(dir);
 		m_ball.reset_velocity();
@@ -129,7 +128,7 @@ namespace Pong
 				return;
 			}
 
-			const bool did_p1_score { m_ball.get_position().x > Window::k_width};
+			const bool did_p1_score { m_ball.get_position().x > m_screen_size.x};
 			const bool did_p2_score { m_ball.get_position().x + m_ball.get_bounds().width < 0};
 
 			if (did_p1_score)
@@ -177,13 +176,12 @@ namespace Pong
 
 	void GameScreen::handle_input(sf::Event event, Window* window)
 	{
-		if (PlayState::Won == m_state && event.type == sf::Event::KeyReleased)
+		if (PlayState::Won == m_state && event.type == sf::Event::KeyReleased) 
+		{
 			on_start();
+		}
 	}
 
-	void GameScreen::on_stop()
-	{
-	}
 
 	Paddle* GameScreen::did_player_win()
 	{
@@ -196,8 +194,8 @@ namespace Pong
 	void GameScreen::show_winner(std::string name)
 	{
 		m_winner_text.set_text("GG.\n" + name + " Wins!");
-		m_winner_text.set_position(Window::k_width / 2 - m_winner_text.get_bounds().width / 2, 
-			Window::k_height / 2 - m_winner_text.get_bounds().height / 2);
+		m_winner_text.set_position(m_screen_size.x / 2 - m_winner_text.get_bounds().width / 2, 
+			m_screen_size.y / 2 - m_winner_text.get_bounds().height / 2);
 
 		m_press_key_text.set_position(m_winner_text.get_position().x,
 		                              m_winner_text.get_position().y + m_winner_text.get_bounds().height);
@@ -213,6 +211,6 @@ namespace Pong
 
 	bool GameScreen::can_go_down(const sf::RectangleShape& shape)
 	{
-		return shape.getPosition().y + shape.getSize().y <= Window::k_height;
+		return shape.getPosition().y + shape.getSize().y <= m_screen_size.y;
 	}
 }

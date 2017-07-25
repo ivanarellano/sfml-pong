@@ -1,95 +1,66 @@
 #include "Window.h"
-#include "Screen/TitleScreen.h"
-#include "Screen/GameScreen.h"
 #include <SFML/Window/Event.hpp>
-#include <iostream>
 
 namespace Pong
 {
-	Window::Window(const std::string& title) : m_screen { nullptr }
+	Window::Window() : Window{ "Window", sf::Vector2u{ 800, 600 } }
 	{
-		m_sf_window.create(sf::VideoMode(k_width, k_height), title);
-		m_sf_window.setFramerateLimit(60);
-
-		show_title_screen();
-
-		while (m_sf_window.isOpen())
-		{
-			poll_input_events();
-			update_game_state();
-			draw_frame();
-		}
-
-		shutdown();
 	}
 
-	sf::RenderWindow* Window::get_render_window()
+	Window::Window(const std::string& title, const sf::Vector2u size)
+		: m_window_title{ title }
+		, m_window_size{ size }
+		, m_is_fullscreen{ false }
+		, m_is_done{ false }
 	{
-		return &m_sf_window;
+		create();
 	}
 
-	void Window::show_game_screen()
+	void Window::begin_draw()
 	{
-		set_screen(new GameScreen());
+		m_window.clear(sf::Color::Black);
 	}
 
-	void Window::show_title_screen()
+	void Window::end_draw()
 	{
-		set_screen(new TitleScreen());
+		m_window.display();
 	}
 
-	void Window::show_credits_screen()
-	{
-		// TODO: Show credits
-		std::cout << "TODO: Show credits" << std::endl;
-	}
-
-	void Window::poll_input_events()
+	void Window::update()
 	{
 		sf::Event event;
-
-		while (m_sf_window.pollEvent(event))
+		while (m_window.pollEvent(event))
 		{
-			if (event.type == sf::Event::Closed)
+			if (event.type == sf::Event::Closed) 
 			{
-				m_sf_window.close();
-			}
-			else 
+				m_is_done = true;
+			} 
+			else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) 
 			{
-				if (m_screen != nullptr)
-					m_screen->handle_input(event, this);
+				m_is_done = true;
+			} 
+			else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::F5) 
+			{
+				toggle_fullscreen();
 			}
 		}
 	}
 
-	void Window::update_game_state()
+	void Window::toggle_fullscreen()
 	{
-		m_screen->update(m_clock.restart().asSeconds());
+		m_is_fullscreen = !m_is_fullscreen;
+		destroy();
+		create();
 	}
 
-	void Window::draw_frame()
+	void Window::create()
 	{
-		m_sf_window.clear();
-
-		m_screen->draw(&m_sf_window);
-
-		m_sf_window.display();
+		auto style = is_fullscreen() ? sf::Style::Fullscreen : sf::Style::Default;
+		m_window.create(sf::VideoMode{ m_window_size.x, m_window_size.y, 32 }, m_window_title, style);
 	}
 
-	void Window::shutdown() const
+	void Window::destroy()
 	{
-		m_screen->on_stop();
-	}
-
-	void Window::set_screen(Screen* screen)
-	{
-		if (m_screen != nullptr)
-		{
-			m_screen->on_stop();
-			delete m_screen;
-		}
-
-		m_screen = screen;
-		m_screen->on_start();
+		m_window.close();
 	}
 }

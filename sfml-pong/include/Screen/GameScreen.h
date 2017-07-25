@@ -24,8 +24,6 @@ namespace Pong
 		void on_start() override;
 		void update(float dt) override;
 		void handle_input(sf::Event event, Window* window) override;
-		void on_stop() override;
-
 	private:
 		const int k_serve_delay;
 		const float k_paddle_offset;
@@ -38,11 +36,11 @@ namespace Pong
 		Ball m_ball;
 		Paddle m_player_1;
 		Paddle m_player_2;
-		HalfCourtLine m_half_court_line;
 		Text m_p1_score_text;
 		Text m_p2_score_text;
 		Text m_winner_text;
 		Text m_press_key_text;
+		HalfCourtLine m_half_court_line {100, 1};
 
 		Paddle* m_server;
 		sf::Clock m_clock;
