@@ -1,35 +1,37 @@
 #pragma once
-#include "Screen/Screen.h"
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <string>
 
 namespace Pong
 {
 	class Window
 	{
 	public:
-		virtual ~Window() {}
+		Window();
+		Window(const std::string& title, const sf::Vector2u size);
+		~Window() {}
 
-		constexpr static int k_width { 800 };
-		constexpr static int k_height { 600 };
+		void begin_draw();
+		void end_draw();
 
-		Window(const std::string& title);
+		void update(sf::Event event);
 
-		sf::RenderWindow* get_render_window();
+		bool is_done() { return m_is_done; }
+		bool is_fullscreen() { return m_is_fullscreen; }
+		sf::RenderWindow* get_render_window() { return &m_window; }
+		sf::Vector2u get_window_size() { return m_window_size; }
 
-		void show_game_screen();
-		void show_title_screen();
-		void show_credits_screen();
+		void toggle_fullscreen();
 	private:
-		sf::RenderWindow m_sf_window;
-		sf::Clock m_clock;
-		Screen* m_screen;
+		sf::RenderWindow m_window;
+		sf::Vector2u m_window_size;
+		std::string m_window_title;
 
-		void poll_input_events();
-		void update_game_state();
-		void draw_frame();
-		void shutdown() const;
+		bool m_is_done;
+		bool m_is_fullscreen;
 
-		void set_screen(Screen* screen);
+		void create();
+		void destroy();
 
 		Window(const Window&) = delete;
 		Window& operator=(const Window&) = delete;

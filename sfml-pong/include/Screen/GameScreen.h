@@ -15,21 +15,18 @@ namespace Pong
 			Playing, Serving, Won
 		};
 
-		GameScreen();
-		GameScreen(float paddle_offset, float score_offset, int serve_delay);
+		explicit GameScreen(sf::Vector2u screen_size);
 
 		virtual void serve();
 
 		void draw(sf::RenderTarget* target) override;
 		void on_start() override;
 		void update(float dt) override;
-		void handle_input(sf::Event event, Window* window) override;
-		void on_stop() override;
-
+		void handle_input(sf::Event event, Game* game) override;
 	private:
-		const int k_serve_delay;
-		const float k_paddle_offset;
-		const float k_score_offset;
+		const int k_serve_delay{ 3 };
+		const float k_paddle_offset{ 35.f };
+		const float k_score_offset{ 40.f };
 
 		int m_p1_score;
 		int m_p2_score;
@@ -38,11 +35,11 @@ namespace Pong
 		Ball m_ball;
 		Paddle m_player_1;
 		Paddle m_player_2;
-		HalfCourtLine m_half_court_line;
 		Text m_p1_score_text;
 		Text m_p2_score_text;
 		Text m_winner_text;
 		Text m_press_key_text;
+		HalfCourtLine m_half_court_line {100, 1};
 
 		Paddle* m_server;
 		sf::Clock m_clock;

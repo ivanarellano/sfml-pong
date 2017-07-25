@@ -3,7 +3,7 @@
 
 namespace Pong
 {
-	class Window;
+	class Game;
 
 	struct Screen : Drawable
 	{
@@ -11,12 +11,13 @@ namespace Pong
 
 		virtual void on_start() = 0;
 		virtual void update(float dt) = 0;
-		virtual void handle_input(sf::Event event, Window* window) = 0;
-		virtual void on_stop() = 0;
+		virtual void handle_input(sf::Event event, Game* game) = 0;
 
 		Screen(const Screen&) = delete;
 		Screen& operator=(const Screen&) = delete;
 	protected:
-		Screen() {}
+		explicit Screen(sf::Vector2u screen_size) : m_screen_size(screen_size) {}
+
+		sf::Vector2u m_screen_size;
 	};
 }
