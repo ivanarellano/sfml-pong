@@ -9,7 +9,6 @@ namespace Pong
 	{
 	public:
 		Game();
-		~Game() {}
 
 		void handle_input();
 		void update();

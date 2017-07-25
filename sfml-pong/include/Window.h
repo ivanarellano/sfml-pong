@@ -9,7 +9,6 @@ namespace Pong
 	public:
 		Window();
 		Window(const std::string& title, const sf::Vector2u size);
-		~Window() {}
 
 		void begin_draw();
 		void end_draw();
