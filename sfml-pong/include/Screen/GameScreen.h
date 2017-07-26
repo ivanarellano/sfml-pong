@@ -25,7 +25,7 @@ namespace Pong
 		void update(float dt) override;
 		void handle_input(sf::Event event, Game* game) override;
 	private:
-		const int k_serve_delay{ 3 };
+		const int k_serve_delay_sec{ 3 };
 		const float k_paddle_hori_padding{ 35.f };
 		const float k_score_vert_padding{ 40.f };
 
@@ -43,10 +43,8 @@ namespace Pong
 		Text m_winner_text;
 		Text m_press_key_text{ "Press any key\nto play again." };
 		HalfCourtLine m_half_court_line{ m_screen_size };
-
 		Paddle* m_server{ nullptr };
-		sf::Clock m_clock;
-		float m_time;
+		float m_time{ 0.f };
 
 		Paddle* did_player_win();
 		void show_winner(std::string name);

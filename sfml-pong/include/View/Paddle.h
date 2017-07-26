@@ -6,11 +6,8 @@ namespace Pong
 	class Paddle : public Actor
 	{
 	public:
-		Paddle();
-
-		explicit Paddle(sf::Vector2f size, float move_speed)
+		explicit Paddle(sf::Vector2f size = sf::Vector2f{ 16.f, 50.f })
 			: Actor{ size }
-			, m_move_speed{ move_speed }
 			, m_move_up{ false }
 			, m_move_down{ false }
 		{
@@ -25,8 +22,8 @@ namespace Pong
 		const std::string& get_name() const { return m_name; }
 	private:
 		std::string m_name;
-		float m_move_speed;
-		bool m_move_up;
-		bool m_move_down;
+		float m_move_speed{ 375.f };
+		bool m_move_up{ false };
+		bool m_move_down{ false };
 	};
 }

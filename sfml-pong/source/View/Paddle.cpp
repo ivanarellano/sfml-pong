@@ -2,10 +2,6 @@
 
 namespace Pong
 {
-	Paddle::Paddle() : Paddle { sf::Vector2f { 16.f, 50.f }, 375.f }
-	{
-	}
-
 	void Paddle::update(float dt)
 	{
 		if (m_move_up)
