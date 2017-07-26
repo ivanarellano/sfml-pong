@@ -11,16 +11,16 @@ namespace Pong
 
 		void update(float dt) override;
 
-		void initialize();
-		void on_collision();
-
+		void serve(bool isFacingLeftPlayer);
 		void increase_velocity(float vel);
+		void on_collision();
 	private:
-		const float k_min_velocity{ 300 };
-		const float k_max_velocity{ 500 };
-		const float k_spring_force{ 50 };
+		const float k_min_velocity{ 100.f };
+		const float k_max_velocity{ 200 };
+		const float k_spring_force{ 1 };
 
 		sf::Vector2f m_velocity;
+		sf::Vector2f m_acceleration;
 
 		Sound m_bounce_sound;
 	};

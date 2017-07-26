@@ -18,7 +18,7 @@ namespace Pong
 		void move(float x, float y) override { m_rect.move(x, y); }		
 
 		sf::RectangleShape get_shape() const { return m_rect; }
-	private:
 		sf::RectangleShape m_rect;
+	private:
 	};
 }

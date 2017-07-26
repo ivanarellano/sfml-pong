@@ -153,6 +153,9 @@
     <ClCompile Include="source\Screen\TitleScreen.cpp">
       <Filter>Source Files\Screen</Filter>
     </ClCompile>
+    <ClCompile Include="include\Vector2Math.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="source\ResourcePath.mm">

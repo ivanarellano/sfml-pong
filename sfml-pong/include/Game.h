@@ -24,6 +24,7 @@ namespace Pong
 	private:
 		Window m_window;
 		sf::Clock m_clock;
+		sf::Clock m_dt;
 		float m_elapsed;
 		Screen* m_screen;
 

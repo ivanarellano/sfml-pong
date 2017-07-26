@@ -30,11 +30,13 @@ namespace Pong
 
 	void Game::update()
 	{
-		float timestep { 1.0f / 60.0f };
+		float timestep { 1.0f / 60.f };
 
 		if (m_elapsed >= timestep)
 		{
-			m_screen->update(m_elapsed);
+			float dt = m_dt.restart().asSeconds();
+
+			m_screen->update(dt);
 			m_elapsed -= timestep;
 		}
 	}

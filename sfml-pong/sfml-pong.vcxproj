@@ -179,6 +179,7 @@
     <ClInclude Include="include\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="include\Vector2Math.h" />
     <ClCompile Include="source\Game.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\Network\Client.cpp" />

@@ -40,23 +40,12 @@ namespace Pong
 	{
 		if (m_server == nullptr) return;
 
-		Ball::Direction dir;
-
-		if (m_server == &m_p1)
-		{
-			dir = coin_toss() ? Ball::Direction::NE : Ball::Direction::SE;
-		}
-		else
-		{
-			dir = coin_toss() ? Ball::Direction::NW : Ball::Direction::SW;
-		}
+		m_ball.serve(m_server == &m_p1);
 
 		const float ball_pos_x { m_screen_size.x / 2 - m_ball.get_bounds().width / 2};
 		const float ball_pos_y { static_cast<float>(random(static_cast<int>(m_ball.get_bounds().height),
 			m_screen_size.y)) - m_ball.get_bounds().height / 2};
 
-		m_ball.set_direction(dir);
-		m_ball.initialize();
 		m_ball.set_position(ball_pos_x, ball_pos_y);
 		m_ball.set_visibility(true);
 
@@ -65,88 +54,87 @@ namespace Pong
 	
 	void GameScreen::update(float dt)
 	{
-		if (PlayState::Playing == m_state || PlayState::Serving == m_state)
+		if (PlayState::Serving == m_state)
 		{
-			const bool did_press_up	  { sf::Keyboard::isKeyPressed(sf::Keyboard::Up) };
-			const bool did_press_down { sf::Keyboard::isKeyPressed(sf::Keyboard::Down) };
-			const bool did_press_w	  { sf::Keyboard::isKeyPressed(sf::Keyboard::W) };
-			const bool did_press_s	  { sf::Keyboard::isKeyPressed(sf::Keyboard::S) };
-
-			m_p1.move_up(did_press_w && can_go_up(m_p1.get_shape()));
-			m_p1.move_down(did_press_s && can_go_down(m_p1.get_shape()));
-
-			m_p2.move_up(did_press_up && can_go_up(m_p2.get_shape()));
-			m_p2.move_down(did_press_down && can_go_down(m_p2.get_shape()));
-
-			m_p1.update(dt);
-			m_p2.update(dt);
-		}
-
-		if (PlayState::Won == m_state)
-		{
-			/* Wait for any key event to restart */
-		}
-		else if (PlayState::Serving == m_state)
-		{
-			m_time += m_clock.getElapsedTime().asSeconds();
-			m_clock.restart();
-
-			if (m_time >= k_serve_delay)
-			{
-				serve();
-				m_time = 0;
-				m_clock.restart();
-			}
+			serve();
 		}
 		else if (PlayState::Playing == m_state)
 		{
-			Paddle* m_winner = did_player_win();
-
-			if (m_winner != nullptr)
-			{
-				m_ball.set_visibility(false);
-
-				show_winner(m_winner->get_name());
-				m_state = PlayState::Won;
-				return;
-			}
-
-			const bool did_p1_score { m_ball.get_position().x > m_screen_size.x};
-			const bool did_p2_score { m_ball.get_position().x + m_ball.get_bounds().width < 0};
-
-			if (did_p1_score)
-			{
-				m_p1_score_text.set_text(std::to_string(++m_p1_score));
-				m_server = &m_p1;
-			}
-
-			if (did_p2_score)
-			{
-				m_p2_score_text.set_text(std::to_string(++m_p2_score));
-				m_server = &m_p2;
-			}
-
-			if (did_p1_score || did_p2_score)
-			{
-				m_state = PlayState::Serving;
-				return;
-			}
-
-			const bool did_hit_p1 { m_ball.get_bounds().intersects(m_p1.get_bounds()) };
-			const bool did_hit_p2 { m_ball.get_bounds().intersects(m_p2.get_bounds()) };
-
-			if (did_hit_p1 || did_hit_p2)
-			{
-				m_ball.reflect_on_paddle();
-			}
-
-			if (!can_go_up(m_ball.get_shape()) || !can_go_down(m_ball.get_shape()))
-			{
-				m_ball.reflect_on_court();
-			}
-
 			m_ball.update(dt);
 		}
+
+		//if (PlayState::Playing == m_state || PlayState::Serving == m_state)
+		//{
+		//	const bool did_press_up	  { sf::Keyboard::isKeyPressed(sf::Keyboard::Up) };
+		//	const bool did_press_down { sf::Keyboard::isKeyPressed(sf::Keyboard::Down) };
+		//	const bool did_press_w	  { sf::Keyboard::isKeyPressed(sf::Keyboard::W) };
+		//	const bool did_press_s	  { sf::Keyboard::isKeyPressed(sf::Keyboard::S) };
+
+		//	m_p1.move_up(did_press_w && can_go_up(m_p1.get_shape()));
+		//	m_p1.move_down(did_press_s && can_go_down(m_p1.get_shape()));
+
+		//	m_p2.move_up(did_press_up && can_go_up(m_p2.get_shape()));
+		//	m_p2.move_down(did_press_down && can_go_down(m_p2.get_shape()));
+
+		//	m_p1.update(dt);
+		//	m_p2.update(dt);
+		//}
+
+		//if (PlayState::Won == m_state)
+		//{
+		//	/* Wait for any key event to restart */
+		//}
+		//else if (PlayState::Serving == m_state)
+		//{
+		//	m_time += m_clock.getElapsedTime().asSeconds();
+		//	m_clock.restart();
+
+		//	if (m_time >= k_serve_delay)
+		//	{
+		//		serve();
+		//		m_time = 0;
+		//		m_clock.restart();
+		//	}
+		//}
+		//else if (PlayState::Playing == m_state)
+		//{
+		//	Paddle* m_winner = did_player_win();
+
+		//	if (m_winner != nullptr)
+		//	{
+		//		m_ball.set_visibility(false);
+
+		//		show_winner(m_winner->get_name());
+		//		m_state = PlayState::Won;
+		//		return;
+		//	}
+
+		//	const bool did_p1_score { m_ball.get_position().x > m_screen_size.x};
+		//	const bool did_p2_score { m_ball.get_position().x + m_ball.get_bounds().width < 0};
+
+		//	if (did_p1_score)
+		//	{
+		//		m_p1_score_text.set_text(std::to_string(++m_p1_score));
+		//		m_server = &m_p1;
+		//	}
+
+		//	if (did_p2_score)
+		//	{
+		//		m_p2_score_text.set_text(std::to_string(++m_p2_score));
+		//		m_server = &m_p2;
+		//	}
+
+		//	if (did_p1_score || did_p2_score)
+		//	{
+		//		m_state = PlayState::Serving;
+		//		return;
+		//	}
+
+		//	const bool did_hit_p1 { m_ball.get_bounds().intersects(m_p1.get_bounds()) };
+		//	const bool did_hit_p2 { m_ball.get_bounds().intersects(m_p2.get_bounds()) };
+
+		//	m_ball.update(dt);
+		//}
 	}
 
 	void GameScreen::draw(sf::RenderTarget* target)

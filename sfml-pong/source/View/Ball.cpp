@@ -1,38 +1,36 @@
 #include "Ball.h"
+#include "Vector2Math.h"
+#include "Random.h"
+#include <iostream>
 
 namespace Pong
 {
 	Ball::Ball(sf::Vector2f size) : Actor{ size }
 	{
 		m_bounce_sound.load(Sound::Asset::blip);
-		initialize();
+	}
+
+	void Ball::serve(bool isFacingLeftPlayer)
+	{
+		m_acceleration.x = isFacingLeftPlayer ? -1.f : 1.f;
+		m_acceleration.y = coin_toss() ? -1.f : 1.f;
+
+		m_acceleration *= k_min_velocity;
 	}
 
 	void Ball::update(float dt)
 	{
-		m_velocity *= dt;
-		move(m_velocity.x, m_velocity.y);
+		m_velocity = m_acceleration * dt;
+		m_rect.move(m_velocity);
 	}
 
 	void Ball::increase_velocity(float vel)
 	{
-		m_velocity.x += vel;
-		m_velocity.y += vel;
+		m_acceleration.x += vel;
+		m_acceleration.y += vel;
 
-		//if (new_vel < k_max_velocity)
-		//{
-		//	m_velocity = new_vel;
-		//}
-		//else
-		//{
-		//	m_velocity = k_max_velocity;
-		//}
-	}
-
-	void Ball::initialize()
-	{
-		m_velocity.x = k_min_velocity; 
-		m_velocity.y = k_min_velocity;
+		std::cout << "Increased velocity  x: " << m_acceleration.x 
+			<< ", y:" << m_acceleration.y << std::endl;
 	}
 
 	void Ball::on_collision()
