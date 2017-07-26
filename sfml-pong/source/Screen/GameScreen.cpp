@@ -56,7 +56,7 @@ namespace Pong
 			m_screen_size.y)) - m_ball.get_bounds().height / 2};
 
 		m_ball.set_direction(dir);
-		m_ball.reset_velocity();
+		m_ball.initialize();
 		m_ball.set_position(ball_pos_x, ball_pos_y);
 		m_ball.set_visibility(true);
 

@@ -20,8 +20,7 @@ namespace Pong
 
 	struct Text : Widget
 	{
-		Text();
-		explicit Text(const std::string& text);
+		explicit Text(const std::string& text = "");
 		Text(const std::string& text, OnClickCallback callback);
 
 		void on_click(Address pw) override;

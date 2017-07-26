@@ -5,88 +5,39 @@ namespace Pong
 	Ball::Ball(sf::Vector2f size) : Actor{ size }
 	{
 		m_bounce_sound.load(Sound::Asset::blip);
+		initialize();
 	}
 
 	void Ball::update(float dt)
 	{
-		const float time_adjusted_speed = m_velocity * dt;
-		switch (m_direction)
-		{
-		case Direction::NW:
-			move(-time_adjusted_speed, -time_adjusted_speed);
-			break;
-		case Direction::NE:
-			move(time_adjusted_speed, -time_adjusted_speed);
-			break;
-		case Direction::SW:
-			move(-time_adjusted_speed, time_adjusted_speed);
-			break;
-		case Direction::SE:
-			move(time_adjusted_speed, time_adjusted_speed);
-			break;
-		case Direction::None:
-			break;
-		}
+		m_velocity *= dt;
+		move(m_velocity.x, m_velocity.y);
 	}
 
 	void Ball::increase_velocity(float vel)
 	{
-		float new_vel = m_velocity + vel;
+		m_velocity.x += vel;
+		m_velocity.y += vel;
 
-		if (new_vel < k_max_velocity)
-		{
-			m_velocity = new_vel;
-		}
-		else
-		{
-			m_velocity = k_max_velocity;
-		}
+		//if (new_vel < k_max_velocity)
+		//{
+		//	m_velocity = new_vel;
+		//}
+		//else
+		//{
+		//	m_velocity = k_max_velocity;
+		//}
 	}
 
-	void Ball::reflect_on_court()
+	void Ball::initialize()
 	{
-		m_bounce_sound.play();
-
-		switch (m_direction)
-		{
-		case Direction::NW:
-			m_direction = Direction::SW;
-			break;
-		case Direction::NE:
-			m_direction = Direction::SE;
-			break;
-		case Direction::SW:
-			m_direction = Direction::NW;
-			break;
-		case Direction::SE:
-			m_direction = Direction::NE;
-			break;
-		default:
-			m_direction = Direction::None;
-		}
+		m_velocity.x = k_min_velocity; 
+		m_velocity.y = k_min_velocity;
 	}
 
-	void Ball::reflect_on_paddle()
+	void Ball::on_collision()
 	{
 		m_bounce_sound.play();
 		increase_velocity(k_spring_force);
-
-		switch (m_direction)
-		{
-		case Direction::NW:
-			m_direction = Direction::NE;
-			break;
-		case Direction::NE:
-			m_direction = Direction::NW;
-			break;
-		case Direction::SW:
-			m_direction = Direction::SE;
-			break;
-		case Direction::SE:
-			m_direction = Direction::SW;
-			break;
-		default:
-			m_direction = Direction::None;
-		}
 	}
 }
