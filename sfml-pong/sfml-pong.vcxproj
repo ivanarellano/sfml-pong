@@ -167,7 +167,6 @@
     <ClInclude Include="include\Screen\Screen.h" />
     <ClInclude Include="include\Screen\TitleScreen.h" />
     <ClInclude Include="include\Sound.h" />
-    <ClInclude Include="include\View\Actor.h" />
     <ClInclude Include="include\View\Ball.h" />
     <ClInclude Include="include\View\Event.h" />
     <ClInclude Include="include\View\Font.h" />

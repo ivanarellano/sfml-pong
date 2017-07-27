@@ -26,8 +26,8 @@ namespace Pong
 		void handle_input(sf::Event event, Game* game) override;
 	private:
 		const int k_serve_delay_sec{ 3 };
-		const float k_paddle_hori_padding{ 35.f };
-		const float k_score_vert_padding{ 40.f };
+		float k_paddle_hori_padding{ 35.f };
+		float k_score_vert_padding{ 40.f };
 
 		void init_gui();
 

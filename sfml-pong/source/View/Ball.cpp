@@ -5,7 +5,7 @@
 
 namespace Pong
 {
-	Ball::Ball(sf::Vector2f size) : Actor{ size }
+	Ball::Ball(float radius) : m_shape{ radius }
 	{
 		m_bounce_sound.load(Sound::Asset::blip);
 	}
@@ -18,24 +18,21 @@ namespace Pong
 		m_acceleration *= k_min_velocity;
 	}
 
-	void Ball::update(float dt)
+	void Ball::tick(float delta_time)
 	{
-		m_velocity = m_acceleration * dt;
-		m_rect.move(m_velocity);
+		m_velocity = m_acceleration * delta_time;
+		m_shape.move(m_velocity);
 	}
 
-	void Ball::increase_velocity(float vel)
+	void Ball::increase_speed(float vel)
 	{
 		m_acceleration.x += vel;
 		m_acceleration.y += vel;
-
-		std::cout << "Increased velocity  x: " << m_acceleration.x 
-			<< ", y:" << m_acceleration.y << std::endl;
 	}
 
 	void Ball::on_collision()
 	{
 		m_bounce_sound.play();
-		increase_velocity(k_spring_force);
+		increase_speed(k_spring_force);
 	}
 }

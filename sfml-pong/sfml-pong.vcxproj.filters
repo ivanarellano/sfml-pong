@@ -61,9 +61,6 @@
     <ClInclude Include="include\Network\Server.h">
       <Filter>Header Files\Network</Filter>
     </ClInclude>
-    <ClInclude Include="include\View\Actor.h">
-      <Filter>Header Files\View</Filter>
-    </ClInclude>
     <ClInclude Include="include\View\Ball.h">
       <Filter>Header Files\View</Filter>
     </ClInclude>

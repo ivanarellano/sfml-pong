@@ -12,25 +12,15 @@ namespace Pong
 		virtual void draw(sf::RenderTarget* target) = 0;
 	};
 
-	class Measurement
+	class Tickable
 	{
 	public:
-		virtual ~Measurement() {}
+		virtual ~Tickable() {}
 
-		virtual sf::FloatRect get_bounds() const = 0;
+		virtual void tick(float delta_time) = 0;
 	};
 
-	class Movable
-	{
-	public:
-		virtual ~Movable() {}
-
-		virtual sf::Vector2f get_position() const = 0;
-		virtual void set_position(float x, float y) = 0;
-		virtual void move(float x, float y) = 0;
-	};
-
-	class View : Drawable, Measurement, Movable
+	class View : Drawable
 	{
 	public:
 		virtual ~View() {}
