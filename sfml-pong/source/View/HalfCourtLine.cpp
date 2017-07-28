@@ -1,5 +1,5 @@
 #include "HalfCourtLine.h"
-#include "Window.h"
+#include <SFML/Graphics/RenderTarget.hpp>
 
 namespace Pong
 {
@@ -16,8 +16,8 @@ namespace Pong
 		}
 	}
 
-	void HalfCourtLine::draw(sf::RenderTarget* target)
+	void HalfCourtLine::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	{
-		for (const auto& notch : m_notches) target->draw(notch);
+		for (const auto& notch : m_notches) target.draw(notch);
 	}
 }

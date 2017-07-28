@@ -173,7 +173,8 @@
     <ClInclude Include="include\View\HalfCourtLine.h" />
     <ClInclude Include="include\View\Paddle.h" />
     <ClInclude Include="include\View\Text.h" />
-    <ClInclude Include="include\View\View.h" />
+    <ClInclude Include="include\View\Tickable.h" />
+    <ClInclude Include="include\View\Visibility.h" />
     <ClInclude Include="include\View\Widget.h" />
     <ClInclude Include="include\Window.h" />
   </ItemGroup>

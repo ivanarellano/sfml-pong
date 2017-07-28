@@ -4,7 +4,9 @@
 #include "Paddle.h"
 #include "Text.h"
 #include "HalfCourtLine.h"
-#include <SFML\System\Clock.hpp>
+#include <SFML/Graphics/Drawable.hpp>
+#include <SFML/System/Clock.hpp>
+#include <vector>
 
 namespace Pong
 {
@@ -17,13 +19,13 @@ namespace Pong
 		};
 
 		explicit GameScreen(sf::Vector2u screen_size);
-
+		
 		virtual void serve();
 
-		void draw(sf::RenderTarget* target) override;
 		void on_start() override;
 		void update(float dt) override;
 		void handle_input(sf::Event event, Game* game) override;
+		void draw(sf::RenderTarget* target) const override;
 	private:
 		const int k_serve_delay_sec{ 3 };
 		float k_paddle_hori_padding{ 35.f };
@@ -35,6 +37,9 @@ namespace Pong
 		int m_p2_score{ 0 };
 		PlayState m_state{ PlayState::Serving };
 
+		Paddle* m_server{ nullptr };
+		float m_time{ 0.f };
+
 		Ball m_ball;
 		Paddle m_p1;
 		Paddle m_p2;
@@ -43,8 +48,6 @@ namespace Pong
 		Text m_winner_text;
 		Text m_press_key_text{ "Press any key\nto play again." };
 		HalfCourtLine m_half_court_line{ m_screen_size };
-		Paddle* m_server{ nullptr };
-		float m_time{ 0.f };
 
 		Paddle* did_player_win();
 		void show_winner(std::string name);

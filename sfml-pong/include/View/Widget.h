@@ -1,5 +1,4 @@
 #pragma once
-#include "View.h"
 
 namespace Pong
 {
@@ -17,7 +16,7 @@ namespace Pong
 		Neutral, Focused, Clicked
 	};
 
-	class Widget : public View
+	class Widget
 	{
 	public:
 		virtual ~Widget() {}

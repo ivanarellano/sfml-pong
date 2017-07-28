@@ -2,6 +2,8 @@
 #include "Game.h"
 #include "Screen.h"
 #include "Text.h"
+#include <SFML/Graphics/Drawable.hpp>
+#include <vector>
 
 namespace Pong
 {
@@ -13,10 +15,10 @@ namespace Pong
 		void start_game_server();
 		void find_game_server();
 
-		void draw(sf::RenderTarget* target) override;
 		void on_start() override;
 		void update(float dt) override { /* Do nothing*/ }
 		void handle_input(sf::Event event, Game* game) override;
+		void draw(sf::RenderTarget* target) const override;
 	private:
 		Text m_title{ "PONG" };
 		Text m_host_game{ "New Game (LAN)", cb_new_game };

@@ -2,22 +2,13 @@
 
 namespace Pong
 {
-	TextStyle::TextStyle()
-		: m_font { Font::forward }
-		, m_size { 50 }
-		, m_color { sf::Color::White }
-	{
-	}
-
-	Text::Text(const std::string& text) : Text{ text, nullptr }
-	{
-	}
-
-	Text::Text(const std::string& text, OnClickCallback callback) : m_on_click_cb { callback }
+	Text::Text(const std::string& text, OnClickCallback callback)
+		: sf::Text{}
+		, m_on_click_cb { callback }
 	{
 		TextStyle style;
 		set_style(ViewState::Neutral, style);
-		set_text(text);
+		setString(text);
 	}
 
 	void Text::on_click(Address pw)
@@ -40,7 +31,7 @@ namespace Pong
 
 		TextStyle style { itr->second };
 		set_font(style.m_font);
-		set_color(style.m_color);
-		set_size(style.m_size);
+		setFillColor(style.m_color);
+		setCharacterSize(style.m_size);
 	}
 }

@@ -79,9 +79,6 @@
     <ClInclude Include="include\View\Text.h">
       <Filter>Header Files\View</Filter>
     </ClInclude>
-    <ClInclude Include="include\View\View.h">
-      <Filter>Header Files\View</Filter>
-    </ClInclude>
     <ClInclude Include="include\View\Widget.h">
       <Filter>Header Files\View</Filter>
     </ClInclude>
@@ -111,6 +108,12 @@
     </ClInclude>
     <ClInclude Include="include\Screen\TitleScreen.h">
       <Filter>Header Files\Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="include\View\Visibility.h">
+      <Filter>Header Files\View</Filter>
+    </ClInclude>
+    <ClInclude Include="include\View\Tickable.h">
+      <Filter>Header Files\View</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

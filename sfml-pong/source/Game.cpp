@@ -11,7 +11,7 @@ namespace Pong
 		, m_elapsed { 0.0f }
 		, m_screen { nullptr }
 	{
-		show_game_screen();
+		show_title_screen();
 	}
 
 	void Game::handle_input()
@@ -45,9 +45,7 @@ namespace Pong
 	{
 		m_window.begin_draw();
 
-		sf::RenderWindow* w{ get_window()->get_render_window() };
-
-		m_screen->draw(w);
+		m_screen->draw(m_window.get_render_window());
 
 		m_window.end_draw();
 	}

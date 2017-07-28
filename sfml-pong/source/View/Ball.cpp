@@ -5,7 +5,7 @@
 
 namespace Pong
 {
-	Ball::Ball(float radius) : m_shape{ radius }
+	Ball::Ball(float radius) : CircleShape{ radius }
 	{
 		m_bounce_sound.load(Sound::Asset::blip);
 	}
@@ -21,7 +21,7 @@ namespace Pong
 	void Ball::tick(float delta_time)
 	{
 		m_velocity = m_acceleration * delta_time;
-		m_shape.move(m_velocity);
+		move(m_velocity);
 	}
 
 	void Ball::increase_speed(float vel)
