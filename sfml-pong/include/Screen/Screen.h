@@ -1,4 +1,5 @@
 #pragma once
+#include "Tickable.h"
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 
@@ -6,12 +7,11 @@ namespace Pong
 {
 	class Game;
 
-	struct Screen
+	struct Screen : Tickable
 	{
 		virtual ~Screen() {}
 
 		virtual void on_start() = 0;
-		virtual void update(float dt) = 0;
 		virtual void handle_input(sf::Event event, Game* game) = 0;
 		virtual void draw(sf::RenderTarget* target) const = 0;
 

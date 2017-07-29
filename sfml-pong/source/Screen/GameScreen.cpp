@@ -50,7 +50,7 @@ namespace Pong
 		//m_state = PlayState::Playing;
 	}
 	
-	void GameScreen::update(float dt)
+	void GameScreen::tick(float delta_time)
 	{
 		// Move paddles
 		if (PlayState::Playing == m_state || PlayState::Serving == m_state)
@@ -66,8 +66,8 @@ namespace Pong
 			m_p2.move_up(did_press_up && can_go_up(m_p2));
 			m_p2.move_down(did_press_down && can_go_down(m_p2));
 
-			m_p1.tick(dt);
-			m_p2.tick(dt);
+			m_p1.tick(delta_time);
+			m_p2.tick(delta_time);
 		}
 
 		if (PlayState::Won == m_state)
@@ -76,7 +76,7 @@ namespace Pong
 		}
 		else if (PlayState::Serving == m_state)
 		{
-			m_time += dt;
+			m_time += delta_time;
 
 			if (m_time >= k_serve_delay_sec)
 			{
@@ -119,7 +119,7 @@ namespace Pong
 			const bool did_hit_p1{ m_ball.getGlobalBounds().intersects(m_p1.getGlobalBounds()) };
 			const bool did_hit_p2{ m_ball.getGlobalBounds().intersects(m_p2.getGlobalBounds()) };
 
-			m_ball.tick(dt);
+			m_ball.tick(delta_time);
 		}
 	}
 

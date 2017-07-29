@@ -23,7 +23,7 @@ namespace Pong
 		virtual void serve();
 
 		void on_start() override;
-		void update(float dt) override;
+		void tick(float delta_time) override;
 		void handle_input(sf::Event event, Game* game) override;
 		void draw(sf::RenderTarget* target) const override;
 	private:

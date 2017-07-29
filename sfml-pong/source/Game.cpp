@@ -36,7 +36,7 @@ namespace Pong
 		{
 			float dt = m_dt.restart().asSeconds();
 
-			m_screen->update(dt);
+			m_screen->tick(dt);
 			m_elapsed -= timestep;
 		}
 	}

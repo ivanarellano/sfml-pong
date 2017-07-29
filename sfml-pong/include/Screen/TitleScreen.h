@@ -16,7 +16,7 @@ namespace Pong
 		void find_game_server();
 
 		void on_start() override;
-		void update(float dt) override { /* Do nothing*/ }
+		void tick(float delta_time) override { /* Do nothing*/ }
 		void handle_input(sf::Event event, Game* game) override;
 		void draw(sf::RenderTarget* target) const override;
 	private:
