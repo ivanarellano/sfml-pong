@@ -36,9 +36,9 @@ namespace Pong
 		PlayState m_state{ PlayState::Serving };
 
 		Paddle* m_server{ nullptr };
-		float m_time{ 0.f };
+		float m_serve_delay_dt{ 0.f };
 
-		Ball m_ball;
+		Ball m_ball{ 0, m_screen_size.y };
 		Text m_p1_score_text;
 		Text m_p2_score_text;
 		Text m_winner_text;
@@ -48,6 +48,7 @@ namespace Pong
 		HalfCourtLine m_half_court_line{ m_screen_size };
 
 		Paddle* did_player_win();
+		void check_scoring();
 		void show_winner(const std::string& name);
 	};
 }

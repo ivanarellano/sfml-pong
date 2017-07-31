@@ -53,24 +53,16 @@ namespace Pong
 	
 	void GameScreen::tick(float delta_time)
 	{
-		if (PlayState::Playing == m_state || PlayState::Serving == m_state)
-		{
-			m_p1.tick(delta_time);
-			m_p2.tick(delta_time);
-		}
+		m_p1.tick(delta_time);
+		m_p2.tick(delta_time);
 
-		if (PlayState::Won == m_state)
+		if (PlayState::Serving == m_state)
 		{
-			/* Wait for any key event to restart */
-		}
-		else if (PlayState::Serving == m_state)
-		{
-			m_time += delta_time;
-
-			if (m_time >= k_serve_delay_sec)
+			m_serve_delay_dt += delta_time;
+			if (m_serve_delay_dt >= k_serve_delay_sec)
 			{
 				serve();
-				m_time = 0;
+				m_serve_delay_dt = 0;
 			}
 		}
 		else if (PlayState::Playing == m_state)
@@ -78,37 +70,40 @@ namespace Pong
 			Paddle* m_winner = did_player_win();
 			if (m_winner != nullptr)
 			{
-				m_ball.set_visibility(false);
-
 				show_winner(m_winner->get_name());
 				m_state = PlayState::Won;
 				return;
 			}
 
- 			const bool did_p1_score{ m_ball.getPosition().x > m_screen_size.x };
-			if (did_p1_score)
-			{
-				m_p1_score_text.setString(std::to_string(++m_p1_score));
-				m_server = &m_p1;
-			}
+			check_scoring();
 
-			const bool did_p2_score{ m_ball.getPosition().x + m_ball.getPosition().x < 0 };
-			if (did_p2_score)
-			{
-				m_p2_score_text.setString(std::to_string(++m_p2_score));
-				m_server = &m_p2;
-			}
-
-			if (did_p1_score || did_p2_score)
-			{
-				m_state = PlayState::Serving;
-				return;
-			}
-
-			const bool did_hit_p1{ m_ball.getGlobalBounds().intersects(m_p1.getGlobalBounds()) };
-			const bool did_hit_p2{ m_ball.getGlobalBounds().intersects(m_p2.getGlobalBounds()) };
+			m_ball.check_collision(m_p1, m_p2);
 
 			m_ball.tick(delta_time);
+		}
+	}
+
+	void GameScreen::check_scoring()
+	{
+		const bool did_p1_score{ m_ball.getPosition().x > m_screen_size.x + m_ball.getRadius() * 2 };
+		const bool did_p2_score{ m_ball.getPosition().x < -m_ball.getRadius() * 2 };
+
+		if (did_p1_score)
+		{
+			m_p1_score_text.setString(std::to_string(++m_p1_score));
+			m_server = &m_p1;
+		}
+
+		if (did_p2_score)
+		{
+			m_p2_score_text.setString(std::to_string(++m_p2_score));
+			m_server = &m_p2;
+		}
+
+		if (did_p1_score || did_p2_score)
+		{
+			m_state = PlayState::Serving;
+			return;
 		}
 	}
 

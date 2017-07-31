@@ -14,8 +14,8 @@ namespace Pong
 			P1, P2
 		};
 
-		Paddle(Player player, int top_bound = { 0 }, 
-			int btm_bound = { 0 }, sf::Vector2f size = sf::Vector2f{ 16.f, 50.f })
+		Paddle(Player player, int top_bound = 0, int btm_bound = 0, 
+			sf::Vector2f size = sf::Vector2f{ 16.f, 60.f })
 			: RectangleShape{ size }
 			, m_player{ player }
 			, m_top_y_bound{top_bound}
@@ -43,8 +43,8 @@ namespace Pong
 			}
 		}
 
-		float get_half_width() { return getSize().x / 2.f; }
-		float get_half_height() { return getSize().y / 2.f; }
+		float get_half_width() const { return getSize().x / 2.f; }
+		float get_half_height() const { return getSize().y / 2.f; }
 	private:
 		Player m_player;
 		float m_move_speed{ 10.f };
