@@ -20,9 +20,11 @@ namespace Pong
 		const float k_min_velocity{ 200.f };
 		const float k_max_velocity{ k_min_velocity * 4.f };
 		const float k_spring_force{ 1 };
+		const float k_pi{ 3.14159f };
 
 		sf::Vector2f m_velocity;
 		sf::Vector2f m_acceleration;
 		Sound m_bounce_sound;
+		float ball_angle{ 0.f };
 	};
 }

@@ -2,32 +2,53 @@
 #include "Tickable.h"
 #include <SFML\Graphics\RectangleShape.hpp>
 #include <string>
+#include <iostream>
 
 namespace Pong
 {
 	class Paddle : public sf::RectangleShape, public Tickable
 	{
 	public:
-		Paddle(const std::string& name_tag, sf::Vector2f size = sf::Vector2f{ 16.f, 50.f })
+		enum class Player
+		{
+			P1, P2
+		};
+
+		Paddle(Player player, int top_bound = { 0 }, 
+			int btm_bound = { 0 }, sf::Vector2f size = sf::Vector2f{ 16.f, 50.f })
 			: RectangleShape{ size }
-			, m_name{ name_tag }
+			, m_player{ player }
+			, m_top_y_bound{top_bound}
+			, m_btm_y_bound{btm_bound}
 		{
 		}
 
 		void tick(float delta_time) override;
 
-		void set_name(std::string name) { m_name = name; }
-		void move_up(bool can_move_up) { m_move_up = can_move_up; }
-		void move_down(bool can_move_down) { m_move_down = can_move_down; }
+		const std::string get_name() { return m_player == Player::P1 ? "P1" : "P2"; }
 
-		const std::string& get_name() const { return m_name; }
+		void move_up()
+		{
+			if (getPosition().y - get_half_height() >= m_top_y_bound)
+			{
+				move(0, -m_move_speed);
+			}
+		}
+
+		void move_down()
+		{
+			if (getPosition().y + get_half_height() <= m_btm_y_bound)
+			{
+				move(0, m_move_speed);
+			}
+		}
 
 		float get_half_width() { return getSize().x / 2.f; }
 		float get_half_height() { return getSize().y / 2.f; }
 	private:
-		std::string m_name;
-		float m_move_speed{ 375.f };
-		bool m_move_up{ false };
-		bool m_move_down{ false };
+		Player m_player;
+		float m_move_speed{ 10.f };
+		int m_top_y_bound;
+		int m_btm_y_bound;
 	};
 }

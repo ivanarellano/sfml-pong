@@ -22,16 +22,6 @@ namespace Pong
 		
 		virtual void serve();
 
-		bool GameScreen::can_go_up(const sf::RectangleShape& shape)
-		{
-			return shape.getPosition().y >= 0;
-		}
-
-		bool GameScreen::can_go_down(const sf::RectangleShape& shape)
-		{
-			return shape.getPosition().y + shape.getSize().y <= m_screen_size.y;
-		}
-
 		void on_start() override;
 		void tick(float delta_time) override;
 		void handle_input(sf::Event event, Game* game) override;
@@ -52,8 +42,8 @@ namespace Pong
 		Text m_p1_score_text;
 		Text m_p2_score_text;
 		Text m_winner_text;
-		Paddle m_p1{ "P1" };
-		Paddle m_p2{ "P2" };
+		Paddle m_p1{ Paddle::Player::P1, 0, m_screen_size.y };
+		Paddle m_p2{ Paddle::Player::P2, 0, m_screen_size.y };
 		Text m_press_key_text{ "Press any key\nto play again." };
 		HalfCourtLine m_half_court_line{ m_screen_size };
 

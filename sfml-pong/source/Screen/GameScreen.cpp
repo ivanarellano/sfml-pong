@@ -1,7 +1,6 @@
 #include "Screen/GameScreen.h"
 #include "Random.h"
 #include "Game.h"
-#include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Event.hpp>
 
 namespace Pong
@@ -54,20 +53,8 @@ namespace Pong
 	
 	void GameScreen::tick(float delta_time)
 	{
-		// Move paddles
 		if (PlayState::Playing == m_state || PlayState::Serving == m_state)
 		{
-			const bool did_press_w	  { sf::Keyboard::isKeyPressed(sf::Keyboard::W) };
-			const bool did_press_s	  { sf::Keyboard::isKeyPressed(sf::Keyboard::S) };
-			const bool did_press_up	  { sf::Keyboard::isKeyPressed(sf::Keyboard::Up) };
-			const bool did_press_down { sf::Keyboard::isKeyPressed(sf::Keyboard::Down) };
-
-			m_p1.move_up(did_press_w && can_go_up(m_p1));
-			m_p1.move_down(did_press_s && can_go_down(m_p1));
-
-			m_p2.move_up(did_press_up && can_go_up(m_p2));
-			m_p2.move_down(did_press_down && can_go_down(m_p2));
-
 			m_p1.tick(delta_time);
 			m_p2.tick(delta_time);
 		}
