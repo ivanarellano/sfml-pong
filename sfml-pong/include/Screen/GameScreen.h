@@ -22,6 +22,16 @@ namespace Pong
 		
 		virtual void serve();
 
+		bool GameScreen::can_go_up(const sf::RectangleShape& shape)
+		{
+			return shape.getPosition().y >= 0;
+		}
+
+		bool GameScreen::can_go_down(const sf::RectangleShape& shape)
+		{
+			return shape.getPosition().y + shape.getSize().y <= m_screen_size.y;
+		}
+
 		void on_start() override;
 		void tick(float delta_time) override;
 		void handle_input(sf::Event event, Game* game) override;
@@ -29,9 +39,7 @@ namespace Pong
 	private:
 		const int k_serve_delay_sec{ 3 };
 		float k_paddle_hori_padding{ 35.f };
-		float k_score_vert_padding{ 40.f };
-
-		void init_gui();
+		float k_score_vert_padding{ 60.f };
 
 		int m_p1_score{ 0 };
 		int m_p2_score{ 0 };
@@ -41,18 +49,15 @@ namespace Pong
 		float m_time{ 0.f };
 
 		Ball m_ball;
-		Paddle m_p1;
-		Paddle m_p2;
 		Text m_p1_score_text;
 		Text m_p2_score_text;
 		Text m_winner_text;
+		Paddle m_p1{ "P1" };
+		Paddle m_p2{ "P2" };
 		Text m_press_key_text{ "Press any key\nto play again." };
 		HalfCourtLine m_half_court_line{ m_screen_size };
 
 		Paddle* did_player_win();
-		void show_winner(std::string name);
-
-		bool can_go_up(const sf::RectangleShape& shape);
-		bool can_go_down(const sf::RectangleShape& shape);
+		void show_winner(const std::string& name);
 	};
 }

@@ -9,7 +9,7 @@ namespace Pong
 	class Ball : public sf::CircleShape, public Visibility, public Tickable
 	{
 	public:
-		explicit Ball(float radius = 10);
+		explicit Ball(float radius = 7);
 
 		void tick(float delta_time) override;
 
@@ -17,8 +17,8 @@ namespace Pong
 		void increase_speed(float vel);
 		void on_collision();
 	private:
-		const float k_min_velocity{ 100.f };
-		const float k_max_velocity{ 200 };
+		const float k_min_velocity{ 200.f };
+		const float k_max_velocity{ k_min_velocity * 4.f };
 		const float k_spring_force{ 1 };
 
 		sf::Vector2f m_velocity;

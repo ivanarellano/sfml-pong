@@ -11,7 +11,7 @@ namespace Pong
 		, m_elapsed { 0.0f }
 		, m_screen { nullptr }
 	{
-		show_title_screen();
+		show_game_screen();
 	}
 
 	void Game::handle_input()

@@ -34,6 +34,9 @@ namespace Pong
 		void on_click(Address pw);
 		void set_style(const ViewState& state, const TextStyle& style);
 		void apply_style();
+
+		float get_half_width() { return getGlobalBounds().width / 2.f; }
+		float get_half_height() { return getGlobalBounds().height / 2.f; }
 	private:
 		sf::Font m_font;
 		TextStates m_style_states;
