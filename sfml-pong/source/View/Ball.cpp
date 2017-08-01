@@ -23,8 +23,15 @@ namespace Pong
 
 	void Ball::increase_speed(float vel)
 	{
-		m_acceleration.x *= vel;
-		m_acceleration.y *= vel;
+		if (std::abs(Vec2Math::mag(m_acceleration)) < k_max_velocity)
+		{
+			m_acceleration.x *= vel;
+			m_acceleration.y *= vel;
+		}
+		else 
+		{
+			m_acceleration = Vec2Math::norm(m_acceleration) * k_max_velocity;
+		}
 	}
 
 	void Ball::on_collision()

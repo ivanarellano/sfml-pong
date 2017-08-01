@@ -17,7 +17,7 @@ namespace Vec2Math
 		return sf::Vector2f{ a } / mag(a);
 	}
 
-	inline sf::Vector2f limit(const sf::Vector2f a, float n)
+	inline sf::Vector2f limit(const sf::Vector2f& a, float n)
 	{
 		if (mag(a) > n)
 			return norm(a) * n;

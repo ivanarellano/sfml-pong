@@ -20,7 +20,7 @@ namespace Pong
 		void check_collision(const Paddle& p1, const Paddle& p2);
 	private:
 		const float k_min_velocity{ 220.f };
-		const float k_max_velocity{ k_min_velocity * 2.5f };
+		const float k_max_velocity{ k_min_velocity * 3.f };
 		const float k_spring_force{ 1.25f  };
 
 		sf::Vector2f m_velocity;
