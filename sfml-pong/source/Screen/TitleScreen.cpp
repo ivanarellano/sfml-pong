@@ -37,10 +37,10 @@ namespace Pong
 		auto pos = sf::Vector2f(sf::Mouse::getPosition(*game->get_window()->get_render_window()));
 
 		if (m_host_game.getGlobalBounds().contains(pos.x, pos.y)) {
-			m_host_game.on_click(this);
+			m_host_game.on_click(game);
 		}
 		else if (m_join_game.getGlobalBounds().contains(pos.x, pos.y)) {
-			m_join_game.on_click(this);
+			m_join_game.on_click(game);
 		}
 		else if (m_credits.getGlobalBounds().contains(pos.x, pos.y)) {
 			m_credits.on_click(game);

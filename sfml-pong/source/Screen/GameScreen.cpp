@@ -43,7 +43,8 @@ namespace Pong
 	{
 		if (m_server == nullptr) return;
 
-		const double ball_y{ randomd(.15f, .85f) * m_screen_size.y };
+		double ball_y{ randomd(.15f, .85f) * m_screen_size.y };
+		
 		m_ball.setPosition(get_half_screen_width(), static_cast<float>(ball_y));
 		m_ball.set_visibility(true);
 		m_ball.serve(m_server == &m_p1);
