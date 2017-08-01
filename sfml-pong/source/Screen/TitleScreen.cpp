@@ -14,24 +14,12 @@ namespace Pong
 		m_credits.setCharacterSize(20);
 	}
 
-	void TitleScreen::start_game_server()
-	{
-		std::cout << "TODO: Start server" << std::endl; /// TODO: Start server
-	}
-
-	void TitleScreen::find_game_server()
-	{
-		std::cout << "TODO: Start client" << std::endl; /// TODO: Start client
-	}
-
 	void TitleScreen::on_start()
 	{
-		const int half_w = m_screen_size.x / 2;
-
-		m_title.setPosition(half_w - m_title.getGlobalBounds().width / 2, 100.f);
-		m_host_game.setPosition(half_w - m_host_game.getGlobalBounds().width / 2, 375.f);
-		m_join_game.setPosition(half_w - m_join_game.getGlobalBounds().width / 2, 425.f);
-		m_credits.setPosition(half_w - m_credits.getGlobalBounds().width / 2, 475.f);
+		m_title.setPosition(get_half_screen_width() - m_title.get_half_width(), 100.f);
+		m_host_game.setPosition(get_half_screen_width() - m_host_game.get_half_width(), 375.f);
+		m_join_game.setPosition(get_half_screen_width() - m_join_game.get_half_width(), 425.f);
+		m_credits.setPosition(get_half_screen_width() - m_credits.get_half_width(), 475.f);
 	}
 
 	void TitleScreen::draw(sf::RenderTarget* target) const
@@ -44,9 +32,7 @@ namespace Pong
 
 	void TitleScreen::handle_input(sf::Event event, Game* game)
 	{
-		if (event.type != sf::Event::MouseButtonReleased) {
-			return;
-		}
+		if (event.type != sf::Event::MouseButtonReleased) return;
 
 		auto pos = sf::Vector2f(sf::Mouse::getPosition(*game->get_window()->get_render_window()));
 

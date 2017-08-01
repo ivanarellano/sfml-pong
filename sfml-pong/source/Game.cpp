@@ -6,12 +6,11 @@
 
 namespace Pong
 {
-	Game::Game()
-		: m_window { "Pong", sf::Vector2u{ 800,600 } }
-		, m_elapsed { 0.0f }
-		, m_screen { nullptr }
+	Game::Game() : m_window { "Pong", sf::Vector2u{ 800,600 } }
 	{
-		show_game_screen();
+		m_window.get_render_window()->setFramerateLimit(k_framerate_sec);
+
+		show_title_screen();
 	}
 
 	void Game::handle_input()
@@ -30,7 +29,7 @@ namespace Pong
 
 	void Game::update()
 	{
-		float timestep { 1.0f / 60.f };
+		const float timestep { 1.0f / k_framerate_sec };
 
 		if (m_elapsed >= timestep)
 		{

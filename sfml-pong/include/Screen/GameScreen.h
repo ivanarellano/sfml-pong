@@ -28,6 +28,7 @@ namespace Pong
 		void draw(sf::RenderTarget* target) const override;
 	private:
 		const int k_serve_delay_sec{ 3 };
+
 		float k_paddle_hori_padding{ 35.f };
 		float k_score_vert_padding{ 60.f };
 
