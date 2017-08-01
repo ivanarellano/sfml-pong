@@ -10,5 +10,12 @@ namespace Pong
 		return std::uniform_int_distribution<>{min, max}(random_engine);
 	}
 
+	inline double randomd(double min, double max)
+	{
+		static std::default_random_engine random_engine;
+		random_engine.seed(std::random_device{}());
+		return std::uniform_real<>{min, max}(random_engine);
+	}
+
 	inline bool coin_toss() { return random(0, 1); }
 }

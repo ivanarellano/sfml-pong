@@ -61,13 +61,7 @@
     <ClInclude Include="include\Network\Server.h">
       <Filter>Header Files\Network</Filter>
     </ClInclude>
-    <ClInclude Include="include\View\Actor.h">
-      <Filter>Header Files\View</Filter>
-    </ClInclude>
     <ClInclude Include="include\View\Ball.h">
-      <Filter>Header Files\View</Filter>
-    </ClInclude>
-    <ClInclude Include="include\View\Drawable.h">
       <Filter>Header Files\View</Filter>
     </ClInclude>
     <ClInclude Include="include\View\Event.h">
@@ -79,19 +73,10 @@
     <ClInclude Include="include\View\HalfCourtLine.h">
       <Filter>Header Files\View</Filter>
     </ClInclude>
-    <ClInclude Include="include\View\Measurement.h">
-      <Filter>Header Files\View</Filter>
-    </ClInclude>
-    <ClInclude Include="include\View\Movable.h">
-      <Filter>Header Files\View</Filter>
-    </ClInclude>
     <ClInclude Include="include\View\Paddle.h">
       <Filter>Header Files\View</Filter>
     </ClInclude>
     <ClInclude Include="include\View\Text.h">
-      <Filter>Header Files\View</Filter>
-    </ClInclude>
-    <ClInclude Include="include\View\View.h">
       <Filter>Header Files\View</Filter>
     </ClInclude>
     <ClInclude Include="include\View\Widget.h">
@@ -123,6 +108,12 @@
     </ClInclude>
     <ClInclude Include="include\Screen\TitleScreen.h">
       <Filter>Header Files\Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="include\View\Visibility.h">
+      <Filter>Header Files\View</Filter>
+    </ClInclude>
+    <ClInclude Include="include\View\Tickable.h">
+      <Filter>Header Files\View</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -161,6 +152,9 @@
     </ClCompile>
     <ClCompile Include="source\Screen\TitleScreen.cpp">
       <Filter>Source Files\Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="include\Vector2Math.h">
+      <Filter>Header Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

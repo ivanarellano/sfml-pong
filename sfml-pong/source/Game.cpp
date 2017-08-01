@@ -6,11 +6,10 @@
 
 namespace Pong
 {
-	Game::Game()
-		: m_window { "Pong", sf::Vector2u{ 800,600 } }
-		, m_elapsed { 0.0f }
-		, m_screen { nullptr }
+	Game::Game() : m_window { "Pong", sf::Vector2u{ 800,600 } }
 	{
+		m_window.get_render_window()->setFramerateLimit(k_framerate_sec);
+
 		show_title_screen();
 	}
 
@@ -30,11 +29,13 @@ namespace Pong
 
 	void Game::update()
 	{
-		float timestep { 1.0f / 60.0f };
+		const float timestep { 1.0f / k_framerate_sec };
 
 		if (m_elapsed >= timestep)
 		{
-			m_screen->update(m_elapsed);
+			float dt = m_dt.restart().asSeconds();
+
+			m_screen->tick(dt);
 			m_elapsed -= timestep;
 		}
 	}
@@ -43,9 +44,7 @@ namespace Pong
 	{
 		m_window.begin_draw();
 
-		sf::RenderWindow* w{ get_window()->get_render_window() };
-
-		m_screen->draw(w);
+		m_screen->draw(m_window.get_render_window());
 
 		m_window.end_draw();
 	}

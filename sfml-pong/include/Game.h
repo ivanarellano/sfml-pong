@@ -9,7 +9,6 @@ namespace Pong
 	{
 	public:
 		Game();
-		~Game() {}
 
 		void handle_input();
 		void update();
@@ -23,10 +22,13 @@ namespace Pong
 		void show_title_screen();
 		void show_credits_screen();
 	private:
+		const int k_framerate_sec{ 60 };
+
 		Window m_window;
 		sf::Clock m_clock;
-		float m_elapsed;
-		Screen* m_screen;
+		sf::Clock m_dt;
+		float m_elapsed{ 0.f };
+		Screen* m_screen{ nullptr };
 
 		Client m_client;
 

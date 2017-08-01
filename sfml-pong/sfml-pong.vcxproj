@@ -167,21 +167,19 @@
     <ClInclude Include="include\Screen\Screen.h" />
     <ClInclude Include="include\Screen\TitleScreen.h" />
     <ClInclude Include="include\Sound.h" />
-    <ClInclude Include="include\View\Actor.h" />
     <ClInclude Include="include\View\Ball.h" />
-    <ClInclude Include="include\View\Drawable.h" />
     <ClInclude Include="include\View\Event.h" />
     <ClInclude Include="include\View\Font.h" />
     <ClInclude Include="include\View\HalfCourtLine.h" />
-    <ClInclude Include="include\View\Measurement.h" />
-    <ClInclude Include="include\View\Movable.h" />
     <ClInclude Include="include\View\Paddle.h" />
     <ClInclude Include="include\View\Text.h" />
-    <ClInclude Include="include\View\View.h" />
+    <ClInclude Include="include\View\Tickable.h" />
+    <ClInclude Include="include\View\Visibility.h" />
     <ClInclude Include="include\View\Widget.h" />
     <ClInclude Include="include\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="include\Vector2Math.h" />
     <ClCompile Include="source\Game.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\Network\Client.cpp" />

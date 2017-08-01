@@ -1,20 +1,21 @@
 #include "Paddle.h"
+#include <SFML/Window/Keyboard.hpp>
 
 namespace Pong
 {
-	Paddle::Paddle() : Paddle { sf::Vector2f { 16.f, 50.f }, 375.f }
+	void Paddle::tick(float delta_time)
 	{
-	}
+		float speed{ m_move_speed * delta_time };
 
-	void Paddle::update(float dt)
-	{
-		if (m_move_up)
+		switch (m_player)
 		{
-			move(0, -m_move_speed * dt);
-		}
-		else if (m_move_down)
-		{
-			move(0, m_move_speed * dt);
+		case Player::P1:
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) move_up();
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) move_down();
+			break;
+		default:
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) move_up();
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) move_down();
 		}
 	}
 }

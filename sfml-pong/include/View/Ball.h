@@ -1,43 +1,32 @@
 #pragma once
 #include "Sound.h"
-#include "Actor.h"
+#include "Tickable.h"
+#include "Visibility.h"
+#include "Paddle.h"
+#include <SFML\Graphics\CircleShape.hpp>
 
 namespace Pong
 {
-	class Ball : public Actor
+	class Ball : public sf::CircleShape, public Visibility, public Tickable
 	{
 	public:
-		enum class Direction
-		{
-			None, NW, NE, SW, SE
-		};
+		Ball(int top_bound = 0, int btm_bound = 0, float radius = 7);
 
-		Ball();
+		void tick(float delta_time) override;
 
-		explicit Ball(sf::Vector2f size, float start_velocity, float max_velocity, float spring_force)
-			: Actor { size }
-			, k_start_velocity { start_velocity }
-			, k_max_velocity { max_velocity }
-			, k_spring_force { spring_force }
-			, m_velocity { start_velocity }
-			, m_direction { Direction::None }
-		{}
-
-		void update(float dt) override;
-
-		void increase_velocity(float vel);
-		void reflect_on_court();
-		void reflect_on_paddle();
-
-		void reset_velocity() { m_velocity = k_start_velocity; }
-		void set_direction(Direction dir) { m_direction = dir; }
+		void serve(bool isFacingLeftPlayer);
+		void increase_speed(float vel);
+		void on_collision();
+		void check_collision(const Paddle& p1, const Paddle& p2);
 	private:
-		const float k_start_velocity;
-		const float k_max_velocity;
-		const float k_spring_force;
+		const float k_min_velocity{ 220.f };
+		const float k_max_velocity{ k_min_velocity * 3.f };
+		const float k_spring_force{ 1.25f  };
 
-		float m_velocity;
-		Direction m_direction;
+		sf::Vector2f m_velocity;
+		sf::Vector2f m_acceleration;
 		Sound m_bounce_sound;
+		int m_top_y_bound;
+		int m_btm_y_bound;
 	};
 }
